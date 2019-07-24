@@ -40,11 +40,11 @@ class User extends \Core\Model
         $this->validate();
         if (empty($this->errors)) {
             $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
-            $sql = 'INSERT INTO users (name, email, password_hash)
-                    VALUES (:name, :email, :password_hash)';
+            $sql = 'INSERT INTO users (username, email, password_hash)
+                    VALUES (:username, :email, :password_hash)';
             $db = static::getDB();
             $statement = $db->prepare($sql);
-            $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $statement->bindValue(':username', $this->name, PDO::PARAM_STR);
             $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
             $statement->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
             return $statement->execute();

@@ -7,7 +7,7 @@
     <h1>Welcome</h1>
 	
 	{% if current_user %}
-		Hello {{ current_user.name }}.<br />
+		Hello {{ current_user.username }}.<br />
 	
 		<a href="/logout">Log out</a>
 	{% else %}
