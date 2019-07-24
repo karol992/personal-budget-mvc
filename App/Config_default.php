@@ -11,7 +11,7 @@ class Config {
 	const DB_USER = '';
 	const DB_PASSWORD = '';
 	
-	const SHOW_ERRORS = false;
+	const SHOW_ERRORS = false; // when false: errors in logs folder
 	
-	const SECRET_KEY = '';
+	const SECRET_KEY = ''; //32 chars
 }
