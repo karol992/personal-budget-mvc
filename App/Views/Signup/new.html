@@ -35,7 +35,6 @@
 					email: {
 						required: true,
 						email: true,
-						maxlength: 50,
 						remote: '/account/validate-email'
 					},
 					password: {
@@ -47,7 +46,7 @@
 				},
 				messages: {
 					name: {
-						required: 'Wymagana nazwa użytkownika',
+						required: 'Wymagana nazwa użytkownika.',
 						minlength: 'Minimalna długość nazwy użytkownika to 3 znaki.',
 						maxlength: 'Maksymalna długość nazwy użytkownika to 50 znaków.'
 					},
@@ -55,7 +54,6 @@
 					email: {
 						required: 'Wymagany adres email.',
 						email: 'Wpisz poprawny adres email.',
-						maxlength: 'Maksymalna długość emaila to 50 znaków.',
 						remote: 'Adres email zajęty.'
 					},
 					password: {
@@ -102,11 +100,8 @@
 	</div>
 {% endblock %}
 
-
-
-
-
 {% block body %}
+
 	<form class="col-12 col-sm-8 col-md-6 col-xl-4 offset-sm-2 offset-md-3 offset-xl-4 form-box" method="post" id="formSignup" action="/signup/create">
 		<div class="input-container">
 			<i class="fa fa-user bg-icon fa-fw single-icon"></i>
