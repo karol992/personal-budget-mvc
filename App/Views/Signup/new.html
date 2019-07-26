@@ -3,7 +3,7 @@
 {% block title %}Sign up{% endblock %}
 
 {% block css_styles %}
-<link rel="stylesheet" href="/css/registration.css">
+<link rel="stylesheet" href="/css/signup.css">
 {% endblock %}
 
 {% block footer %}
@@ -107,32 +107,7 @@
 
 
 {% block body %}
-
-<!--    <h1>Sign up</h1>
-    {% if user.errors is not empty %}
-        <p>Errors:</p>
-        <ul>
-            {% for error in user.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <form method="post" action="/signup/create" id="formSignup">
-        <div>
-            <label for="inputName">Name</label>
-            <input id="inputName" name="name" placeholder="Name" autofocus value="{{ user.name }}" />
-        </div>
-        <div>
-            <label for="inputEmail">Email address</label>
-            <input id="inputEmail" name="email" placeholder="email address" value="{{ user.email }}" type="email" />
-        </div>
-        <div>
-            <label for="inputPassword">Password</label>
-            <input type="password" id="inputPassword" name="password" placeholder="Password" />
-        </div>
-        <button type="submit">Sign up</button>
-    </form>-->
-	<form class="col-12 col-sm-8 col-md-6 col-xl-4 offset-sm-2 offset-md-3 offset-xl-4 form-box" method="post" id="formSignup">
+	<form class="col-12 col-sm-8 col-md-6 col-xl-4 offset-sm-2 offset-md-3 offset-xl-4 form-box" method="post" id="formSignup" action="/signup/create">
 		<div class="input-container">
 			<i class="fa fa-user bg-icon fa-fw single-icon"></i>
 			<input class="input-field" type="text" placeholder="imię" onfocus="this.placeholder=''" onblur="this.placeholder='imię'"
@@ -141,7 +116,7 @@
 		<div class="input-container">
 			<i class="fa fa-envelope bg-icon fa-fw single-icon"></i>
 			<input class="input-field" type="email" placeholder="e-mail" onfocus="this.placeholder=''" onblur="this.placeholder='e-mail'" 
-			value="" name="email" id="inputEmail">
+			value="" name="email" value="{{ user.email }}" id="inputEmail">
 		</div>
 		<div class="input-container">
 			<i class="fa fa-lock bg-icon fa-fw single-icon"></i>
