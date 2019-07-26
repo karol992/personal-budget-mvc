@@ -9,7 +9,7 @@ use \App\Models\User;
  * Income controller
  * PHP version 7.0
  */
-class Settings extends \Core\Controller
+class Settings extends Authenticated
 {
 
     /**

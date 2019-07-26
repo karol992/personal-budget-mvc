@@ -3,12 +3,13 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \App\Models\User;
 
 /**
  * Income controller
  * PHP version 7.0
  */
-class Income extends \Core\Controller
+class Income extends Authenticated
 {
 
     /**

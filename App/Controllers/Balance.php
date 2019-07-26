@@ -9,7 +9,7 @@ use \App\Models\User;
  * Balance controller
  * PHP version 7.0
  */
-class Balance extends \Core\Controller
+class Balance extends Authenticated
 {
 
     /**

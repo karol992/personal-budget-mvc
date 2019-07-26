@@ -9,7 +9,7 @@ use \App\Models\User;
  * Expense controller
  * PHP version 7.0
  */
-class Expense extends \Core\Controller
+class Expense extends Authenticated
 {
 
     /**
