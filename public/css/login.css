@@ -14,7 +14,7 @@ body {
 }
 .input-field {
 	background-color: white;
-	font-size: 20px;
+	/*font-size: 20px;*/
 	color: #7F9949;
 	width: 100%;
 	padding: 10px;
@@ -24,7 +24,7 @@ body {
 }
 .btn {
 	background-color: #7F9949;
-	font-size: 20px;
+	/*font-size: 20px;*/
 	color: white;
 	padding: 10px;
 	border: none;
