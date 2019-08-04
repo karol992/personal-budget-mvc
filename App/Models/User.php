@@ -60,24 +60,25 @@ class User extends \Core\Model
     {
         // Name
         if ($this->name == '') {
-            $this->errors[] = 'Name is required';
+            $this->errors[] = 'Wymagana nazwa użytkownika.';
         }
         // email address
-        if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
-            $this->errors[] = 'Invalid email';
-        }
-        if (static::emailExists($this->email)) {
-            $this->errors[] = 'email already taken';
+		if ($this->email == '') {
+            $this->errors[] = 'Wymagany adres email.';
+        } else if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
+            $this->errors[] = 'Wpisz poprawny adres email.';
+        } else if (static::emailExists($this->email)) {
+            $this->errors[] = 'Adres email zajęty.';
         }
         // Password
         if (strlen($this->password) < 6) {
-            $this->errors[] = 'Please enter at least 6 characters for the password';
-        }
-        if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
-            $this->errors[] = 'Password needs at least one letter';
-        }
-        if (preg_match('/.*\d+.*/i', $this->password) == 0) {
-            $this->errors[] = 'Password needs at least one number';
+            $this->errors[] = 'Hasło musi zawierać conajmniej 6 znaków.';
+        } else if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
+            $this->errors[] = 'Hasło musi zawierać conajmniej jedną literę.';
+        } else if (preg_match('/.*\d+.*/i', $this->password) == 0) {
+            $this->errors[] = 'Hasło musi zawierać conajmniej jedną cyfrę.';
+        } else if (strlen($this->password) > 50) {
+            $this->errors[] = 'Hasło może zawierać maksymalnie 50 znaków.';
         }
     }
 

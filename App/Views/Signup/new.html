@@ -9,7 +9,7 @@
 {% block footer %}
 	<script src="/js/hideShowPassword.min.js"></script>
 	<script>
-		$.validator.addMethod('validPassword',
+		$.validator.addMethod('validPasswordd',
 			function(value, element, param) {
 				if (value != '') {
 					if (value.match(/.*[a-z]+.*/i) == null) {
@@ -25,7 +25,7 @@
 		);
 		
 		$(document).ready(function() {
-			$('#formSignup').validate({
+			$('#formSignupp').validate({
 				rules: {
 					name: {
 						required: true,
@@ -106,22 +106,29 @@
 		<div class="input-container">
 			<i class="fa fa-user bg-icon fa-fw single-icon"></i>
 			<input class="input-field" type="text" placeholder="imię" onfocus="this.placeholder=''" onblur="this.placeholder='imię'"
-			value="" name="name" value="{{ user.name }}" id="inputName">
+			name="name" value="{{ user.name }}" id="inputName">
 		</div>
 		<div class="input-container">
 			<i class="fa fa-envelope bg-icon fa-fw single-icon"></i>
 			<input class="input-field" type="email" placeholder="e-mail" onfocus="this.placeholder=''" onblur="this.placeholder='e-mail'" 
-			value="" name="email" value="{{ user.email }}" id="inputEmail">
+			name="email" value="{{ user.email }}" id="inputEmail">
 		</div>
 		<div class="input-container">
 			<i class="fa fa-lock bg-icon fa-fw single-icon"></i>
 			<input class="input-field" type="password" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" 
-			value="" name="password" id="inputPassword">
+			name="password" id="inputPassword">
 		</div>  
 		<div class="submit-container">
 			<i class="fa fa-user-plus fa-fw submit-icon"></i>
 			<button type="submit" class="btn">Zarejestruj</button>
 		</div>
+		
+		{% if user.errors is not empty %}
+				{% for error in user.errors %}
+					<div>{{ error }}</div>
+				{% endfor %}
+		{% endif %}
+		
 		<div>
 			<label id="inputName-error" class="error" for="inputName"></label>
 		</div>
@@ -132,4 +139,6 @@
 			<label id="inputPassword-error" class="error" for="inputPassword"></label>
 		</div>
 	</form>
+	
+	
 {% endblock %}
