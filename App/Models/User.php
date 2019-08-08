@@ -40,14 +40,17 @@ class User extends \Core\Model
         $this->validate();
         if (empty($this->errors)) {
             $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
-            $sql = 'INSERT INTO users (name, email, password_hash)
-                    VALUES (:name, :email, :password_hash)';
+            $sql = 'INSERT INTO users (username, email, password_hash)
+                    VALUES (:username, :email, :password_hash)';
             $db = static::getDB();
             $statement = $db->prepare($sql);
-            $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $statement->bindValue(':username', $this->name, PDO::PARAM_STR);
             $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
             $statement->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
-            return $statement->execute();
+            if ($statement->execute()) {
+				$user = static::findByEmail($this->email);
+				return $this->copyDefaultCategories($user->id);
+			}
         }
         return false;
     }
@@ -60,24 +63,25 @@ class User extends \Core\Model
     {
         // Name
         if ($this->name == '') {
-            $this->errors[] = 'Name is required';
+            $this->errors[] = 'Wymagana nazwa użytkownika.';
         }
         // email address
-        if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
-            $this->errors[] = 'Invalid email';
-        }
-        if (static::emailExists($this->email)) {
-            $this->errors[] = 'email already taken';
+		if ($this->email == '') {
+            $this->errors[] = 'Wymagany adres email.';
+        } else if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
+            $this->errors[] = 'Wpisz poprawny adres email.';
+        } else if (static::emailExists($this->email)) {
+            $this->errors[] = 'Adres email zajęty.';
         }
         // Password
         if (strlen($this->password) < 6) {
-            $this->errors[] = 'Please enter at least 6 characters for the password';
-        }
-        if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
-            $this->errors[] = 'Password needs at least one letter';
-        }
-        if (preg_match('/.*\d+.*/i', $this->password) == 0) {
-            $this->errors[] = 'Password needs at least one number';
+            $this->errors[] = 'Hasło musi zawierać conajmniej 6 znaków.';
+        } else if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
+            $this->errors[] = 'Hasło musi zawierać conajmniej jedną literę.';
+        } else if (preg_match('/.*\d+.*/i', $this->password) == 0) {
+            $this->errors[] = 'Hasło musi zawierać conajmniej jedną cyfrę.';
+        } else if (strlen($this->password) > 50) {
+            $this->errors[] = 'Hasło może zawierać maksymalnie 50 znaków.';
         }
     }
 
@@ -158,4 +162,28 @@ class User extends \Core\Model
 		return $statement->execute();
 	}
 	
+	/** Copy default categories to categories assua
+	 * @return bolean True if categories was copied, false otherwise
+	 */
+	protected function copyDefaultCategories($userId) {
+		$db = static::getDB();
+		$copyPayments=$db->prepare("INSERT INTO payment_methods_assigned_to_users (id, user_id, name) SELECT NULL, :newUserId, name FROM payment_methods_default");
+		$copyPayments->bindValue(':newUserId',$userId,PDO::PARAM_INT);
+		$copyIncomes=$db->prepare("INSERT INTO incomes_category_assigned_to_users (id, user_id, name) SELECT NULL, :newUserId, name FROM incomes_category_default");
+		$copyIncomes->bindValue(':newUserId',$userId,PDO::PARAM_INT);
+		$copyExpenses=$db->prepare("INSERT INTO expenses_category_assigned_to_users (id, user_id, name) SELECT NULL, :newUserId, name FROM expenses_category_default");
+		$copyExpenses->bindValue(':newUserId',$userId,PDO::PARAM_INT);
+		return ($copyPayments->execute() && $copyIncomes->execute() && $copyExpenses->execute());
+	}
+	
+	/** Load categories assigned to current user.
+	 * @return assoc array
+	 */
+	public static function getUserIncomeCats() {
+		$db = static::getDB();
+		$incomeCat = $db->prepare("SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id=:id");
+		$incomeCat->bindValue(':id',$_SESSION['user_id'],PDO::PARAM_INT);
+		$incomeCat->execute();
+		return $incomeCat->fetchAll();
+	}
 }

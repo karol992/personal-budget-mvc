@@ -5,17 +5,18 @@ namespace App\Controllers;
 use \Core\View;
 
 /**
- * Home controller
+ * Expense controller
  * PHP version 7.0
  */
-class Home extends Authenticated
+class Expense extends Authenticated
 {
 
     /**
-     * Show the Home page
+     * Show the Add-Expense page
      * @return void
      */
     public function indexAction() {
-        View::renderTemplate('Home/index.html');
+        View::renderTemplate('Expense/index.html');
     }
+
 }

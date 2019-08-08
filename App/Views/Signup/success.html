@@ -2,10 +2,23 @@
 
 {% block title %}Sign up{% endblock %}
 
+{% block css_styles %}
+	<link rel="stylesheet" href="/css/signup.css">
+
+{% endblock %}
+
+{% block navbar %}
+	<div class="collapse navbar-collapse  justify-content-center" id="mainmenu">
+		<ul class="navbar-nav offset-6">
+			<li class="nav-item">
+				<a class="nav-link" href="/login"><span class="fa fa-sign-in fa-fw"></span>Logowanie</a>
+			</li>
+		</ul>
+	</div>
+{% endblock %}
+
 {% block body %}
-
-    <h1>Sign up</h1>
-
-    <p>Success! Thank you for signing up.</p>
-
+	<div class="ribbon_info">
+			Zarejestrowano pomyślnie!
+	</div>
 {% endblock %}

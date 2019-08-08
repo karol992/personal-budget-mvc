@@ -5,17 +5,18 @@ namespace App\Controllers;
 use \Core\View;
 
 /**
- * Home controller
+ * Balance controller
  * PHP version 7.0
  */
-class Home extends Authenticated
+class Balance extends Authenticated
 {
 
     /**
-     * Show the Home page
+     * Show the Balance page
      * @return void
      */
     public function indexAction() {
-        View::renderTemplate('Home/index.html');
+        View::renderTemplate('Balance/index.html');
     }
+
 }
