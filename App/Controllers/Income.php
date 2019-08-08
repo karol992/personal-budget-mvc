@@ -18,5 +18,10 @@ class Income extends Authenticated
     public function indexAction() {
         View::renderTemplate('Income/index.html');
     }
+	
+	/**
+     * Load list of income catgories
+     * @return assoc array
+     */
 
 }

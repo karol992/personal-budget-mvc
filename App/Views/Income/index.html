@@ -25,11 +25,9 @@
 			<div class="income_section col-12 col-md-6">
 				<div>Kategoria: </div>
 				<select name="income_category">
-					<!--?php
-						foreach ($incomeCategories as $incCaty) {
-							echo '<option value="'.$incCaty['id'].'"> '.$incCaty['name'].' </option>';
-						}
-					?>-->
+							{% for item in income_cats %}
+							<option value="{{ item.id }}">{{ item.name }} </option>
+							{% endfor %}
 				</select>
 			</div>
 			<!-- Income note -->

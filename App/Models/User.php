@@ -175,4 +175,15 @@ class User extends \Core\Model
 		$copyExpenses->bindValue(':newUserId',$userId,PDO::PARAM_INT);
 		return ($copyPayments->execute() && $copyIncomes->execute() && $copyExpenses->execute());
 	}
+	
+	/** Load categories assigned to current user.
+	 * @return assoc array
+	 */
+	public static function getUserIncomeCats() {
+		$db = static::getDB();
+		$incomeCat = $db->prepare("SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id=:id");
+		$incomeCat->bindValue(':id',$_SESSION['user_id'],PDO::PARAM_INT);
+		$incomeCat->execute();
+		return $incomeCat->fetchAll();
+	}
 }
