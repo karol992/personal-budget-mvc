@@ -32,9 +32,9 @@ class View {
             $twig = new \Twig_Environment($loader);
 			$twig->addGlobal('current_user', \App\Auth::getUser());
 			$twig->addGlobal('flash_messages', \App\Flash::getMessages());
-			$twig->addGlobal('income_cats', \App\Models\User::getUserIncomeCats());
-			$twig->addGlobal('expense_cats', \App\Models\User::getUserExpenseCats());
-			$twig->addGlobal('payment_cats', \App\Models\User::getUserPaymentCats());
+			$twig->addGlobal('income_cats', \App\Models\Data::getUserIncomeCats());
+			$twig->addGlobal('expense_cats', \App\Models\Data::getUserExpenseCats());
+			$twig->addGlobal('payment_cats', \App\Models\Data::getUserPaymentCats());
         }
         echo $twig->render($template, $args);
     }	

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use PDO;
 use \App\Token;
-use \App\Auth;
+use Data;
 
 /**
  * User model
@@ -50,7 +50,7 @@ class User extends \Core\Model
             $statement->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
             if ($statement->execute()) {
 				$user = static::findByEmail($this->email);
-				return $this->copyDefaultCategories($user->id);
+				return Data::copyDefaultCategories($user->id);
 			}
         }
         return false;
@@ -162,51 +162,5 @@ class User extends \Core\Model
 		
 		return $statement->execute();
 	}
-	
-	/** Copy default categories to categories assua
-	 * @return bolean True if categories was copied, false otherwise
-	 */
-	protected function copyDefaultCategories($userId) {
-		$db = static::getDB();
-		$copyPayments=$db->prepare("INSERT INTO payment_methods_assigned_to_users (id, user_id, name) SELECT NULL, :newUserId, name FROM payment_methods_default");
-		$copyPayments->bindValue(':newUserId',$userId,PDO::PARAM_INT);
-		$copyIncomes=$db->prepare("INSERT INTO incomes_category_assigned_to_users (id, user_id, name) SELECT NULL, :newUserId, name FROM incomes_category_default");
-		$copyIncomes->bindValue(':newUserId',$userId,PDO::PARAM_INT);
-		$copyExpenses=$db->prepare("INSERT INTO expenses_category_assigned_to_users (id, user_id, name) SELECT NULL, :newUserId, name FROM expenses_category_default");
-		$copyExpenses->bindValue(':newUserId',$userId,PDO::PARAM_INT);
-		return ($copyPayments->execute() && $copyIncomes->execute() && $copyExpenses->execute());
-	}
-	
-	/** Load income categories assigned to current user.
-	 * @return assoc array
-	 */
-	public static function getUserIncomeCats() {
-		$db = static::getDB();
-		$incomeCat = $db->prepare("SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id=:id");
-		$incomeCat->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);
-		$incomeCat->execute();
-		return $incomeCat->fetchAll();
-	}
-	/** Load expense categories assigned to current user.
-	 * @return assoc array
-	 */
-	public static function getUserExpenseCats() {
-		$db = static::getDB();
-		$expenseCat = $db->prepare("SELECT id, name FROM expenses_category_assigned_to_users WHERE user_id=:id");
-		$expenseCat->bindValue(':id', Auth::getUserId(),PDO::PARAM_INT);
-		$expenseCat->execute();
-		return $expenseCat->fetchAll();
-	}
-	/** Load payment categories assigned to current user.
-	 * @return assoc array
-	 */
-	public static function getUserPaymentCats() {
-		$db = static::getDB();
-		$paymentCat = $db->prepare("SELECT id, name FROM payment_methods_assigned_to_users WHERE user_id=:id");
-		$paymentCat->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);
-		$paymentCat->execute();
-		return $paymentCat->fetchAll();
-	}
-	
 	
 }
