@@ -4,6 +4,7 @@ namespace App\Models;
 
 use PDO;
 use \App\Token;
+use \App\Auth;
 
 /**
  * User model
@@ -182,7 +183,7 @@ class User extends \Core\Model
 	public static function getUserIncomeCats() {
 		$db = static::getDB();
 		$incomeCat = $db->prepare("SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id=:id");
-		$incomeCat->bindValue(':id',$_SESSION['user_id'],PDO::PARAM_INT);
+		$incomeCat->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);
 		$incomeCat->execute();
 		return $incomeCat->fetchAll();
 	}
@@ -192,7 +193,7 @@ class User extends \Core\Model
 	public static function getUserExpenseCats() {
 		$db = static::getDB();
 		$expenseCat = $db->prepare("SELECT id, name FROM expenses_category_assigned_to_users WHERE user_id=:id");
-		$expenseCat->bindValue(':id',$_SESSION['user_id'],PDO::PARAM_INT);
+		$expenseCat->bindValue(':id', Auth::getUserId(),PDO::PARAM_INT);
 		$expenseCat->execute();
 		return $expenseCat->fetchAll();
 	}
@@ -202,8 +203,10 @@ class User extends \Core\Model
 	public static function getUserPaymentCats() {
 		$db = static::getDB();
 		$paymentCat = $db->prepare("SELECT id, name FROM payment_methods_assigned_to_users WHERE user_id=:id");
-		$paymentCat->bindValue(':id',$_SESSION['user_id'],PDO::PARAM_INT);
+		$paymentCat->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);
 		$paymentCat->execute();
 		return $paymentCat->fetchAll();
 	}
+	
+	
 }
