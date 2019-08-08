@@ -176,7 +176,7 @@ class User extends \Core\Model
 		return ($copyPayments->execute() && $copyIncomes->execute() && $copyExpenses->execute());
 	}
 	
-	/** Load categories assigned to current user.
+	/** Load income categories assigned to current user.
 	 * @return assoc array
 	 */
 	public static function getUserIncomeCats() {
@@ -185,5 +185,25 @@ class User extends \Core\Model
 		$incomeCat->bindValue(':id',$_SESSION['user_id'],PDO::PARAM_INT);
 		$incomeCat->execute();
 		return $incomeCat->fetchAll();
+	}
+	/** Load expense categories assigned to current user.
+	 * @return assoc array
+	 */
+	public static function getUserExpenseCats() {
+		$db = static::getDB();
+		$expenseCat = $db->prepare("SELECT id, name FROM expenses_category_assigned_to_users WHERE user_id=:id");
+		$expenseCat->bindValue(':id',$_SESSION['user_id'],PDO::PARAM_INT);
+		$expenseCat->execute();
+		return $expenseCat->fetchAll();
+	}
+	/** Load payment categories assigned to current user.
+	 * @return assoc array
+	 */
+	public static function getUserPaymentCats() {
+		$db = static::getDB();
+		$paymentCat = $db->prepare("SELECT id, name FROM payment_methods_assigned_to_users WHERE user_id=:id");
+		$paymentCat->bindValue(':id',$_SESSION['user_id'],PDO::PARAM_INT);
+		$paymentCat->execute();
+		return $paymentCat->fetchAll();
 	}
 }

@@ -19,9 +19,9 @@ class Income extends Authenticated
         View::renderTemplate('Income/index.html');
     }
 	
-	/**
-     * Load list of income catgories
-     * @return assoc array
-     */
-
+	/** Add an income to the database
+	 * @return void*/
+	public function addIncomeAction() {
+		View::renderTemplate('Home/index.html');
+	}
 }
