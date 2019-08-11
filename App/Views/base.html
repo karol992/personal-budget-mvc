@@ -28,7 +28,7 @@
 	
 	
 {% for message in flash_messages %}
-		<div class="alert-{{ message.type }}">
+		<div class="alert alert-{{ message.type }}">
 			{{ message.body }}
 		</div>
 	{% endfor %}

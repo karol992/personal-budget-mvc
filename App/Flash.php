@@ -39,4 +39,9 @@ class Flash {
 		}
 	}
 	
+	public static function getCurrentDate() {
+		$now=new DateTime();
+		return $now->format('Y-m-d');
+    }
+	
 }

@@ -80,6 +80,7 @@ class Data extends \Core\Model
 				$queryIncome->bindValue(':comment', $_POST['income_note'], PDO::PARAM_STR);
 				if ($queryIncome->execute()) {
 					Flash::addMessage('Dodano '.$categoryName.' +'.$_POST['income_value'].'');
+					$_SESSION['transaction_date'] = $_POST['income_date'];
 				}
 			}
 		}
@@ -104,6 +105,7 @@ class Data extends \Core\Model
 				$queryExpense->bindValue(':comment', $_POST['expense_note'], PDO::PARAM_STR);
 				if ($queryExpense->execute()) {
 					Flash::addMessage('Dodano '.$categoryName.' -'.$_POST['expense_value'].'');
+					$_SESSION['transaction_date'] = $_POST['expense_date'];
 				}
 			}
 		}
