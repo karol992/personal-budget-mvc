@@ -27,11 +27,11 @@
 	</header>
 	
 	
-<!--	{% for message in flash_messages %}
-		<div class="alert alert-{{ message.type }}">
+{% for message in flash_messages %}
+		<div class="alert-{{ message.type }}">
 			{{ message.body }}
 		</div>
-	{% endfor %}-->
+	{% endfor %}
 	<main>
 {% block body %}{% endblock %}
 	</main>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use PDO;
 use \App\Auth;
+use \App\Flash;
 
 /**
  * User model
@@ -60,6 +61,7 @@ class Data extends \Core\Model
 		return $query->fetchAll();
 	}
 	
+	/* Functions addIncome, addExpense are similar but didn't inherits from any function cause of code simplicity. */
 	/** Save income in database
 	 * @return void
 	 */
@@ -67,14 +69,19 @@ class Data extends \Core\Model
 		$userId = Auth::getUserId();
 		if($userId) {
 			$db = static::getDB();
-			$queryIncome = $db->prepare("INSERT INTO incomes (id, user_id, income_category_assigned_to_user_id, amount, date_of_income, income_comment)
-			VALUES (NULL, :user_id, :category_id, :value, :date, :comment)");
-			$queryIncome->bindValue(':user_id', $userId, PDO::PARAM_INT);
-			$queryIncome->bindValue(':category_id', $_POST['income_category'], PDO::PARAM_INT);
-			$queryIncome->bindValue(':value', $_POST['income_value'], PDO::PARAM_STR);
-			$queryIncome->bindValue(':date', $_POST['income_date'], PDO::PARAM_STR);
-			$queryIncome->bindValue(':comment', $_POST['income_note'], PDO::PARAM_STR);
-			$queryIncome->execute();
+			$categoryName = static::getCategoryName('incomes_category_assigned_to_users', $_POST['income_category']);
+			if($categoryName) {
+				$queryIncome = $db->prepare("INSERT INTO incomes (id, user_id, income_category_assigned_to_user_id, amount, date_of_income, income_comment)
+				VALUES (NULL, :user_id, :category_id, :value, :date, :comment)");
+				$queryIncome->bindValue(':user_id', $userId, PDO::PARAM_INT);
+				$queryIncome->bindValue(':category_id', $_POST['income_category'], PDO::PARAM_INT);
+				$queryIncome->bindValue(':value', $_POST['income_value'], PDO::PARAM_STR);
+				$queryIncome->bindValue(':date', $_POST['income_date'], PDO::PARAM_STR);
+				$queryIncome->bindValue(':comment', $_POST['income_note'], PDO::PARAM_STR);
+				if ($queryIncome->execute()) {
+					Flash::addMessage('Dodano '.$categoryName.' +'.$_POST['income_value'].'');
+				}
+			}
 		}
 	}
 
@@ -85,15 +92,34 @@ class Data extends \Core\Model
 		$userId = Auth::getUserId();
 		if($userId) {
 			$db = static::getDB();
-			$queryExpense = $db->prepare("INSERT INTO expenses (id, user_id, expense_category_assigned_to_user_id, payment_method_assigned_to_user_id, amount, date_of_expense, expense_comment)
-			VALUES (NULL, :user_id, :category_id, :payment_cat_id, :value, :date, :comment)");
-			$queryExpense->bindValue(':user_id', $userId, PDO::PARAM_INT);
-			$queryExpense->bindValue(':category_id', $_POST['expense_category'], PDO::PARAM_INT);
-			$queryExpense->bindValue(':payment_cat_id', $_POST['payment_category'], PDO::PARAM_INT);
-			$queryExpense->bindValue(':value', $_POST['expense_value'], PDO::PARAM_STR);
-			$queryExpense->bindValue(':date', $_POST['expense_date'], PDO::PARAM_STR);
-			$queryExpense->bindValue(':comment', $_POST['expense_note'], PDO::PARAM_STR);
-			$queryExpense->execute();
+			$categoryName = static::getCategoryName('expenses_category_assigned_to_users', $_POST['expense_category']);
+			if($categoryName) {
+				$queryExpense = $db->prepare("INSERT INTO expenses (id, user_id, expense_category_assigned_to_user_id, payment_method_assigned_to_user_id, amount, date_of_expense, expense_comment)
+				VALUES (NULL, :user_id, :category_id, :payment_cat_id, :value, :date, :comment)");
+				$queryExpense->bindValue(':user_id', $userId, PDO::PARAM_INT);
+				$queryExpense->bindValue(':category_id', $_POST['expense_category'], PDO::PARAM_INT);
+				$queryExpense->bindValue(':payment_cat_id', $_POST['payment_category'], PDO::PARAM_INT);
+				$queryExpense->bindValue(':value', $_POST['expense_value'], PDO::PARAM_STR);
+				$queryExpense->bindValue(':date', $_POST['expense_date'], PDO::PARAM_STR);
+				$queryExpense->bindValue(':comment', $_POST['expense_note'], PDO::PARAM_STR);
+				if ($queryExpense->execute()) {
+					Flash::addMessage('Dodano '.$categoryName.' -'.$_POST['expense_value'].'');
+				}
+			}
 		}
+	}
+	
+	/**  Return searched name of category_id
+	 * @param string $table Table name with searched category
+	 * @param int $category_id Searched category id
+	 * @return string $cat_name Name of searched category
+	 */
+	protected static function getCategoryName($table, $id) {
+		$db = static::getDB();
+		$query = $db->prepare("SELECT name FROM $table WHERE id=:id");
+		$query->bindValue(':id', $id, PDO::PARAM_INT);
+		$query->execute();
+		$name=$query->fetch();
+		return $name[0];
 	}
 }

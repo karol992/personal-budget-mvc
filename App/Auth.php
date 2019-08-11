@@ -104,4 +104,12 @@ class Auth {
 		$user = static::getUser();
 		return $user->id ?? false;
 	}
+	
+	/** Get user name
+	 * @return string The user name or null if not logged in
+	 */
+	public static function getUserName() {
+		$user = static::getUser();
+		return $user->username ?? false;
+	}
 }

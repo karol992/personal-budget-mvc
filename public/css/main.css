@@ -52,7 +52,7 @@ h1 {
 .error {
 	color: red;
 }
-.info_ribbon {
+.alert-success {
 	background-color: var(--color-medium);
 	color: #FFFBD9;
 	text-align: center;
