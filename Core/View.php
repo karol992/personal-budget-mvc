@@ -35,6 +35,7 @@ class View {
 			$twig->addGlobal('expense_cats', \App\Models\Data::getUserExpenseCats());
 			$twig->addGlobal('payment_cats', \App\Models\Data::getUserPaymentCats());
 			$twig->addGlobal('income_date', $_POST['income_date'] ?? false);
+			$twig->addGlobal('expense_date', $_POST['expense_date'] ?? false);
         }
         echo $twig->render($template, $args);
     }	

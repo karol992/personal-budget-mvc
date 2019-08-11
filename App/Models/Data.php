@@ -60,13 +60,12 @@ class Data extends \Core\Model
 		return $query->fetchAll();
 	}
 	
-	/**
-	 *
+	/** Save income in database
+	 * @return void
 	 */
 	public static function addIncome() {
 		$userId = Auth::getUserId();
 		if($userId) {
-			$_SESSION['income_date'] = $_POST['income_date'];
 			$db = static::getDB();
 			$queryIncome = $db->prepare("INSERT INTO incomes (id, user_id, income_category_assigned_to_user_id, amount, date_of_income, income_comment)
 			VALUES (NULL, :user_id, :category_id, :value, :date, :comment)");
@@ -78,5 +77,23 @@ class Data extends \Core\Model
 			$queryIncome->execute();
 		}
 	}
-	
+
+	/** Save expense in database
+	 * @return void
+	 */
+	public static function addExpense() {
+		$userId = Auth::getUserId();
+		if($userId) {
+			$db = static::getDB();
+			$queryExpense = $db->prepare("INSERT INTO expenses (id, user_id, expense_category_assigned_to_user_id, payment_method_assigned_to_user_id, amount, date_of_expense, expense_comment)
+			VALUES (NULL, :user_id, :category_id, :payment_cat_id, :value, :date, :comment)");
+			$queryExpense->bindValue(':user_id', $userId, PDO::PARAM_INT);
+			$queryExpense->bindValue(':category_id', $_POST['expense_category'], PDO::PARAM_INT);
+			$queryExpense->bindValue(':payment_cat_id', $_POST['payment_category'], PDO::PARAM_INT);
+			$queryExpense->bindValue(':value', $_POST['expense_value'], PDO::PARAM_STR);
+			$queryExpense->bindValue(':date', $_POST['expense_date'], PDO::PARAM_STR);
+			$queryExpense->bindValue(':comment', $_POST['expense_note'], PDO::PARAM_STR);
+			$queryExpense->execute();
+		}
+	}
 }
