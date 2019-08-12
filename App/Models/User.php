@@ -4,7 +4,6 @@ namespace App\Models;
 
 use PDO;
 use \App\Token;
-use Data;
 
 /**
  * User model
@@ -50,7 +49,7 @@ class User extends \Core\Model
             $statement->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
             if ($statement->execute()) {
 				$user = static::findByEmail($this->email);
-				return Data::copyDefaultCategories($user->id);
+				return $this->copyDefaultCategories($user->id);
 			}
         }
         return false;
@@ -161,6 +160,21 @@ class User extends \Core\Model
 		$statement->bindValue(':expires_at', date('Y-m-d H:i:s', $this->expiry_timestamp), PDO::PARAM_STR);
 		
 		return $statement->execute();
+	}
+	
+	/** Copy default categories to categories assigned to users
+     * @param integer $userId The user id
+	 * @return bolean True if categories was copied, false otherwise
+	 */
+	protected function copyDefaultCategories($userId) {
+		$db = static::getDB();
+		$copyPayments=$db->prepare("INSERT INTO payment_methods_assigned_to_users (id, user_id, name) SELECT NULL, :newUserId, name FROM payment_methods_default");
+		$copyPayments->bindValue(':newUserId',$userId,PDO::PARAM_INT);
+		$copyIncomes=$db->prepare("INSERT INTO incomes_category_assigned_to_users (id, user_id, name) SELECT NULL, :newUserId, name FROM incomes_category_default");
+		$copyIncomes->bindValue(':newUserId',$userId,PDO::PARAM_INT);
+		$copyExpenses=$db->prepare("INSERT INTO expenses_category_assigned_to_users (id, user_id, name) SELECT NULL, :newUserId, name FROM expenses_category_default");
+		$copyExpenses->bindValue(':newUserId',$userId,PDO::PARAM_INT);
+		return ($copyPayments->execute() && $copyIncomes->execute() && $copyExpenses->execute());
 	}
 	
 }
