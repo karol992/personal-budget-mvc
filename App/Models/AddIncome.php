@@ -13,7 +13,7 @@ use \App\Models\Data;
 class AddIncome extends Transaction
 {
 	/** Body of public function send()
-     * @return boolean
+     * @return boolean True if income is added
      */
 	protected function transactionQuery($userId) {
 		$db = static::getDB();

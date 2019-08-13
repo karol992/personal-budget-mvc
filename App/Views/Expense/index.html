@@ -9,10 +9,18 @@
 {% block body %}
 	<!-- Expense adding -->
 		<form class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10" action="/expense/add-expense" method="post" enctype="multipart/form-data">
+			<!-- Errors of expense -->
+			{% if errors is not empty %}
+				<div class="col-12">
+				{% for error in errors %}
+					<div class="error">{{ error }}</div>
+				{% endfor %}
+				</div>
+			{% endif %}
 			<!-- Amount of expense -->
 			<div class="expense_section col-12 col-md-6">
 				<div><label for="expense_value">Kwota: </label></div>
-				<div><input type="number" name="expense_value" step="0.01" min="0.01" max="999999.99" required></div>
+				<div><input type="number" name="expense_value" step="0.01" min="0.01" max="999999.99" value="{{ expense_value }}"required></div>
 			</div>
 			<!-- Date of expense -->
 			<div class="expense_section col-12 col-md-6">
