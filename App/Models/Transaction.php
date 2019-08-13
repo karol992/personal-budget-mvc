@@ -16,8 +16,8 @@ abstract class Transaction extends \Core\Model
      */
     public $errors = [];
 	
-	public function send() {
-		$this->validate($_POST['income_value'], $_POST['income_date'], $_POST['income_note']);
+	public function send($value, $date, $note) {
+		$this->validate($value, $date, $note);
 		if (empty($this->errors)) {
 			$userId = Auth::getUserId();
 			if($userId) {

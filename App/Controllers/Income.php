@@ -31,7 +31,7 @@ class Income extends Authenticated
 	public function addIncomeAction() {
 		$args=[];
 		$income = new AddIncome();
-		if (! $income->send()) {
+		if (! $income->send($_POST['income_value'], $_POST['income_date'], $_POST['income_note'])) {
 			Flash::addMessage('Operacja nie powiodła się.', 'warning');
 		}
 		$args['errors'] = $income->errors;
