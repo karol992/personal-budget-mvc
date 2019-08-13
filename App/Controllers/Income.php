@@ -6,6 +6,7 @@ use \Core\View;
 use \App\Models\Data;
 use \App\Models\AddIncome;
 use \App\Timer;
+use \App\Flash;
 
 /**
  * Income controller
@@ -19,9 +20,9 @@ class Income extends Authenticated
      * @return void
      */
     public function indexAction($args = []) {
-		
+		$args['income_value'] = '0.00';
 		$args['income_cats'] = \App\Models\Data::getUserIncomeCats();
-		$args['transaction_date'] = $_SESSION['transaction_date'] ?? \App\Timer::getCurrentDate();
+		$args['transaction_date'] = $_POST['income_date'] ?? \App\Timer::getCurrentDate();
         View::renderTemplate('Income/index.html', $args);
     }
 	
@@ -30,7 +31,9 @@ class Income extends Authenticated
 	public function addIncomeAction() {
 		$args=[];
 		$income = new AddIncome();
-		$income->send();
+		if (! $income->send()) {
+			Flash::addMessage('Operacja nie powiodła się.', 'warning');
+		}
 		$args['errors'] = $income->errors;
 		$this->indexAction($args);
 	}
