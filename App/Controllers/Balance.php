@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \App\Models\DataProperties\ShowBalance;
 
 /**
  * Balance controller

@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\Data;
-use \App\Models\Data\AddIncome;
+use \App\Models\DataProperties\AddIncome;
 use \App\Timer;
 use \App\Flash;
 
