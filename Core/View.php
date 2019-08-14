@@ -30,9 +30,13 @@ class View {
         if ($twig === null) {
             $loader = new \Twig_Loader_Filesystem(dirname(__DIR__) . '/App/Views');
             $twig = new \Twig_Environment($loader);
-			$twig->addGlobal('current_user', \App\Auth::getUser());
+			/*$twig->addGlobal('income_cats', \App\Models\Data::getUserIncomeCats());
+			$twig->addGlobal('expense_cats', \App\Models\Data::getUserExpenseCats());
+			$twig->addGlobal('payment_cats', \App\Models\Data::getUserPaymentCats());
+			$twig->addGlobal('income_date', $_POST['income_date'] ?? false);
+			$twig->addGlobal('expense_date', $_POST['expense_date'] ?? false);
+			$twig->addGlobal('transaction_date', $_SESSION['transaction_date'] ?? \App\Timer::getCurrentDate());*/
 			$twig->addGlobal('flash_messages', \App\Flash::getMessages());
-			$twig->addGlobal('income_cats', \App\Models\User::getUserIncomeCats());
         }
         echo $twig->render($template, $args);
     }	

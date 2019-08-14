@@ -162,7 +162,8 @@ class User extends \Core\Model
 		return $statement->execute();
 	}
 	
-	/** Copy default categories to categories assua
+	/** Copy default categories to categories assigned to users
+     * @param integer $userId The user id
 	 * @return bolean True if categories was copied, false otherwise
 	 */
 	protected function copyDefaultCategories($userId) {
@@ -176,14 +177,4 @@ class User extends \Core\Model
 		return ($copyPayments->execute() && $copyIncomes->execute() && $copyExpenses->execute());
 	}
 	
-	/** Load categories assigned to current user.
-	 * @return assoc array
-	 */
-	public static function getUserIncomeCats() {
-		$db = static::getDB();
-		$incomeCat = $db->prepare("SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id=:id");
-		$incomeCat->bindValue(':id',$_SESSION['user_id'],PDO::PARAM_INT);
-		$incomeCat->execute();
-		return $incomeCat->fetchAll();
-	}
 }

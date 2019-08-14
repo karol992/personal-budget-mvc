@@ -3,6 +3,8 @@
   --color-dark: #7F9949;
   --color-medium: #BBCC99;
   --border-dark: 2px solid var(--color-dark);
+  --color-warning-text: #6e1a22;
+  --color-warning-bg: #dc5565;
 }
 body {
 	background-color: var(--color-bg);
@@ -52,11 +54,19 @@ h1 {
 .error {
 	color: red;
 }
-.info_ribbon {
+.alert {
+	font-size: calc(8px + 3vmin);
+	text-align: center;
+}
+.alert-success {
 	background-color: var(--color-medium);
 	color: #FFFBD9;
-	text-align: center;
 	text-shadow: -1px 0 var(--color-dark), 0 1px var(--color-dark), 1px 0 var(--color-dark), 0 -1px var(--color-dark);
+}
+.alert-warning {
+	background-color: var(--color-warning-bg);
+	color: #FFFBD9;
+	text-shadow: -1px 0 var(--color-warning-text), 0 1px var(--color-warning-text), 1px 0 var(--color-warning-text), 0 -1px var(--color-warning-text);
 }
 .inB {
 	display: inline-block;

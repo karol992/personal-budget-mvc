@@ -96,4 +96,20 @@ class Auth {
 			setcookie('remember_me', '', time() - 3600); // set to expire in the past
 		}
 	}
+	
+	/** Get user id
+	 * @return integer The user id or null if not logged in
+	 */
+	public static function getUserId() {
+		$user = static::getUser();
+		return $user->id ?? false;
+	}
+	
+	/** Get user name
+	 * @return string The user name or null if not logged in
+	 */
+	public static function getUserName() {
+		$user = static::getUser();
+		return $user->username ?? false;
+	}
 }
