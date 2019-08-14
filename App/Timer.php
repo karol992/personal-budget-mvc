@@ -88,9 +88,19 @@ class Timer {
 	public static function dateValidation($date) {
 		if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) == 0) {
             return 'Poprawny format daty to YYYY-MM-DD';
-        } else if (!$this->validateDate($date, 'Y-m-d')) {
+        } else if (!static::checkDateExist($date, 'Y-m-d')) {
 			return 'Data nie istnieje.';
 		}
 		return false;
+	}
+	
+		/** Check if date exist
+	 * Source : https://www.php.net/manual/en/function.checkdate.php#113205
+	 * @return bolean True when date is correct, false otherwise
+	 */
+	public static function checkDateExist($date, $format)
+	{
+		$d = \DateTime::createFromFormat($format, $date);
+		return $d && $d->format($format) == $date;
 	}
 }
