@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\DataProperties\ShowBalance;
+use \App\Timer;
 
 /**
  * Balance controller
@@ -17,13 +18,27 @@ class Balance extends Authenticated
      * @return void
      */
     public function indexAction() {
-	$args=[];
-		if(isset($_POST['balance_period'])) {
-			$args['balance_period']=$_POST['balance_period'];
-		} else {
-			$args['balance_period']='current_month';
-		}
+		$args=[];
+		$args['balance_period']=$this->getPeriodForView();
         View::renderTemplate('Balance/index.html', $args);
     }
-
+	
+	protected function getPeriodForView() {
+		if(isset($_POST['balance_period'])) {
+			$inPeriod=$_POST['balance_period'];
+			switch ($inPeriod) {
+				case 'current_month':
+					$outPeriod = 'current_month'; break;
+				case 'last_month':
+					$outPeriod = 'last_month'; break;
+				case 'current_year':
+					$outPeriod = 'current_year'; break;
+			}
+		} else {
+			$outPeriod = 'current_month___';
+		}
+		return $outPeriod;
+	}
+		
+	
 }
