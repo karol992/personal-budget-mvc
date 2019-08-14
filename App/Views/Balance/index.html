@@ -14,7 +14,7 @@
 					Zakres
 				</button>
 				<div class="dropdown-menu col-lg-2 col-md-3 col-sm-4 col-5" aria-labelledby="dropdownMenu2">
-						<form action="aaa.php" method="post">
+						<form action="/balance/index" method="post">
 						<button class="dropdown-item" type="submit" name="balance_period" value="current_month">Bieżący miesiąc</button>
 						<button class="dropdown-item" type="submit" name="balance_period" value="last_month">Poprzedni miesiąc</button>
 						<button class="dropdown-item" type="submit" name="balance_period" value="current_year">Bieżący rok</button></form>
@@ -25,6 +25,8 @@
 			</div>
 		
 	</div>
-
-	coming soon...
+	<div class="container">
+		balance_period: {{ balance_period }} <br />
+		coming soon...
+	</div>
 {% endblock %}

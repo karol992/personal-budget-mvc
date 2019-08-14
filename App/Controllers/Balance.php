@@ -17,7 +17,13 @@ class Balance extends Authenticated
      * @return void
      */
     public function indexAction() {
-        View::renderTemplate('Balance/index.html');
+	$args=[];
+		if(isset($_POST['balance_period'])) {
+			$args['balance_period']=$_POST['balance_period'];
+		} else {
+			$args['balance_period']='current_month';
+		}
+        View::renderTemplate('Balance/index.html', $args);
     }
 
 }
