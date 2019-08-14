@@ -23,22 +23,43 @@ class Balance extends Authenticated
         View::renderTemplate('Balance/index.html', $args);
     }
 	
+	/**
+	 */
 	protected function getPeriodForView() {
-		if(isset($_POST['balance_period'])) {
+		if (isset($_POST['balance_start_day']) && 
+		isset ($_POST['balance_end_day'])) {
+			if($_POST['balance_start_day'] &&
+			$_POST['balance_end_day']) {
+				$outPeriod=Timer::bindUserPeriod($_POST['balance_start_day'], $_POST['balance_end_day']);
+			} else {
+				$outPeriod = Timer::currentMonthPeriod();
+			}
+		} else if(isset($_POST['balance_period'])) {
 			$inPeriod=$_POST['balance_period'];
 			switch ($inPeriod) {
 				case 'current_month':
-					$outPeriod = 'current_month'; break;
+					$outPeriod = Timer::currentMonthPeriod(); break;
 				case 'last_month':
-					$outPeriod = 'last_month'; break;
+					$outPeriod = Timer::lastMonthPeriod(); break;
 				case 'current_year':
-					$outPeriod = 'current_year'; break;
+					$outPeriod = Timer::currentYearPeriod(); break;
 			}
 		} else {
-			$outPeriod = 'current_month___';
+			if(isset($_SESSION['remembered_period'])) {
+				$outPeriod = Timer::bindUserPeriod($_SESSION['remembered_period']['start'], $_SESSION['remembered_period']['end']);
+			} else {
+				$outPeriod = Timer::currentMonthPeriod();
+			}
 		}
+		$this->savePeriodToSession($outPeriod);
 		return $outPeriod;
 	}
-		
+	
+	/**
+	 */
+	protected function savePeriodToSession($period) {
+		$_SESSION['remembered_period']['start']=$period['start'];
+		$_SESSION['remembered_period']['end']=$period['end'];
+	}
 	
 }

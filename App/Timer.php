@@ -2,6 +2,7 @@
 
 namespace App;
 
+use \App\Flash;
 
 /**
  * 
@@ -22,8 +23,8 @@ class Timer {
 	public static function currentMonthPeriod() {
 		$period=[];
 		$now=new \DateTime();
-		$period=$now->format('Y-m-01');
-		$period=$now->format('Y-m-t');
+		$period['start']=$now->format('Y-m-01');
+		$period['end']=$now->format('Y-m-t');
 		return $period;
 	}
 	
@@ -34,8 +35,8 @@ class Timer {
 		$period=[];
 		$now=new \DateTime();
 		$now->modify('-1 month');
-		$period=$now->format('Y-m-01');
-		$period=$now->format('Y-m-t');
+		$period['start']=$now->format('Y-m-01');
+		$period['end']=$now->format('Y-m-t');
 		return $period;
 	}
 	
@@ -45,10 +46,28 @@ class Timer {
 	public static function currentYearPeriod() {
 		$period=[];
 		$now=new \DateTime();
-		$period=$now->format('Y-01-01');
-		$period=$now->format('Y-12-31');
+		$period['start']=$now->format('Y-01-01');
+		$period['end']=$now->format('Y-12-31');
 		return $period;
 	}
+	
+	
+	/**
+	 */
+	 public static function bindUserPeriod($start, $end) {
+		$outPeriod = [];
+		$startDT = new \DateTime($start);
+		$endDT = new \DateTime($end);
+		if ($startDT->format("Y-m-d")  > $endDT->format("Y-m-d")) {
+			$temp = $start;
+			$start = $end;
+			$end = $temp;
+			Flash::addMessage('Odwrócono kolejność dat.', 'info');
+		}
+		$outPeriod['start'] = $start;
+		$outPeriod['end'] = $end;
+		return $outPeriod;
+	 }
 	
 	/**
 	 * @param array $inPeriod, with two string dates in format('Y-m-d')
@@ -56,11 +75,22 @@ class Timer {
      */
 	//convert period date for ribbon content
 	public static function dottedDate($inPeriod) {
-		$startDate = new \DateTime($inPeriod[0]);
-		$endDate = new \DateTime($inPeriod[1]);
+		$startDate = new \DateTime($inPeriod['start']);
+		$endDate = new \DateTime($inPeriod['end']);
 		$outPeriod = [];
-		$outPeriod = $startDate->format('d.m.Y');
-		$outPeriod = $endDate->format('d.m.Y');
+		$outPeriod['start'] = $startDate->format('d.m.Y');
+		$outPeriod['end'] = $endDate->format('d.m.Y');
 		return $outPeriod;
+	}
+	
+	/**
+	 */
+	public static function dateValidation($date) {
+		if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) == 0) {
+            return 'Poprawny format daty to YYYY-MM-DD';
+        } else if (!$this->validateDate($date, 'Y-m-d')) {
+			return 'Data nie istnieje.';
+		}
+		return false;
 	}
 }
