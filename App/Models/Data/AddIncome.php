@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Data;
 
 use PDO;
 use \App\Flash;

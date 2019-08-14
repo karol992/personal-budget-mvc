@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\Data;
-use \App\Models\AddExpense;
+use \App\Models\Data\AddExpense;
 use \App\Timer;
 use \App\Flash;
 
