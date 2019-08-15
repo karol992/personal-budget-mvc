@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\DataProperties\ShowBalance;
 use \App\Timer;
+use \App\Models\Data;
 
 /**
  * Balance controller
@@ -24,8 +25,7 @@ class Balance extends Authenticated
 		$balance = new ShowBalance($period);
 		$args['incomes_sums'] = $balance->loadIncomeSums();
 		$args['expenses_sums'] = $balance->loadExpenseSums();
-		//$args['json_expenses_sums'] = json_encode($args['expenses_sums']);
-		json_encode($args['expenses_sums']);
+		$args['js_expenses_sums'] = Data::getExpenseSums($period);
         View::renderTemplate('Balance/index.html', $args);
     }
 	
