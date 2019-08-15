@@ -11,31 +11,46 @@ use \App\Models\Data;
  */
 class ShowBalance extends \Core\Model
 {	
+	//public $incomeSums;
+	//public $expenseSums;
+	//public $pieChartExpenseSums;
+	//public $balanceValue;
+	//public $motivationInfo;
 	/**
      * Class constructor
      * @param assoc array $period [start, end]
      * @return void
      */
     public function __construct($period) {
-        $this->period = $period;
+		$this->balanceValue = 0;
+		$this->incomeSums = $this->loadIncomeSums($period);
+		$this->expenseSums = $this->loadExpenseSums($period);
+		$this->pieChartExpenseSums = Data::getExpenseSums($period);
+		$this->motivationInfo = $this->loadMotivationText($this->balanceValue);
     }
 	
 	
 	/** Create table with all user income categories sums also empty ones
 	 * @return assoc array $allIncomeSums [name, id, sum]
 	 */
-	public function loadIncomeSums() {
+	protected function loadIncomeSums($period) {
 		$incomeCategories = Data::getUserIncomeCats();
-		$allIncomeSums = Data::getIncomeSums($this->period);
+		$allIncomeSums = Data::getIncomeSums($period);
+		foreach ($allIncomeSums as $iSums) {
+			$this->balanceValue += $iSums['sum'];
+		}
 		return $this->addZeroSums($incomeCategories, $allIncomeSums);
 	}
 	
 	/** Create table with all user expense categories sums also empty ones
 	 * @return assoc array $allExpenseSums [name, id, sum]
 	 */
-	public function loadExpenseSums() {
+	protected function loadExpenseSums($period) {
 		$expenseCategories = Data::getUserExpenseCats();
-		$allExpenseSums = Data::getExpenseSums($this->period);
+		$allExpenseSums = Data::getExpenseSums($period);
+		foreach ($allExpenseSums as $eSums) {
+			$this->balanceValue -= $eSums['sum'];
+		}
 		return $this->addZeroSums($expenseCategories, $allExpenseSums);
 	}
 	
@@ -54,5 +69,22 @@ class ShowBalance extends \Core\Model
 			unset($key);
 		}
 		return $sumsArray;
+	}
+	
+	/** Specify the motivation div
+	 * @return assoc array $text ([0] - style, [1] - first span, [2] - second span)
+	 */
+	protected function loadMotivationText($value) {
+		$text=[];
+		if ($value >= 0) {
+			$text[0]='';
+			$text[1]='Gratulacje.';
+			$text[2]='Świetnie zarządzasz finansami!';
+		} else {
+			$text[0]='color:red';
+			$text[1]='Uważaj,';
+			$text[2]='wpadasz w długi!';
+		}
+		return $text;
 	}
 }

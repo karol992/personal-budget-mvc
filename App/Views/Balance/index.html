@@ -1,9 +1,10 @@
 {% extends 'navbar.html' %}
 
 {% block title %}Balance{% endblock %}
-
-{% block css_styles %}
+{% block pre_css_styles %}
 	<link rel="stylesheet" href="/css/piechart.css">
+{% endblock %}
+{% block css_styles %}
 	<link rel="stylesheet" href="/css/balance.css">
 {% endblock %}
 
@@ -91,6 +92,32 @@
 	</div>
 	
 </section>
+
+<footer> <!-- Sum & Comment. -->
+	<div class="container"> 
+		<div class="row">
+		
+			<div class="col-md-6">
+				<div class="b_line b_sum row shadow">
+					<div class="blcell col-7">Bilans</div>
+					<div class="brcell col-5">{{ "%.2f"|format(balance_value) }}</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="b_line b_motivation shadow" style="{{ motivation_info.0 }}">
+					<div class="inB">
+						<span>{{ motivation_info.1 }}</span>
+					</div>
+					<div class="inB">
+						<span>{{ motivation_info.2 }}</span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</footer>
 	
 <!------dateModal----------------------------------------------------------------------------------->	
 <div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
