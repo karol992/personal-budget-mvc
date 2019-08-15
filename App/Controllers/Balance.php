@@ -27,7 +27,8 @@ class Balance extends Authenticated
         View::renderTemplate('Balance/index.html', $args);
     }
 	
-	/**
+	/** Processes session and post period variables
+	 * @return assoc array $outPeriod [start, end], format ("Y-m-d") 
 	 */
 	protected function getPeriodForView() {
 		if (isset($_POST['balance_start_day']) && 
@@ -59,7 +60,8 @@ class Balance extends Authenticated
 		return $outPeriod;
 	}
 	
-	/**
+	/** Save Period To Session
+	 * @param assoc array 
 	 */
 	protected function savePeriodToSession($period) {
 		$_SESSION['remembered_period']['start']=$period['start'];

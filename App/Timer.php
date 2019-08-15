@@ -17,7 +17,7 @@ class Timer {
 		return $now->format('Y-m-d');
     }
 	
-	/** 
+	/** Current Month Interval
      * @return array $period with two dates: first day and last day of current month
      */
 	public static function currentMonthPeriod() {
@@ -28,7 +28,7 @@ class Timer {
 		return $period;
 	}
 	
-	/** 
+	/** Last Month Interval
      * @return array $period with two dates: first day and last day of last month
      */
 	public static function lastMonthPeriod() {
@@ -40,7 +40,7 @@ class Timer {
 		return $period;
 	}
 	
-	/** 
+	/** Current Year Interval
      * @return array $period with two dates: first day and last day of current year
      */
 	public static function currentYearPeriod() {
@@ -52,7 +52,8 @@ class Timer {
 	}
 	
 	
-	/**
+	/** Set correct sequence of period dates
+	 * @return assoc array $outPeriod [start, end] format("Y-m-d")
 	 */
 	 public static function bindUserPeriod($start, $end) {
 		$outPeriod = [];
@@ -69,11 +70,10 @@ class Timer {
 		return $outPeriod;
 	 }
 	
-	/**
+	/** Convert period date for ribbon content 
 	 * @param array $inPeriod, with two string dates in format('Y-m-d')
      * @return array $outPeriod, with two string dates in format('d.m.Y')
      */
-	//convert period date for ribbon content
 	public static function dottedDate($inPeriod) {
 		$startDate = new \DateTime($inPeriod['start']);
 		$endDate = new \DateTime($inPeriod['end']);
@@ -83,7 +83,9 @@ class Timer {
 		return $outPeriod;
 	}
 	
-	/**
+	/** Check if date is correct
+	 * @param string $date
+	 * @return mixed string with explanation of incorrectness or false if $date is correct
 	 */
 	public static function dateValidation($date) {
 		if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) == 0) {
@@ -94,7 +96,7 @@ class Timer {
 		return false;
 	}
 	
-		/** Check if date exist
+	/** Check if date exist
 	 * Source : https://www.php.net/manual/en/function.checkdate.php#113205
 	 * @return bolean True when date is correct, false otherwise
 	 */
