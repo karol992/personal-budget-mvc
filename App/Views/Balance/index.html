@@ -46,15 +46,8 @@
 			<div class="col-md-6"> 
 					Przychody
 				{% for income in incomes_sums %}
-				<div id="income_table"><!-- Incomes categories. -->
-						<!--
-						$totalIncome=(float)0;
-						foreach($incomes as $inc) {
-							$incomeName=$inc['name'];
-							$incomeSumValue=number_format((float)$inc['iSum'], 2, '.', ''); //always show 2 decimal places
-							$totalIncome+=$incomeSumValue;
-							$incomeCategoryID=$inc['id']; //<<<<<<<<<<<<<<<<<<<<<<< BELOW: IT WAS HARD TO SOLVE/FIND
--->
+				<!-- Incomes categories. -->
+				<div id="income_table">
 							<div class="b_line row shadow">
 								<div class="blcell col-7">{{ income.name }}</div>
 								<div class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
@@ -82,15 +75,8 @@
 			<div class="col-md-6"> 
 				Wydatki:
 				{% for expense in expenses_sums %}
-				<div id="expense_table"><!-- Expenses categories. -->
-<!--
-						$totalExpense=(float)0;
-						foreach($expenses as $ex) {
-							$expenseName=$ex['name'];
-							$expenseSumValue=number_format((float)$ex['eSum'], 2, '.', ''); //always show 2 decimal places
-							$totalExpense+=$expenseSumValue;
-							$expenseCategoryID=$ex['id']; //<<<<<<<<<<<<<<<<<<<<<<< BELOW: IT WAS HARD TO SOLVE/FIND
--->
+				<!-- Expenses categories. -->
+				<div id="expense_table">
 							<div class="b_line row shadow">
 								<div class="blcell col-7">{{ expense.name }}</div>
 								<div class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
@@ -98,7 +84,6 @@
 									<span class="fa fa-file-text-o"></span>
 								</button>
 							</div>
-
 				</div>
 				{% endfor %}
 			</div>
