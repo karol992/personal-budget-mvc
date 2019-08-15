@@ -1,11 +1,186 @@
 {% extends 'navbar.html' %}
 
 {% block title %}Balance{% endblock %}
-
+{% block pre_css_styles %}
+	<link rel="stylesheet" href="/css/piechart.css">
+{% endblock %}
 {% block css_styles %}
 	<link rel="stylesheet" href="/css/balance.css">
 {% endblock %}
 
 {% block body %}
-	coming soon...
+<!-- Choose period of balance -->
+<div class="container"> 
+		<div class="dropdown">
+			 <button class="con margin20 offset-lg-10 offset-md-9 offset-sm-8 offset-7 col-lg-2 col-md-3 col-sm-4 col-5 btn btn-balance dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Zakres
+			</button>
+			<div class="dropdown-menu col-lg-2 col-md-3 col-sm-4 col-5" aria-labelledby="dropdownMenu2">
+					<form action="/balance/index" method="post">
+					<button class="dropdown-item" type="submit" name="balance_period" value="current_month">Bieżący miesiąc</button>
+					<button class="dropdown-item" type="submit" name="balance_period" value="last_month">Poprzedni miesiąc</button>
+					<button class="dropdown-item" type="submit" name="balance_period" value="current_year">Bieżący rok</button></form>
+				<button class="dropdown-item" type="button" href="#dateModal" data-toggle="modal" data-target="#dateModal">
+					Niestandardowy
+				</button>			
+			</div>
+		</div>
+</div>
+
+<!-- Display period of balance -->
+<div class="info_ribbon">
+	<div class="inB">Zakres bilansu:</div>
+	<div class="inB">
+		<div class="inB">{{ balance_period.start }}</div>
+		<div class="inB"> - </div>
+		<div class="inB">{{ balance_period.end }}</div>
+	</div>
+</div>
+	
+	
+	
+	
+	
+<!------mainBody----------------------------------------------------------------------------------->
+<section><!-- Contains incomes, expense pie chart, expenses. -->
+	<div class="container"> 
+		<div class="row">
+			<div class="col-md-6"> 
+					Przychody
+				{% for income in incomes_sums %}
+				<!-- Incomes categories. -->
+				<div id="income_table">
+							<div class="b_line row shadow">
+								<div class="blcell col-7">{{ income.name }}</div>
+								<div class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
+								<button class="btn btn_list col-1" href="#incomeListModal$incomeCategoryID" data-toggle="modal" data-target="#incomeListModal$incomeCategoryID">
+									<span class="fa fa-file-text-o"></span>
+								</button>
+							</div>
+				</div>
+				{% endfor %}
+
+				Wykres wydatków
+				<div class="b_border shadow"> <!-- Pie chart with expenses. -->
+					<div class="ratioparent">
+						<div id="chartdiv" class="ratiochild"></div>
+					</div>
+				</div>
+				<div> <!-- External pie chart legend. Internal has non-rwd display-->
+					<button class="btn b_border col-12" id="legend_btn" href="#legendModal" data-toggle="modal" data-target="#legendModal">
+						Legenda
+					</button>
+				</div>
+			</div>
+			
+			<div class="col-md-6"> 
+				Wydatki:
+				{% for expense in expenses_sums %}
+				<!-- Expenses categories. -->
+				<div id="expense_table">
+							<div class="b_line row shadow">
+								<div class="blcell col-7">{{ expense.name }}</div>
+								<div class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
+								<button class="btn btn_list col-1" href="#expenseListModal$expenseCategoryID" data-toggle="modal" data-target="#expenseListModal$expenseCategoryID">
+									<span class="fa fa-file-text-o"></span>
+								</button>
+							</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+<footer> <!-- Sum & Comment. -->
+	<div class="container"> 
+		<div class="row">
+		
+			<div class="col-md-6">
+				<div class="b_line b_sum row shadow">
+					<div class="blcell col-7">Bilans</div>
+					<div class="brcell col-5">{{ "%.2f"|format(balance_value) }}</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="b_line b_motivation shadow" style="{{ motivation_info.0 }}">
+					<div class="inB">
+						<span>{{ motivation_info.1 }}</span>
+					</div>
+					<div class="inB">
+						<span>{{ motivation_info.2 }}</span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</footer>
+	
+<!------dateModal----------------------------------------------------------------------------------->	
+<div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="/balance/index" method="post" enctype="multipart/form-data">
+				<div class="modal-header">
+					<h5 class="modal-title">Niestandardowy okres</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+							<div class="row">
+								<label class="offset-1 col-2" for="balance_start_day">Od: </label>
+								<input class="col-7" type="date" name="balance_start_day" value="">
+							</div>
+							<div class="row">
+								<label class="offset-1 col-2" for="balance_end_day">Do: </label>
+								<input class="col-7" type="date" name="balance_end_day" value="">
+							</div>
+						</div>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-balance" value="Submit">OK</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!---legendModal------------------------------------------------------------------------------------------>
+	<div class="modal fade" id="legendModal" tabindex="-1" role="dialog" aria-labelledby="legendModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form class="modal-content" action="" method="post" enctype="multipart/form-data">
+				<div class="modal-header">
+					<h5 class="modal-title" id="legendModalLabel">Legenda</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="legendwrapper">
+						<div id="legenddiv"></div>
+					</div>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+<!-------------------------------------------------------------------------------------------------------------------------->
+
+{% endblock %}
+
+{% block footer %}
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="http://www.amcharts.com/lib/4/themes/kelly.js"></script>
+<script>
+	var expenses= JSON.parse('{{ js_expenses_sums|json_encode|raw}}');
+</script>
+<script src="/js/piechart.js"></script>
 {% endblock %}

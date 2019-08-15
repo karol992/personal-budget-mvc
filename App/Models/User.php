@@ -32,7 +32,6 @@ class User extends \Core\Model
 
     /**
      * Save the user model with the current property values
-     *
      * @return boolean  True if the user was saved, false otherwise
      */
     public function save()

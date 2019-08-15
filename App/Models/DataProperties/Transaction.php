@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\DataProperties;
 
 use \App\Auth;
+use \App\Timer;
 
 /**
  * User model
@@ -47,25 +48,14 @@ abstract class Transaction extends \Core\Model
             $this->errors[] = 'Kwota musi być mniejsza niż milion.';
         }
 		//Date
-		if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) == 0) {
-            $this->errors[] = 'Poprawny format daty to YYYY-MM-DD';
-        } else if (!$this->validateDate($date, 'Y-m-d')) {
-			$this->errors[] = 'Data nie istnieje.';
+		$date_error = Timer::dateValidation($date);
+		if($date_error) {
+			$this->errors[] = $date_error;
 		}
 		//Comment
 		if (strlen($comment) > 100) {
             $this->errors[] = 'Komentarz może zawierać maksymalnie 100 znaków.';
         }
 		
-	}
-	
-	/** Check if date exist
-	 * Source : https://www.php.net/manual/en/function.checkdate.php#113205
-	 * @return bolean True when date is correct, false otherwise
-	 */
-	protected function validateDate($date, $format)
-	{
-		$d = \DateTime::createFromFormat($format, $date);
-		return $d && $d->format($format) == $date;
 	}
 }
