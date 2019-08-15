@@ -24,6 +24,8 @@ class Balance extends Authenticated
 		$balance = new ShowBalance($period);
 		$args['incomes_sums'] = $balance->loadIncomeSums();
 		$args['expenses_sums'] = $balance->loadExpenseSums();
+		//$args['json_expenses_sums'] = json_encode($args['expenses_sums']);
+		json_encode($args['expenses_sums']);
         View::renderTemplate('Balance/index.html', $args);
     }
 	

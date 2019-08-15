@@ -124,4 +124,15 @@
 		</div>
 	</div>
 </div>
+
+{% endblock %}
+
+{% block footer %}
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="http://www.amcharts.com/lib/4/themes/kelly.js"></script>
+<script>
+	var expenses= JSON.parse('{{ expenses_sums|json_encode|raw}}');
+</script>
+<script src="/js/piechart.js"></script>
 {% endblock %}
