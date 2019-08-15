@@ -58,14 +58,4 @@ abstract class Transaction extends \Core\Model
         }
 		
 	}
-	
-	/** Check if date exist
-	 * Source : https://www.php.net/manual/en/function.checkdate.php#113205
-	 * @return bolean True when date is correct, false otherwise
-	 */
-	protected function validateDate($date, $format)
-	{
-		$d = \DateTime::createFromFormat($format, $date);
-		return $d && $d->format($format) == $date;
-	}
 }

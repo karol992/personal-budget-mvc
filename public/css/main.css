@@ -83,3 +83,10 @@ h1 {
 	margin-bottom: 20px;
 	font-size: calc(8px + 3vmin);
 }
+
+.info_ribbon {
+	background-color: #BBCC99;
+	color: #FFFBD9;
+	text-shadow: -1px 0 #7F9949, 0 1px #7F9949, 1px 0 #7F9949, 0 -1px #7F9949;
+	text-align: center;
+}

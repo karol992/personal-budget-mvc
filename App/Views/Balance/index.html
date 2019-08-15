@@ -7,28 +7,103 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container"> <!-- Choose period of balance -->
+<!-- Choose period of balance -->
+<div class="container"> 
+		<div class="dropdown">
+			 <button class="con margin20 offset-lg-10 offset-md-9 offset-sm-8 offset-7 col-lg-2 col-md-3 col-sm-4 col-5 btn btn-balance dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Zakres
+			</button>
+			<div class="dropdown-menu col-lg-2 col-md-3 col-sm-4 col-5" aria-labelledby="dropdownMenu2">
+					<form action="/balance/index" method="post">
+					<button class="dropdown-item" type="submit" name="balance_period" value="current_month">Bieżący miesiąc</button>
+					<button class="dropdown-item" type="submit" name="balance_period" value="last_month">Poprzedni miesiąc</button>
+					<button class="dropdown-item" type="submit" name="balance_period" value="current_year">Bieżący rok</button></form>
+				<button class="dropdown-item" type="button" href="#dateModal" data-toggle="modal" data-target="#dateModal">
+					Niestandardowy
+				</button>			
+			</div>
+		</div>
+</div>
+
+<!-- Display period of balance -->
+<div class="info_ribbon">
+	<div class="inB">Zakres bilansu:</div>
+	<div class="inB">
+		<div class="inB">{{ balance_period.start }}</div>
+		<div class="inB"> - </div>
+		<div class="inB">{{ balance_period.end }}</div>
+	</div>
+</div>
+	
+	
+	
+	
+	
+<!------mainBody----------------------------------------------------------------------------------->
+<section><!-- Contains incomes, expense pie chart, expenses. -->
+	<div class="container"> 
+		<div class="row">
+			<div class="col-md-6"> 
+					Przychody
+				{% for income in incomes_sums %}
+				<div id="income_table"><!-- Incomes categories. -->
+						<!--
+						$totalIncome=(float)0;
+						foreach($incomes as $inc) {
+							$incomeName=$inc['name'];
+							$incomeSumValue=number_format((float)$inc['iSum'], 2, '.', ''); //always show 2 decimal places
+							$totalIncome+=$incomeSumValue;
+							$incomeCategoryID=$inc['id']; //<<<<<<<<<<<<<<<<<<<<<<< BELOW: IT WAS HARD TO SOLVE/FIND
+-->
+							<div class="b_line row shadow">
+								<div class="blcell col-7">{{ income.name }}</div>
+								<div class="brcell col-4">{{ income.iSum }}</div>
+								<button class="btn btn_list col-1" href="#incomeListModal$incomeCategoryID" data-toggle="modal" data-target="#incomeListModal$incomeCategoryID">
+									<span class="fa fa-file-text-o"></span>
+								</button>
+							</div>
+				</div>
+				{% endfor %}
+<!---
+				Wykres wydatków
+				<div class="b_border shadow"> <!-- Pie chart with expenses. --
+					<div class="ratioparent">
+						<div id="chartdiv" class="ratiochild"></div>
+					</div>
+				</div>
+				<div> <!-- External pie chart legend. Internal has non-rwd display--
+					<button class="btn b_border col-12" id="legend_btn" href="#legendModal" data-toggle="modal" data-target="#legendModal">
+						Legenda
+					</button>
+				</div>
+-->
+			</div>
 			
-			<div class="dropdown">
-				 <button class="con margin20 offset-lg-10 offset-md-9 offset-sm-8 offset-7 col-lg-2 col-md-3 col-sm-4 col-5 btn btn-balance dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Zakres
-				</button>
-				<div class="dropdown-menu col-lg-2 col-md-3 col-sm-4 col-5" aria-labelledby="dropdownMenu2">
-						<form action="/balance/index" method="post">
-						<button class="dropdown-item" type="submit" name="balance_period" value="current_month">Bieżący miesiąc</button>
-						<button class="dropdown-item" type="submit" name="balance_period" value="last_month">Poprzedni miesiąc</button>
-						<button class="dropdown-item" type="submit" name="balance_period" value="current_year">Bieżący rok</button></form>
-					<button class="dropdown-item" type="button" href="#dateModal" data-toggle="modal" data-target="#dateModal">
-						Niestandardowy
-					</button>			
+			<div class="col-md-6"> 
+				Wydatki:
+				<div id="expense_table"><!-- Expenses categories. -->
+<!--
+						$totalExpense=(float)0;
+						foreach($expenses as $ex) {
+							$expenseName=$ex['name'];
+							$expenseSumValue=number_format((float)$ex['eSum'], 2, '.', ''); //always show 2 decimal places
+							$totalExpense+=$expenseSumValue;
+							$expenseCategoryID=$ex['id']; //<<<<<<<<<<<<<<<<<<<<<<< BELOW: IT WAS HARD TO SOLVE/FIND
+-->
+							<div class="b_line row shadow">
+								<div class="blcell col-7">$expenseName</div>
+								<div class="brcell col-4">$expenseSumValue</div>
+								<button class="btn btn_list col-1" href="#expenseListModal$expenseCategoryID" data-toggle="modal" data-target="#expenseListModal$expenseCategoryID">
+									<span class="fa fa-file-text-o"></span>
+								</button>
+							</div>
+
 				</div>
 			</div>
-		
+		</div>
 	</div>
-	<div class="container">
-		balance_period: {{ balance_period.start }} {{ balance_period.end }}<br />
-		coming soon...
-	</div>
+	
+</section>
 	
 <!------dateModal----------------------------------------------------------------------------------->	
 <div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -19,7 +19,11 @@ class Balance extends Authenticated
      */
     public function indexAction() {
 		$args=[];
-		$args['balance_period']=$this->getPeriodForView();
+		$period=$this->getPeriodForView();
+		$args['balance_period']=Timer::dottedDate($period);
+		$balance = new ShowBalance($period);
+		$args['incomes_sums'] = $balance->loadIncomeSums();
+		//$args['expenses_sums'] = $balance->loadExpenseSums():: ;
         View::renderTemplate('Balance/index.html', $args);
     }
 	
