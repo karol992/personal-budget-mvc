@@ -57,7 +57,7 @@
 -->
 							<div class="b_line row shadow">
 								<div class="blcell col-7">{{ income.name }}</div>
-								<div class="brcell col-4">{{ income.iSum }}</div>
+								<div class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
 								<button class="btn btn_list col-1" href="#incomeListModal$incomeCategoryID" data-toggle="modal" data-target="#incomeListModal$incomeCategoryID">
 									<span class="fa fa-file-text-o"></span>
 								</button>
@@ -81,6 +81,7 @@
 			
 			<div class="col-md-6"> 
 				Wydatki:
+				{% for expense in expenses_sums %}
 				<div id="expense_table"><!-- Expenses categories. -->
 <!--
 						$totalExpense=(float)0;
@@ -91,14 +92,15 @@
 							$expenseCategoryID=$ex['id']; //<<<<<<<<<<<<<<<<<<<<<<< BELOW: IT WAS HARD TO SOLVE/FIND
 -->
 							<div class="b_line row shadow">
-								<div class="blcell col-7">$expenseName</div>
-								<div class="brcell col-4">$expenseSumValue</div>
+								<div class="blcell col-7">{{ expense.name }}</div>
+								<div class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
 								<button class="btn btn_list col-1" href="#expenseListModal$expenseCategoryID" data-toggle="modal" data-target="#expenseListModal$expenseCategoryID">
 									<span class="fa fa-file-text-o"></span>
 								</button>
 							</div>
 
 				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>

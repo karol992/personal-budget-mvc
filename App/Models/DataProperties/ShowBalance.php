@@ -16,30 +16,43 @@ class ShowBalance extends \Core\Model
      * @param assoc array $period [start, end]
      * @return void
      */
-    public function __construct($period)
-    {
+    public function __construct($period) {
         $this->period = $period;
     }
 	
 	
-	/** Create table with all user categories sums also empty ones
-	 * @return assoc array $allIncomesSums [name, id, iSum]
+	/** Create table with all user income categories sums also empty ones
+	 * @return assoc array $allIncomeSums [name, id, sum]
 	 */
-	public function loadIncomeSums()
-	{
+	public function loadIncomeSums() {
 		$incomeCategories = Data::getUserIncomeCats();
-		$allIncomesSums = Data::getIncomesSums($this->period);
-		
-		foreach($incomeCategories as $ic) {
-			//search the $incomes for a every incomes_category_assigned_to_users
-			$key = array_search($ic['name'], array_column($allIncomesSums, 'name'));
+		$allIncomeSums = Data::getIncomeSums($this->period);
+		return $this->addZeroSums($incomeCategories, $allIncomeSums);
+	}
+	
+	/** Create table with all user expense categories sums also empty ones
+	 * @return assoc array $allExpenseSums [name, id, sum]
+	 */
+	public function loadExpenseSums() {
+		$expenseCategories = Data::getUserExpenseCats();
+		$allExpenseSums = Data::getExpenseSums($this->period);
+		return $this->addZeroSums($expenseCategories, $allExpenseSums);
+	}
+	
+	/** Fill array with user categories not occuring in $sumsArray
+	 * @return assoc array $sumsArray [name, id, sum]
+	 */
+	protected function addZeroSums($categoriesArray, $sumsArray) {
+		foreach($categoriesArray as $ca) {
+			//search the $categoriesArray for a every category assigned to users
+			$key = array_search($ca['name'], array_column($sumsArray, 'name'));
 			//that way below, because of [0] in array; isset, isnull, empty was useless here
 			if(strlen((string)$key)==0) { 
-				$temp_array=array( 'name' => $ic['name'], 0=> $ic['name'],'id' => $ic['id'], 1=> $ic['id'], 'iSum' => 0.00,  2=> 0.00 );
-				array_push($allIncomesSums, $temp_array);
+				$temp_array=array( 'name' => $ca['name'], 0=> $ca['name'],'id' => $ca['id'], 1=> $ca['id'], 'sum' => 0.00,  2=> 0.00 );
+				array_push($sumsArray, $temp_array);
 			}
 			unset($key);
 		}
-		return $allIncomesSums;
+		return $sumsArray;
 	}
 }

@@ -23,7 +23,7 @@ class Balance extends Authenticated
 		$args['balance_period']=Timer::dottedDate($period);
 		$balance = new ShowBalance($period);
 		$args['incomes_sums'] = $balance->loadIncomeSums();
-		//$args['expenses_sums'] = $balance->loadExpenseSums():: ;
+		$args['expenses_sums'] = $balance->loadExpenseSums();
         View::renderTemplate('Balance/index.html', $args);
     }
 	
