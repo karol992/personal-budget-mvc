@@ -13,6 +13,7 @@ class ShowBalance extends \Core\Model
 {	
 	//public $incomeSums;
 	//public $expenseSums;
+	//public $paymentCategories;
 	//public $pieChartExpenseSums;
 	//public $balanceValue;
 	//public $motivationInfo;
@@ -25,6 +26,7 @@ class ShowBalance extends \Core\Model
 		$this->balanceValue = 0;
 		$this->incomeSums = $this->loadIncomeSums($period);
 		$this->expenseSums = $this->loadExpenseSums($period);
+		$this->paymentCategories = Data::getUserPaymentCats();
 		$this->pieChartExpenseSums = Data::getExpenseSums($period);
 		$this->motivationInfo = $this->loadMotivationText($this->balanceValue);
     }
@@ -48,7 +50,8 @@ class ShowBalance extends \Core\Model
 	 */
 	protected function loadExpenseSums($period) {
 		$expenseCategories = Data::getUserExpenseCats();
-		$allExpenseSums = Data::getExpenseSums($period);
+		//$allExpenseSums = Data::getExpenseSums($period);
+		$allExpenseSums = Data::createExpenseArray($period);
 		foreach ($allExpenseSums as $eSums) {
 			$this->balanceValue -= $eSums['sum'];
 		}

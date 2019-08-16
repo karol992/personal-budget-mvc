@@ -25,6 +25,7 @@ class Balance extends Authenticated
 		$balance = new ShowBalance($period);
 		$args['incomes_sums'] = $balance->incomeSums;
 		$args['expenses_sums'] = $balance->expenseSums;
+		$args['payment_cats'] = $balance->paymentCategories;
 		$args['js_expenses_sums'] = $balance->pieChartExpenseSums;
 		$args['balance_value'] = $balance->balanceValue;
 		$args['motivation_info'] = $balance->motivationInfo;
