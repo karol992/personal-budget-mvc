@@ -59,8 +59,9 @@
 							</div>
 				</div>
 				{% endfor %}
-
+				
 				Wykres wydatków
+				{% if expenses is not empty %}
 				<div class="b_border shadow"> <!-- Pie chart with expenses. -->
 					<div class="ratioparent">
 						<div id="chartdiv" class="ratiochild"></div>
@@ -71,6 +72,9 @@
 						Legenda
 					</button>
 				</div>
+				{% else %}
+				<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>
+				{% endif %}
 			</div>
 			
 			<div class="col-md-6"> 
@@ -226,7 +230,11 @@
 				</div>
 				<div class="modal-body">
 					<section>
+						{% if expense.list is not empty %}
 						<h5>Szczegółowa lista</h5>
+						{% else %}
+						<h5>Brak wpisów</h5>
+						{% endif %}
 						<div class="container">
 								{% for record in expense.list %}
 									<form action="" target="" method="post" class="modal_line row shadow" id="tempExpense$tempExpenseID">
