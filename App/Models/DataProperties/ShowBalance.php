@@ -35,7 +35,8 @@ class ShowBalance extends \Core\Model
 	 */
 	protected function loadIncomeSums($period) {
 		$incomeCategories = Data::getUserIncomeCats();
-		$allIncomeSums = Data::getIncomeSums($period);
+		//$allIncomeSums = Data::getIncomeSums($period);
+		$allIncomeSums = Data::createIncomeArray($period);
 		foreach ($allIncomeSums as $iSums) {
 			$this->balanceValue += $iSums['sum'];
 		}
@@ -63,7 +64,7 @@ class ShowBalance extends \Core\Model
 			$key = array_search($ca['name'], array_column($sumsArray, 'name'));
 			//that way below, because of [0] in array; isset, isnull, empty was useless here
 			if(strlen((string)$key)==0) { 
-				$temp_array=array( 'name' => $ca['name'], 0=> $ca['name'],'id' => $ca['id'], 1=> $ca['id'], 'sum' => 0.00,  2=> 0.00 );
+				$temp_array=array( 'name' => $ca['name'], 'id' => $ca['id'], 'sum' => 0.00, 'list' => NULL);
 				array_push($sumsArray, $temp_array);
 			}
 			unset($key);
@@ -87,4 +88,24 @@ class ShowBalance extends \Core\Model
 		}
 		return $text;
 	}
+	
+	/** 
+	 * @return 
+	 *
+	protected function addIncomeLists($allIncomeSums) {
+		foreach($allIncomeSums as $key => $value) {
+			$allIncomeSums[$key]['list']='existIncomeList';
+		}
+		return $allIncomeSums;
+	}
+	
+	/** 
+	 * @return 
+	 *
+	protected function addExpenseLists($allExpenseSums) {
+		foreach($allExpenseSums as $key => $value) {
+			$allExpenseSums[$key]['list']='existExpenseList';
+		}
+		return $allExpenseSums;
+	}*/
 }

@@ -53,7 +53,7 @@
 							<div class="b_line row shadow">
 								<div class="blcell col-7">{{ income.name }}</div>
 								<div class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
-								<button class="btn btn_list col-1" href="#incomeListModal$incomeCategoryID" data-toggle="modal" data-target="#incomeListModal$incomeCategoryID">
+								<button class="btn btn_list col-1" href="#incomeListModal{{ income.id }}" data-toggle="modal" data-target="#incomeListModal{{ income.id }}">
 									<span class="fa fa-file-text-o"></span>
 								</button>
 							</div>
@@ -81,7 +81,7 @@
 							<div class="b_line row shadow">
 								<div class="blcell col-7">{{ expense.name }}</div>
 								<div class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
-								<button class="btn btn_list col-1" href="#expenseListModal$expenseCategoryID" data-toggle="modal" data-target="#expenseListModal$expenseCategoryID">
+								<button class="btn btn_list col-1" href="#expenseListModal" data-toggle="modal" data-target="#expenseListModal">
 									<span class="fa fa-file-text-o"></span>
 								</button>
 							</div>
@@ -171,7 +171,45 @@
 			</form>
 		</div>
 	</div>
-<!-------------------------------------------------------------------------------------------------------------------------->
+
+<!------incomeListModal---------------------------------------------------------------------------->
+{% for income in incomes_sums %}	
+	<div class="modal fade" id="incomeListModal{{ income.id }}" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content" action="" method="post" enctype="multipart/form-data">
+				<div class="modal-header">
+					<div class="modal-title" id="incomeModalLabel{{ income.id }}">{{ income.name }}</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<h5>Szczegółowa lista</h5>
+						<div class="container">
+								{% for record in income.list %}
+								<form action="" target="" method="post" class="modal_line row shadow" id="tempIncome{{ income.id }}">
+									<input type="hidden" name="modalTarget" value="incomeListModal{{ income.id }}" />
+									<input type="hidden" name="incomeId" value="{{ record.id }}" />
+									<input type="number" name="amount" class="modal_cell col-6 col-sm-6 col-lg-2" step="0.01" value="{{ record.amount }}" min="0.01">
+									<input type="date" name="date" class="modal_cell col-6 col-sm-6 col-lg-3" value="{{ record.date_of_income }}">
+									<input type="text" name="comment" class="modal_cell col-8 col-sm-9 col-lg-5" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="{{ record.income_comment }}">
+									<div class="container modal_cell col-4 col-sm-3 col-lg-2" style="padding: 0;">
+										<button name="action" value="update" type="submit" class="btn_settings modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+										<button name="action" value="delete" type="submit" class="btn_settings bg_del modal_button"><i class="fa fa-trash fa-fw"></i></button>
+									</div>
+								</form>
+								{% endfor %}
+						</div>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-balance" data-dismiss="modal" value="Submit">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}	
 
 {% endblock %}
 

@@ -115,5 +115,31 @@ class Data extends \Core\Model
 		return $query->fetchAll();
 	}
 	
-
+	/**
+	 * @return 
+	 */
+	public static function createIncomeArray($period) {
+		$incomeArray = static::getIncomeSums($period);
+		foreach($incomeArray as $key => $value) {
+			$incomeArray[$key]['list'] = static::incomeModalList($period, $incomeArray[$key]['id']);
+		}
+		return $incomeArray;
+	}
+	
+	/**
+	 * @return 
+	 */
+	protected static function incomeModalList($period, $id) {
+		$sql = ("SELECT id, amount, date_of_income, income_comment
+		FROM incomes
+		WHERE income_category_assigned_to_user_id = :id
+		AND (incomes.date_of_income BETWEEN :start AND :end)");
+		$db = static::getDB();
+		$query = $db->prepare($sql);
+		$query->bindValue(':id', $id, PDO::PARAM_INT);
+		$query->bindValue(':start', $period['start'], PDO::PARAM_STR);
+		$query->bindValue(':end', $period['end'], PDO::PARAM_STR);
+		$query->execute();
+		return $query->fetchAll();
+	}
 }
