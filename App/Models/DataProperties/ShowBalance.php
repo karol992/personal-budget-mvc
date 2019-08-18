@@ -13,6 +13,8 @@ class ShowBalance extends \Core\Model
 {	
 	/**
      * Class constructor - create all own parameters:
+		* public $incomeSum;
+		* public $expenseSum;
 		* public $incomeData;
 		* public $expenseData;
 		* public $paymentCategories;
@@ -23,11 +25,13 @@ class ShowBalance extends \Core\Model
      * @return void
      */
     public function __construct($period) {
-		$this->balanceValue = 0;
+		$this->incomeSum = 0;
+		$this->expenseSum = 0;
 		$this->incomeData = $this->loadIncomeData($period);
 		$this->expenseData = $this->loadExpenseData($period);
 		$this->paymentCategories = Data::getUserPaymentCats();
 		$this->pieChartExpenseSums = $this->getExpenseSums($period);
+		$this->balanceValue = $this->incomeSum - $this->expenseSum;
 		$this->motivationInfo = $this->loadMotivationText($this->balanceValue);
     }
 	
@@ -40,7 +44,7 @@ class ShowBalance extends \Core\Model
 		$incomeCategories = Data::getUserIncomeCats();
 		$incomeData = $this->createIncomeArray($period);
 		foreach ($incomeData as $id) {
-			$this->balanceValue += $id['sum'];
+			$this->incomeSum += $id['sum'];
 		}
 		return $this->addZeroSums($incomeCategories, $incomeData);
 	}
@@ -53,7 +57,7 @@ class ShowBalance extends \Core\Model
 		$expenseCategories = Data::getUserExpenseCats();
 		$expenseData = $this->createExpenseArray($period);
 		foreach ($expenseData as $ed) {
-			$this->balanceValue -= $ed['sum'];
+			$this->expenseSum += $ed['sum'];
 		}
 		return $this->addZeroSums($expenseCategories, $expenseData);
 	}
@@ -191,5 +195,9 @@ class ShowBalance extends \Core\Model
 			$text[2]='wpadasz w długi!';
 		}
 		return $text;
+	}
+	
+	protected function checkAnyExpenseExist () {
+		;
 	}
 }

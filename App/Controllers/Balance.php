@@ -23,12 +23,13 @@ class Balance extends Authenticated
 		$period=$this->getPeriodForView();
 		$args['balance_period']=Timer::dottedDate($period);
 		$balance = new ShowBalance($period);
-		$args['incomes_sums'] = $balance->incomeData;
-		$args['expenses_sums'] = $balance->expenseData;
+		$args['incomes'] = $balance->incomeData;
+		$args['expenses'] = $balance->expenseData;
 		$args['payment_cats'] = $balance->paymentCategories;
 		$args['js_expenses_sums'] = $balance->pieChartExpenseSums;
 		$args['balance_value'] = $balance->balanceValue;
 		$args['motivation_info'] = $balance->motivationInfo;
+		$args['expense_sum'] = $balance->expenseSum;
         View::renderTemplate('Balance/index.html', $args);
     }
 	

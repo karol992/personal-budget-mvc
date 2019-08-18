@@ -47,7 +47,7 @@
 		<div class="row">
 			<div class="col-md-6"> 
 					Przychody
-				{% for income in incomes_sums %}
+				{% for income in incomes %}
 				<!-- Incomes categories. -->
 				<div id="income_table">
 							<div class="b_line row shadow">
@@ -60,8 +60,11 @@
 				</div>
 				{% endfor %}
 				
+				
 				Wykres wydatków
-				{% if expenses is not empty %}
+				{% if expense_sum == 0 %}
+				<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>
+				{% else %}
 				<div class="b_border shadow"> <!-- Pie chart with expenses. -->
 					<div class="ratioparent">
 						<div id="chartdiv" class="ratiochild"></div>
@@ -72,14 +75,12 @@
 						Legenda
 					</button>
 				</div>
-				{% else %}
-				<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>
 				{% endif %}
 			</div>
 			
 			<div class="col-md-6"> 
 				Wydatki:
-				{% for expense in expenses_sums %}
+				{% for expense in expenses %}
 				<!-- Expenses categories. -->
 				<div id="expense_table">
 							<div class="b_line row shadow">
@@ -177,7 +178,7 @@
 	</div>
 
 <!------incomeListModal---------------------------------------------------------------------------->
-{% for income in incomes_sums %}	
+{% for income in incomes %}	
 	<div class="modal fade" id="incomeListModal{{ income.id }}" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content" action="" method="post" enctype="multipart/form-data">
@@ -217,7 +218,7 @@
 
 
 <!------expenseListModal---------------------------------------------------------------------------->
-{% for expense in expenses_sums %}	
+{% for expense in expenses %}	
 
 <div class="modal fade" id="expenseListModal{{ expense.id }}" tabindex="-1" role="dialog" aria-labelledby="listModalLabel{{ expense.id }}" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
