@@ -18,7 +18,11 @@ class Login extends \Core\Controller {
      * @return void
      */
     public function newAction() {
-        View::renderTemplate('Login/new.html');
+        if (Auth::getUser()) {
+			$this->redirect('/home/index');
+		} else {
+			View::renderTemplate('Login/new.html');
+		}
     }
 	
 	/**

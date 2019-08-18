@@ -54,7 +54,7 @@ class Auth {
 	 * @return void
 	 */
 	public static function getReturnToPage() {
-		return $_SESSION['return_to'] ?? '/';
+		return $_SESSION['return_to'] ?? '/home/index';
 	}
 	
 	/** Get the current logged-in user, from the session or the remember-me cookie
