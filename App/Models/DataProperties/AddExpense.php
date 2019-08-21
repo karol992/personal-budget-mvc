@@ -28,7 +28,7 @@ class AddExpense extends Transaction
 			$queryExpense->bindValue(':date', $_POST['expense_date'], PDO::PARAM_STR);
 			$queryExpense->bindValue(':comment', $_POST['expense_note'], PDO::PARAM_STR);
 			if ($queryExpense->execute()) {
-				Flash::addMessage('Dodano '.$categoryName.' -'.$_POST['expense_value'].'');
+				Flash::addMessage('Dodano: '.$categoryName.' - '.number_format($_POST['expense_value'], 2, ',', ' ').'');
 				return true;
 			}
 		}

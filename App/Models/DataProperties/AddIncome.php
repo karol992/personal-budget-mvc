@@ -27,7 +27,7 @@ class AddIncome extends Transaction
 			$queryIncome->bindValue(':date', $_POST['income_date'], PDO::PARAM_STR);
 			$queryIncome->bindValue(':comment', $_POST['income_note'], PDO::PARAM_STR);
 			if ($queryIncome->execute()) {
-				Flash::addMessage('Dodano '.$categoryName.' +'.$_POST['income_value'].'');
+				Flash::addMessage('Dodano: '.$categoryName.' + '.number_format($_POST['income_value'], 2, ',', ' ').'');
 				return true;
 			}
 		}
