@@ -34,8 +34,8 @@ class Expense extends Authenticated
 	 */
 	public function addExpenseAction() {
 		$args = [];
-		$expense = new AddExpense();
-		if ($expense->send($_POST['expense_value'], $_POST['expense_date'], $_POST['expense_note'])) {
+		$expense = new AddExpense($_POST);
+		if ($expense->send($expense->expense_value, $expense->expense_date, $expense->expense_note)) {
 			Flash::addMessage($expense->successMessage);
 		} else {
 			Flash::addMessage('Operacja nie powiodła się.', 'warning');
