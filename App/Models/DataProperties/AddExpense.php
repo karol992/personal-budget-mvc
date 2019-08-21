@@ -3,17 +3,22 @@
 namespace App\Models\DataProperties;
 
 use PDO;
-use \App\Flash;
 use \App\Models\Data;
 
 /**
- * User model
+ * AddExpense model
  * PHP version 7.0
  */
 class AddExpense extends Transaction
-{
+{	
+	
+	
+	
 	/** Body of public function send()
-     * @return boolean True if expense is added
+	 * @_POST [expense_category, payment_category, expense_value, expense_date, expense_note]
+	 * @param $userId Integer
+     * @set $successMessage String
+     * @return boolean True if expense is added, false otherwise
      */
 	protected function transactionQuery($userId) {
 		$db = static::getDB();
@@ -28,7 +33,7 @@ class AddExpense extends Transaction
 			$queryExpense->bindValue(':date', $_POST['expense_date'], PDO::PARAM_STR);
 			$queryExpense->bindValue(':comment', $_POST['expense_note'], PDO::PARAM_STR);
 			if ($queryExpense->execute()) {
-				Flash::addMessage('Dodano: '.$categoryName.' - '.number_format($_POST['expense_value'], 2, ',', ' ').'');
+				$this->successMessage = 'Dodano: '.$categoryName.' - '.number_format($_POST['expense_value'], 2, ',', ' ').'';
 				return true;
 			}
 		}

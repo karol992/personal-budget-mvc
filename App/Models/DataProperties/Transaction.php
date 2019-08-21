@@ -6,7 +6,7 @@ use \App\Auth;
 use \App\Timer;
 
 /**
- * User model
+ * Transaction model
  * PHP version 7.0
  */
 abstract class Transaction extends \Core\Model
@@ -17,6 +17,10 @@ abstract class Transaction extends \Core\Model
      */
     public $errors = [];
 	
+	/**
+     * Add transaction to database 
+     * @return boolean
+     */
 	public function send($value, $date, $note) {
 		$this->validate($value, $date, $note);
 		if (empty($this->errors)) {
@@ -29,14 +33,13 @@ abstract class Transaction extends \Core\Model
 	}
 	
 	/** Body of public function send()
-     * @return boolean
      */
 	protected function transactionQuery($userId) {
-		return false;
 	}
 	
 	/**
      * Validate current property values, adding valiation error messages to the errors array property
+     * @set $errors[] Strings
      * @return void
      */
 	protected function validate($value, $date, $comment) {
@@ -56,6 +59,5 @@ abstract class Transaction extends \Core\Model
 		if (strlen($comment) > 100) {
             $this->errors[] = 'Komentarz może zawierać maksymalnie 100 znaków.';
         }
-		
 	}
 }

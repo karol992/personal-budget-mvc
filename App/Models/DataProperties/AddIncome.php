@@ -3,16 +3,18 @@
 namespace App\Models\DataProperties;
 
 use PDO;
-use \App\Flash;
 use \App\Models\Data;
 
 /**
- * User model
+ * AddIncome model
  * PHP version 7.0
  */
 class AddIncome extends Transaction
 {
 	/** Body of public function send()
+     * @_POST [income_category, income_value, income_date, income_note]
+	 * @param $userId Integer
+	 * @set $successMessage String
      * @return boolean True if income is added
      */
 	protected function transactionQuery($userId) {
@@ -27,7 +29,7 @@ class AddIncome extends Transaction
 			$queryIncome->bindValue(':date', $_POST['income_date'], PDO::PARAM_STR);
 			$queryIncome->bindValue(':comment', $_POST['income_note'], PDO::PARAM_STR);
 			if ($queryIncome->execute()) {
-				Flash::addMessage('Dodano: '.$categoryName.' + '.number_format($_POST['income_value'], 2, ',', ' ').'');
+				$this->successMessage = 'Dodano: '.$categoryName.' + '.number_format($_POST['income_value'], 2, ',', ' ').'';
 				return true;
 			}
 		}
