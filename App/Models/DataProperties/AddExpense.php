@@ -15,7 +15,7 @@ class AddExpense extends Transaction
 	
 	
 	/** Body of public function send()
-	 * @_POST [expense_category, payment_category, expense_value, expense_date, expense_note]
+	 * @param(this) $expense_category, $payment_category, $expense_value, $expense_date, $expense_note
 	 * @param $userId Integer
      * @set $successMessage String
      * @return boolean True if expense is added, false otherwise

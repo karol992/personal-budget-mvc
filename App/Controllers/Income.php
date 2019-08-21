@@ -28,7 +28,7 @@ class Income extends Authenticated
     }
 	
 	/** Add an income to the database
-	 * @_POST [income_value, income_date, income_note]
+	 * @_POST [income_category, income_value, income_date, income_note]
 	 * @return void
 	 */
 	public function addIncomeAction() {

@@ -12,7 +12,7 @@ use \App\Models\Data;
 class AddIncome extends Transaction
 {
 	/** Body of public function send()
-     * @_POST [income_category, income_value, income_date, income_note]
+     * @param(this) $income_category, $income_value, $income_date, $income_note
 	 * @param $userId Integer
 	 * @set $successMessage String
      * @return boolean True if income is added

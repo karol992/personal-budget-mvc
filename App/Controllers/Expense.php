@@ -29,7 +29,7 @@ class Expense extends Authenticated
     }
 
 	/** Add an expense to the database
-	 * @_POST [expense_value, expense_date, expense_note]
+	 * @_POST [expense_category, payment_category, expense_value, expense_date, expense_note]
 	 * @return void
 	 */
 	public function addExpenseAction() {
