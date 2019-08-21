@@ -6,6 +6,7 @@ use \Core\View;
 use \App\Models\DataProperties\ShowBalance;
 use \App\Timer;
 use \App\Models\Data;
+use \App\Flash;
 
 /**
  * Balance controller
@@ -74,4 +75,20 @@ class Balance extends Authenticated
 		$_SESSION['remembered_period']['end']=$period['end'];
 	}
 	
+	public function editIncomeAction() {
+		$action = $_POST['action'];
+		$incomeId = $_POST['incomeId'];
+		if ($action == 'delete') {
+			Flash::addMessage("IncomeId: $incomeId, DELETE");
+		} else if ($action == 'update') {
+			Flash::addMessage("IncomeId: $incomeId, UPDATE");
+		}
+		//Flash::addMessage("$action");
+		/*$incomeId = $_POST['incomeId'];
+		$amount = $_POST['amount'];
+		$amount = $_POST['date'];
+		$amount = $_POST['comment'];
+		$amount = $_POST['action'];*/
+		
+	}
 }

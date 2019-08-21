@@ -18,6 +18,18 @@ abstract class Transaction extends \Core\Model
     public $errors = [];
 	
 	/**
+     * Class constructor
+     * @param array $data  Initial property values
+     * @return void
+     */
+    public function __construct($data = [])
+    {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        };
+    }
+	
+	/**
      * Add transaction to database 
      * @return boolean
      */

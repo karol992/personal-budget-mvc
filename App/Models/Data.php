@@ -4,10 +4,9 @@ namespace App\Models;
 
 use PDO;
 use \App\Auth;
-use \App\Flash;
 
 /**
- * User model
+ * Data model
  * PHP version 7.0
  */
 class Data extends \Core\Model
