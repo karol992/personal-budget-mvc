@@ -197,9 +197,9 @@
 								<iframe style="display:none;" name="incomeFrame{{ record.id }}"></iframe>
 								<form action="/balance/edit-income" target="incomeFrame{{ record.id }}" method="post" class="modal_line row shadow" id="tempIncome{{ record.id }}">
 									<!--<input type="hidden" name="modalTarget" value="incomeListModal{{ income.id }}" />-->
-									<input type="hidden" name="incomeId" value="{{ record.id }}" />
+									<input type="hidden" name="income_id" value="{{ record.id }}" />
 									<input type="number" name="amount" class="modal_cell col-6 col-sm-6 col-lg-2" step="0.01" value="{{ record.amount }}" min="0.01">
-									<input type="date" name="date" class="modal_cell col-6 col-sm-6 col-lg-3" value="{{ record.date }}">
+									<input type="date" name="income_date" class="modal_cell col-6 col-sm-6 col-lg-3" value="{{ record.date }}">
 									<input type="text" name="comment" class="modal_cell col-8 col-sm-9 col-lg-5" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="{{ record.comment }}">
 									<div class="container modal_cell col-4 col-sm-3 col-lg-2" style="padding: 0;">
 										<button name="action" value="update" type="submit" class="btn_settings modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
@@ -211,7 +211,7 @@
 					</section>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-balance" data-dismiss="modal" value="Submit">OK</button>
+					<button onclick="window.location.reload();" type="submit" class="btn btn-balance" data-dismiss="modal" value="Submit">Odśwież zestawienie</button>
 				</div>
 			</div>
 		</div>

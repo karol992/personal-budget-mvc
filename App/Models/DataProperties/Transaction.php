@@ -27,6 +27,7 @@ abstract class Transaction extends \Core\Model
         foreach ($data as $key => $value) {
             $this->$key = $value;
         };
+		$this->userId = Auth::getUserId();
     }
 	
 	/**
@@ -36,9 +37,8 @@ abstract class Transaction extends \Core\Model
 	public function send($value, $date, $note) {
 		$this->validate($value, $date, $note);
 		if (empty($this->errors)) {
-			$userId = Auth::getUserId();
-			if($userId) {
-				return $this->transactionQuery($userId);
+			if($this->userId) {
+				return $this->transactionQuery();
 			}
 		}
 		return false;
@@ -46,7 +46,7 @@ abstract class Transaction extends \Core\Model
 	
 	/** Body of public function send()
      */
-	protected function transactionQuery($userId) {
+	protected function transactionQuery() {
 	}
 	
 	/**

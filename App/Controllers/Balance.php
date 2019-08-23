@@ -5,8 +5,9 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\DataProperties\ShowBalance;
 use \App\Timer;
-use \App\Models\Data;
 use \App\Flash;
+use \App\Models\DataProperties\UpdateIncome;
+use \App\Models\DataProperties\DataCleaner;
 
 /**
  * Balance controller
@@ -75,20 +76,35 @@ class Balance extends Authenticated
 		$_SESSION['remembered_period']['end']=$period['end'];
 	}
 	
+	/** Edit income record
+	 * @return void
+	 */
 	public function editIncomeAction() {
 		$action = $_POST['action'];
-		$incomeId = $_POST['incomeId'];
 		if ($action == 'delete') {
-			Flash::addMessage("IncomeId: $incomeId, DELETE");
+			$this->deleteIncome();
 		} else if ($action == 'update') {
-			Flash::addMessage("IncomeId: $incomeId, UPDATE");
+			$this->updateIncome();
 		}
-		//Flash::addMessage("$action");
-		/*$incomeId = $_POST['incomeId'];
-		$amount = $_POST['amount'];
-		$amount = $_POST['date'];
-		$amount = $_POST['comment'];
-		$amount = $_POST['action'];*/
-		
 	}
+	
+	/** Update income record
+	 * @return void
+	 */
+	public function updateIncome() {
+		$update = new UpdateIncome($_POST);
+		if (!$update->send($update->amount, $update->income_date, $update->comment)) {
+			Flash::addMessage("Income update failed.",'warning');
+		}
+	}
+	
+	/** Remove income record
+	 * @return void
+	 */
+	public function deleteIncome() {
+		if (!DataCleaner::incomeRecord($_POST['income_id'])) {
+			Flash::addMessage("Income delete failed.",'warning');
+		}
+	}
+	
 }
