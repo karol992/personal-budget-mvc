@@ -7,6 +7,7 @@ use \App\Models\DataProperties\ShowBalance;
 use \App\Timer;
 use \App\Flash;
 use \App\Models\DataProperties\UpdateIncome;
+use \App\Models\DataProperties\UpdateExpense;
 use \App\Models\DataProperties\DataCleaner;
 
 /**
@@ -88,6 +89,18 @@ class Balance extends Authenticated
 		}
 	}
 	
+	/** Edit expense record
+	 * @return void
+	 */
+	public function editExpenseAction() {
+		$action = $_POST['action'];
+		if ($action == 'delete') {
+			$this->deleteExpense();
+		} else if ($action == 'update') {
+			$this->updateExpense();
+		}
+	}
+	
 	/** Update income record
 	 * @return void
 	 */
@@ -107,4 +120,23 @@ class Balance extends Authenticated
 		}
 	}
 	
+	/** Update expense record
+	 * @return void
+	 */
+	public function updateExpense() {
+		$update = new UpdateExpense($_POST);
+						Flash::addMessage("asdgsfhdgjf",'warning');
+		if (!$update->send($update->amount, $update->expense_date, $update->comment)) {
+			Flash::addMessage("Expense update failed.",'warning');
+		}
+	}
+	
+	/** Remove expense record
+	 * @return void
+	 */
+	public function deleteExpense() {
+		if (!DataCleaner::expenseRecord($_POST['expense_id'])) {
+			Flash::addMessage("Expense delete failed.",'warning');
+		}
+	}
 }
