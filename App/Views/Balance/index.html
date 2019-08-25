@@ -47,9 +47,13 @@
 				<div class="col-md-6">
 				
 					<!-- Incomes categories. -->
-					Przychody
-					{% for income in incomes %}
+					
 						<div id="income_table">
+						Przychody
+						{% if incomes is empty %}
+							<div class="b_line b_motivation shadow">Brak przychodów w wybranym okresie</div>
+						{% endif %}
+						{% for income in incomes %}
 									<div class="b_line row shadow">
 										<div class="blcell col-7">{{ income.name }}</div>
 										<div class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
@@ -57,13 +61,18 @@
 											<span class="fa fa-file-text-o"></span>
 										</button>
 									</div>
+						{% endfor %}
 						</div>
-					{% endfor %}
+					
 					
 					<!-- Expenses categories. -->
-					Wydatki:
-					{% for expense in expenses %}
+					
+					
 						<div id="expense_table">
+						{% if expenses is not empty %}
+						Wydatki:
+						{% endif %}
+						{% for expense in expenses %}
 									<div class="b_line row shadow">
 										<div class="blcell col-7">{{ expense.name }}</div>
 										<div class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
@@ -71,17 +80,19 @@
 											<span class="fa fa-file-text-o"></span>
 										</button>
 									</div>
+						{% endfor %}
 						</div>
-					{% endfor %}
 					
 				</div>
 				
 				<div class="col-md-6"> 
-				
+					
+					{% if expenses is empty %}
+					Wydatki
+							<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>
+					{% endif %}
+					{% if expense_sum != 0 %}
 					Wykres wydatków
-					{% if expense_sum == 0 %}
-					<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>
-					{% else %}
 					<div class="b_border shadow"> <!-- Pie chart with expenses. -->
 						<div class="ratioparent">
 							<div id="chartdiv" class="ratiochild"></div>
@@ -93,6 +104,7 @@
 						</button>
 					</div>
 					{% endif %}
+					{% if  (incomes|length + expenses|length != 0) %}
 					<!--  Sum & Comment. -->
 						<div class="b_line b_sum row shadow">
 							<div class="blcell col-7">Bilans</div>
@@ -106,38 +118,17 @@
 								<span>{{ motivation_info.2 }}</span>
 							</div>
 						</div>
-						
+					{% endif %}
+					
 				</div>
 			</div>
 		</div>
 	</section>
-
+	
 	<footer>
-		<div class="container"> 
-			<div class="row">
-			
-				<div class="col-md-6">
-					<div class="b_line b_sum row shadow">
-						<div class="blcell col-7">Bilans</div>
-						<div class="brcell col-5">{{ "%.2f"|format(balance_value) }}</div>
-					</div>
-				</div>
-				
-				<div class="col-md-6">
-					<div class="b_line b_motivation shadow" style="{{ motivation_info.0 }}">
-						<div class="inB">
-							<span>{{ motivation_info.1 }}</span>
-						</div>
-						<div class="inB">
-							<span>{{ motivation_info.2 }}</span>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
+		<div style="padding: 30px;"></div>
 	</footer>
-
+	
 	<!------dateModal----------------------------------------------------------------------------------->	
 	<div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
