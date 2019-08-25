@@ -202,7 +202,7 @@
 									<input type="date" name="income_date" class="modal_cell col-6 col-sm-6 col-lg-3" value="{{ record.date }}">
 									<input type="text" name="comment" class="modal_cell col-8 col-sm-9 col-lg-5" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="{{ record.comment }}">
 									<div class="container modal_cell col-4 col-sm-3 col-lg-2" style="padding: 0;">
-										<button name="action" value="update" type="submit" class="btn_settings modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+										<button onclick="this.setAttribute('class', 'button_checked')" name="action" value="update" type="submit" class="btn_settings modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
 										<button onclick="this.parentNode.parentNode.style.display = 'none'" name="action" value="delete" type="submit" class="btn_settings bg_del modal_button"><i class="fa fa-trash fa-fw"></i></button>
 									</div>
 								</form>
@@ -257,7 +257,7 @@
 											</select>
 											<input type="text" name="comment" class="modal_cell col-8 col-lg-3" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="{{ record.comment }}" />
 											<div class="container modal_cell col-4 col-lg-2" style="padding: 0;">
-												<button name="action" value="update" type="submit" class="btn_settings modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+												<button onclick="this.setAttribute('class', 'button_checked')" name="action" value="update" type="submit" class="btn_settings modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
 												<button onclick="this.parentNode.parentNode.style.display = 'none'" name="action" value="delete" type="submit" class="btn_settings bg_del modal_button"><i class="fa fa-trash fa-fw"></i></button>
 											</div>
 									</form>

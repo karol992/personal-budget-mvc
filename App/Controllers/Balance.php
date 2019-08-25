@@ -125,7 +125,6 @@ class Balance extends Authenticated
 	 */
 	public function updateExpense() {
 		$update = new UpdateExpense($_POST);
-						Flash::addMessage("asdgsfhdgjf",'warning');
 		if (!$update->send($update->amount, $update->expense_date, $update->comment)) {
 			Flash::addMessage("Expense update failed.",'warning');
 		}

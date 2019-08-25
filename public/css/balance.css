@@ -1,3 +1,12 @@
+:root {
+  --color-bg: #FFFBD9;
+  --color-dark: #7F9949;
+  --color-medium: #BBCC99;
+  --border-dark: 2px solid var(--color-dark);
+  --color-warning-text: #6e1a22;
+  --color-warning-bg: #dc5565;
+}
+
 .con {
 	border-radius: 10px;
 	border: 2px solid #7F9949;
@@ -130,4 +139,18 @@ input[type=date]::-webkit-calendar-picker-indicator {
 .bg_del:hover {
 	background-color: #dc3545;
 	border: 2px solid #6e1a22;
+}
+
+.button_checked {
+	background-color: #B399CC;
+	border-radius: 5px;
+	border: 2px solid #9379AC;
+	float: left; 
+	width: 50%; 
+	height:100%;
+	/*border-radius: 10px;
+	font-size: 16px;
+	margin: 5px;
+	min-width: 145px;
+	text-align: center;*/
 }
