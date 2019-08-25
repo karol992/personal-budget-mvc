@@ -29,7 +29,7 @@
 	
 	
 {% for message in flash_messages %}
-		<div class="ribbon_info">
+		<div class="ribbon_info alert-{{ message.type }}">
 			{{ message.body }}
 		</div>
 	{% endfor %}

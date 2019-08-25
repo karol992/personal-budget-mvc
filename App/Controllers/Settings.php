@@ -65,7 +65,13 @@ class Settings extends Authenticated
 		}
     }
 	
-
+	/**
+     * Edit income category
+     * @return void
+     */
+    /*public function addIncomeCategoryAction() {
+        Data::addIncomeCategory($_POST['name']);
+    }*/
 
 
 }
