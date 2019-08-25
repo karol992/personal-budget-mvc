@@ -20,7 +20,9 @@ class Settings extends Authenticated
      */
     public function indexAction() {
         View::renderTemplate('Settings/index.html', [
-			'incomeCategories' => Data::getUserIncomeCats()
+			'incomeCategories' => Data::getUserIncomeCats(),
+			'expenseCategories' => Data::getUserExpenseCats(),
+			'paymentCategories' => Data::getUserPaymentCats()
 		]);
     }
 
