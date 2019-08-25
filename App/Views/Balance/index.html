@@ -14,7 +14,7 @@
 	<!-- Choose period of balance -->
 	<div class="container"> 
 			<div class="dropdown">
-				 <button class="con margin20 offset-lg-10 offset-md-9 offset-sm-8 offset-7 col-lg-2 col-md-3 col-sm-4 col-5 btn btn-balance dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				 <button class="con margin20 offset-lg-10 offset-md-9 offset-sm-8 offset-7 col-lg-2 col-md-3 col-sm-4 col-5 btn btn_confirm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Zakres
 				</button>
 				<div class="dropdown-menu col-lg-2 col-md-3 col-sm-4 col-5" aria-labelledby="dropdownMenu2">
@@ -155,7 +155,7 @@
 						</section>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-balance" value="Submit">OK</button>
+						<button type="submit" class="btn btn_confirm" value="Submit">OK</button>
 					</div>
 				</form>
 			</div>
@@ -206,8 +206,8 @@
 										<input type="date" name="income_date" class="modal_cell col-6 col-sm-6 col-lg-3" value="{{ record.date }}">
 										<input type="text" name="comment" class="modal_cell col-8 col-sm-9 col-lg-5" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="{{ record.comment }}">
 										<div class="container modal_cell col-4 col-sm-3 col-lg-2" style="padding: 0;">
-											<button name="action" value="update" type="submit" class="btn_settings modal_button edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
-											<button name="action" value="delete" type="submit" class="btn_settings bg_del modal_button delete_record_button"><i class="fa fa-trash fa-fw"></i></button>
+											<button name="action" value="update" type="submit" class="btn_record modal_button edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+											<button name="action" value="delete" type="submit" class="btn_record bg_del modal_button delete_record_button"><i class="fa fa-trash fa-fw"></i></button>
 										</div>
 									</form>
 								{% endfor %}
@@ -215,7 +215,7 @@
 						</section>
 					</div>
 					<div class="modal-footer">
-						<button onclick="window.location.reload();" type="submit" class="btn btn-balance" data-dismiss="modal" value="Submit">Odśwież zestawienie</button>
+						<button onclick="window.location.reload();" type="submit" class="btn btn_confirm" data-dismiss="modal" value="Submit">Odśwież zestawienie</button>
 					</div>
 				</div>
 			</div>
@@ -257,8 +257,8 @@
 										</select>
 										<input type="text" name="comment" class="modal_cell col-8 col-lg-3" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="{{ record.comment }}" />
 										<div class="container modal_cell col-4 col-lg-2" style="padding: 0;">
-											<button name="action" value="update" type="submit" class="btn_settings modal_button edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
-											<button name="action" value="delete" type="submit" class="btn_settings bg_del modal_button delete_record_button"><i class="fa fa-trash fa-fw"></i></button>
+											<button name="action" value="update" type="submit" class="btn_record modal_button edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+											<button name="action" value="delete" type="submit" class="btn_record bg_del modal_button delete_record_button"><i class="fa fa-trash fa-fw"></i></button>
 										</div>
 								</form>
 							{% endfor %}
@@ -266,7 +266,7 @@
 					</section>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-balance reload" data-dismiss="modal" value="Submit">Odśwież zestawienie</button>
+					<button type="submit" class="btn btn_confirm reload" data-dismiss="modal" value="Submit">Odśwież zestawienie</button>
 				</div>
 			</div>
 		</div>
@@ -283,5 +283,5 @@
 	var expenses= JSON.parse('{{ js_expenses_sums|json_encode|raw}}');
 </script>
 <script src="/js/piechart.js"></script>
-<script src="/js/balance.js"></script>
+<script src="/js/modal.js"></script>
 {% endblock %}

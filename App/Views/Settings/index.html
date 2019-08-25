@@ -3,11 +3,12 @@
 {% block title %}Settings{% endblock %}
 
 {% block css_styles %}
+	
 	<link rel="stylesheet" href="/css/settings.css">
 {% endblock %}
 
 {% block body %}
-<!-- Incomes Editor -->
+		<!-- Incomes Editor -->
 		<div class="settings_group offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-3 col-lg-4 col-md-5 col-sm-8 col-10">
 			<h4>
 				Przychody
@@ -16,7 +17,9 @@
 				<a class="nav-link" href="#"><i class="fa fa-plus fa-fw"></i>Dodaj kategorię</a>
 			</button>
 			<button class="btn_settings shadow">
-				<a class="nav-link" href="#"><i class="fa fa-pencil fa-fw"></i> Edytuj kategorię</a>
+				<a class="nav-link" href="#incomeListModal" data-toggle="modal" data-target="#incomeListModal">
+					<i class="fa fa-pencil fa-fw"></i> Edytuj kategorię
+				</a>
 			</button>
 			<button class="btn_settings bg_del shadow">
 				<a class="nav-link" href="#"><i class="fa fa-trash fa-fw"></i> Usuń kategorię</a>
@@ -75,4 +78,62 @@
 		</div>
 		
 		<br />
+		
+		<!---legendModal------------------------------------------------------------------------------------------>
+	<div class="modal fade" id="legendModal" tabindex="-1" role="dialog" aria-labelledby="legendModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form class="modal-content" action="" method="post" enctype="multipart/form-data">
+				<div class="modal-header">
+					<h5 class="modal-title" id="legendModalLabel">Legenda</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="legendwrapper">
+						<div id="legenddiv"></div>
+					</div>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+	
+<!-- Edit income category list modal -->
+	<div class="modal fade" id="incomeListModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content" action="" method="post" enctype="multipart/form-data">
+					<div class="modal-header">
+						<div class="modal-title" id="incomeModalLabel">Edytuj kategorię</div>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<section>
+							<div class="container">
+								{% for category in incomeCategories %}
+									<iframe style="display:none;" name="incomeFrame{{ category.id }}"></iframe>
+									<form action="/settings/edit-income-category" target="incomeFrame{{ category.id }}" method="post" class="modal_line row shadow" id="incomeCategory{{ category.id }}">
+										<input type="hidden" name="id" value="{{ category.id }}" />
+										<input type="text" name="name" class="modal_cell col-8 col-sm-9" value="{{ category.name }}">
+										<div class="container modal_cell col-4 col-sm-3" style="padding: 0;">
+											<button name="action" value="update" type="submit" class="btn_record modal_button edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+											<button name="action" value="delete" type="submit" class="btn_record bg_record_del modal_button delete_record_button"><i class="fa fa-trash fa-fw"></i></button>
+										</div>
+									</form>
+								{% endfor %}
+							</div>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="window.location.reload();" type="submit" class="btn btn_confirm" data-dismiss="modal" value="Submit">Odśwież listę</button>
+					</div>
+				</div>
+			</div>
+		</div>
+{% endblock %}
+
+{% block footer %}
+<script src="/js/modal.js"></script>
 {% endblock %}

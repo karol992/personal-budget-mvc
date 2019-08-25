@@ -36,6 +36,50 @@
 	padding: 0px;
 	border-radius: 0px;
 }
-.btn_title {
-	;
+
+
+.modal_line {
+	font-size: 16px;
+	color: black;
+	margin-bottom: 10px;
+	border: 1px solid #7F9949;
+	border-left: none;
+	border-top: none;
+}
+.modal_cell {
+	padding: 5px;
+	border: 1px solid #7F9949;
+	border-right: none;
+	border-bottom: none;
+	background-color: white;
+}
+.modal_button {
+	float: left; 
+	width: 50%; 
+	height:100%;
+}
+.btn_record {
+	border: 2px solid #7F9949;
+	border-radius: 5px;
+	background-color: #BBCC99;
+}
+.btn_record:hover {
+	background-color: #99AACC;
+	border: 2px solid #6973FA;
+}
+.bg_record_del:hover {
+	background-color: #dc3545;
+	border: 2px solid #6e1a22;
+}
+.btn_confirm {
+	background-color: #7F9949;
+	color: #FFFBD9;
+}
+.button_checked {
+	background-color: #B399CC;
+	border-radius: 5px;
+	border: 2px solid #9379AC;
+	float: left; 
+	width: 50%; 
+	height:100%;
 }
