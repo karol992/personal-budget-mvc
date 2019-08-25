@@ -5,6 +5,7 @@ namespace App\Models\DataProperties;
 use PDO;
 use \App\Models\Data;
 use \App\Flash;
+use \App\Auth;
 
 /**
  * UpdateIncome model
@@ -52,8 +53,8 @@ class EditCategory extends \Core\Model
 			}
 		}
 		
-		if (preg_match('/^[a-z]+$/i', $this->name) == 0) {
-            $this->errors[] = 'Błąd: nazwa może zawierać tylko litery.';
+		if (preg_match('/^[a-z ]+$/i', $this->name) == 0) {
+            $this->errors[] = 'Błąd: nazwa może zawierać tylko litery i spacje.';
         }
 		
 		foreach ($this->errors as $error) {
@@ -92,23 +93,24 @@ class EditCategory extends \Core\Model
 	
 	/** Add new category
 	*/
-	/*protected function addCategory($table, $name) {
-		//$table = "expenses_category_assigned_to_users";
-		//$table = "payment_methods_assigned_to_users";
+	protected function addCategory() {
 		$this->validateName();
-		$sql = "INSERT INTO ".$table." (id, user_id, name) VALUES (NULL, :user_id, :name)";
-		$db = static::getDB();
-		$query = $db->prepare($sql);
-		$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
-		$query->bindValue(':name', $name, PDO::PARAM_STR);
-		return $query->execute();
+		if(empty($this->errors)) {
+			
+			$sql = "INSERT INTO ".$this->table." (id, user_id, name) VALUES (NULL, :user_id, :name)";
+			$db = static::getDB();
+			$query = $db->prepare($sql);
+			$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
+			$query->bindValue(':name', $this->name, PDO::PARAM_STR);
+			$query->execute();
+			return true;
+		}
+		return false;
 	}
 	
-	public function addIncomeCategory($name) {
-		$table = "incomes_category_assigned_to_users";
-		
-		
-		return $this->addCategory($table, $name);
-	}*/
+	public function addIncomeCategory() {
+		$this->table = "incomes_category_assigned_to_users";
+		return $this->addCategory();
+	}
 
 }
