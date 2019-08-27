@@ -31,12 +31,9 @@ class Settings extends Authenticated
      * @return void
      */
     public function editIncomeCategoryAction() {
-        $edit = new EditCategory($_POST);
-		if ($edit->action == 'delete') {
-			//$edit->deleteIncomeCategory();
-		} else if ($edit->action == 'update') {
-			$edit->updateIncomeCategory();
-		}
+		$edit = new EditCategory($_POST);
+		$edit->updateIncomeCategories();
+		$this->redirect('/settings/index');
     }
 	
 	/**
@@ -45,11 +42,8 @@ class Settings extends Authenticated
      */
     public function editExpenseCategoryAction() {
         $edit = new EditCategory($_POST);
-		if ($edit->action == 'delete') {
-			//$edit->deleteExpenseCategory();
-		} else if ($edit->action == 'update') {
-			$edit->updateExpenseCategory();
-		}
+		$edit->updateExpenseCategories();
+		$this->redirect('/settings/index');
     }
 	
 	/**
@@ -58,11 +52,8 @@ class Settings extends Authenticated
      */
     public function editPaymentCategoryAction() {
         $edit = new EditCategory($_POST);
-		if ($edit->action == 'delete') {
-			//$edit->deletePaymentCategory();
-		} else if ($edit->action == 'update') {
-			$edit->updatePaymentCategory();
-		}
+		$edit->updatePaymentCategories();
+		$this->redirect('/settings/index');
     }
 	
 	/**
@@ -72,6 +63,7 @@ class Settings extends Authenticated
     public function addIncomeCategoryAction() {
         $edit = new EditCategory($_POST);
 		$edit->addIncomeCategory();
+		$this->redirect('/settings/index');
     }
 
 

@@ -55,8 +55,11 @@
 }
 .modal_button {
 	float: left; 
-	width: 50%; 
+	width: 100%; 
 	height:100%;
+}
+.half {
+	width: 50%; 
 }
 .btn_record {
 	border: 2px solid #7F9949;
@@ -80,6 +83,5 @@
 	border-radius: 5px;
 	border: 2px solid #9379AC;
 	float: left; 
-	width: 50%; 
 	height:100%;
 }
