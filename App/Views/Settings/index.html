@@ -115,14 +115,12 @@
 				<div class="modal-body">
 					<section>
 						<div class="container">
-								<iframe style="display:none;" name="addIncomeFrame"></iframe>
 								<form action="/settings/add-income-category" method="post" class="modal_line row shadow" id="addIncomeCategory">
 									<input type="text" name="name" class="modal_cell col-8 col-sm-9">
 									<div class="container modal_cell col-4 col-sm-3" style="padding: 0;">
 										<button  type="submit" class="btn_record modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
-										<!--<button type="button" data-dismiss="modal" aria-label="Close" class="btn_record bg_record_del modal_button half"><i class="fa fa-close fa-fw"></i></button>-->
+									</div>
 								</form>
-								</div>
 						</div>
 					</section>
 				</div>
@@ -165,7 +163,7 @@
 <!-- Add expense category modal -->
 	<div class="modal fade" id="addExpenseModal" tabindex="-1" role="dialog" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
-			<div class="modal-content" action="" method="post" enctype="multipart/form-data">
+			<div class="modal-content">
 				<div class="modal-header">
 					<div class="modal-title" id="addExpenseModalLabel">Dodaj kategorię wydatków</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -175,12 +173,10 @@
 				<div class="modal-body">
 					<section>
 						<div class="container">
-								<iframe style="display:none;" name="addExpenseFrame"></iframe>
-								<form action="/settings/add-expense-category" target="addExpenseFrame" method="post" class="modal_line row shadow" id="addExpenseCategory">
+								<form action="/settings/add-expense-category" method="post" class="modal_line row shadow" id="addExpenseCategory">
 									<input type="text" name="name" class="modal_cell col-8 col-sm-9">
 									<div class="container modal_cell col-4 col-sm-3" style="padding: 0;">
-										<button  type="submit" class="btn_record modal_button half edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
-										<button type="button" data-dismiss="modal" aria-label="Close" class="btn_record bg_record_del modal_button half"><i class="fa fa-close fa-fw"></i></button>
+										<button  type="submit" class="btn_record modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
 									</div>
 								</form>
 						</div>
@@ -225,7 +221,7 @@
 <!-- Add payment category modal -->
 	<div class="modal fade" id="addPaymentModal" tabindex="-1" role="dialog" aria-labelledby="addPaymentModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
-			<div class="modal-content" action="" method="post" enctype="multipart/form-data">
+			<div class="modal-content">
 				<div class="modal-header">
 					<div class="modal-title" id="addPaymentModalLabel">Dodaj sposób płatności</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -235,12 +231,10 @@
 				<div class="modal-body">
 					<section>
 						<div class="container">
-								<iframe style="display:none;" name="addPaymentFrame"></iframe>
-								<form action="/settings/add-payment-category" target="addPaymentFrame" method="post" class="modal_line row shadow" id="addPaymentCategory">
+								<form action="/settings/add-payment-category" method="post" class="modal_line row shadow" id="addPaymentCategory">
 									<input type="text" name="name" class="modal_cell col-8 col-sm-9">
 									<div class="container modal_cell col-4 col-sm-3" style="padding: 0;">
-										<button  type="submit" class="btn_record modal_button half edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
-										<button type="button" data-dismiss="modal" aria-label="Close" class="btn_record bg_record_del modal_button half"><i class="fa fa-close fa-fw"></i></button>
+										<button  type="submit" class="btn_record modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
 									</div>
 								</form>
 						</div>

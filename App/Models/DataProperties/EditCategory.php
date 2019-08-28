@@ -8,7 +8,7 @@ use \App\Flash;
 use \App\Auth;
 
 /**
- * UpdateIncome model
+ * Edit Category model
  * PHP version 7.0
  */
 class EditCategory extends \Core\Model
@@ -55,14 +55,14 @@ class EditCategory extends \Core\Model
 			}
 		};
 		
-		if (strlen($record['name']) > 50) {
+		if (mb_strlen($record['name']) > 50) {
             $this->errors[] = 'Błąd ('.substr($record['name'], 0, 15).'...): nazwa może zawierać maksymalnie 50 znaków.';
 			$validation = false;
-        } else if (strlen($record['name']) < 3) {
+        } else if (mb_strlen($record['name']) < 3) {
             $this->errors[] = 'Błąd ('.$record['name'].'): nazwa musi zawierać przynajmniej 3 znaki. ';
 			$validation = false;
         }
-		if (preg_match('/^[a-z ]+$/i', $record['name']) == 0) {
+		if (preg_match('/^[a-z ąęćżźńłóś]+$/i', $record['name']) == 0) {
             $this->errors[] = 'Błąd ('.$record['name'].'): nazwa może zawierać tylko litery i spacje.';
 			$validation = false;
         }
