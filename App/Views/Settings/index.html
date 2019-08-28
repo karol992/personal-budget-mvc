@@ -3,55 +3,79 @@
 {% block title %}Settings{% endblock %}
 
 {% block css_styles %}
+	
 	<link rel="stylesheet" href="/css/settings.css">
 {% endblock %}
 
 {% block body %}
-<!-- Incomes Editor -->
+		
+	<section>
+		<!-- Incomes Editor -->
 		<div class="settings_group offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-3 col-lg-4 col-md-5 col-sm-8 col-10">
 			<h4>
 				Przychody
 			</h4>
 			<button class="btn_settings shadow">
-				<a class="nav-link" href="#"><i class="fa fa-plus fa-fw"></i>Dodaj kategorię</a>
+				<a class="nav-link" href="#addIncomeModal" data-toggle="modal" data-target="#addIncomeModal">
+					<i class="fa fa-plus fa-fw"></i>Dodaj kategorię
+				</a>
 			</button>
 			<button class="btn_settings shadow">
-				<a class="nav-link" href="#"><i class="fa fa-pencil fa-fw"></i> Edytuj kategorię</a>
+				<a class="nav-link" href="#incomeListModal" data-toggle="modal" data-target="#incomeListModal">
+					<i class="fa fa-pencil fa-fw"></i> Edytuj kategorię
+				</a>
 			</button>
 			<button class="btn_settings bg_del shadow">
-				<a class="nav-link" href="#"><i class="fa fa-trash fa-fw"></i> Usuń kategorię</a>
+				<a class="nav-link" href="#incomeRemoveModal" data-toggle="modal" data-target="#incomeRemoveModal">
+					<i class="fa fa-trash fa-fw"></i> Usuń kategorię
+				</a>
 			</button>
 		</div>
+		
 		<!-- Expenses Editor -->
 		<div class="settings_group offset-1 offset-sm-2 offset-md-0 col-xl-3 col-lg-4 col-md-5 col-sm-8 col-10">
 			<h4>
 				Wydatki
 			</h4>
 			<button class="btn_settings shadow">
-				<a class="nav-link" href="#"><i class="fa fa-plus fa-fw"></i>Dodaj kategorię</a>
+				<a class="nav-link" href="#addExpenseModal" data-toggle="modal" data-target="#addExpenseModal">
+					<i class="fa fa-plus fa-fw"></i>Dodaj kategorię
+				</a>
 			</button>
 			<button class="btn_settings shadow">
-				<a class="nav-link" href="#"><i class="fa fa-pencil fa-fw"></i> Edytuj kategorię</a>
+				<a class="nav-link" href="#expenseListModal" data-toggle="modal" data-target="#expenseListModal">
+					<i class="fa fa-pencil fa-fw"></i> Edytuj kategorię
+				</a>
 			</button>
 			<button class="btn_settings bg_del shadow">
-				<a class="nav-link" href="#"><i class="fa fa-trash fa-fw"></i> Usuń kategorię</a>
+				<a class="nav-link" href="#expenseRemoveModal" data-toggle="modal" data-target="#expenseRemoveModal">
+					<i class="fa fa-trash fa-fw"></i> Usuń kategorię
+				</a>
 			</button>
 		</div>
+		
 		<!-- Payment Editor -->
 		<div class="settings_group offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-3 col-lg-4 col-md-5 col-sm-8 col-10">
 			<h4>
 				Sposób płatności
 			</h4>
 			<button class="btn_settings shadow">
-				<a class="nav-link" href="#"><i class="fa fa-plus fa-fw"></i>Dodaj kategorię</a>
+				<a class="nav-link" href="#addPaymentModal" data-toggle="modal" data-target="#addPaymentModal">
+					<i class="fa fa-plus fa-fw"></i>Dodaj kategorię
+				</a>
 			</button>
 			<button class="btn_settings shadow">
-				<a class="nav-link" href="#"><i class="fa fa-pencil fa-fw"></i> Edytuj kategorię</a>
+				<a class="nav-link" href="#paymentListModal" data-toggle="modal" data-target="#paymentListModal">
+					<i class="fa fa-pencil fa-fw"></i> Edytuj kategorię
+				</a>
 			</button>
 			<button class="btn_settings bg_del shadow">
-				<a class="nav-link" href="#"><i class="fa fa-trash fa-fw"></i> Usuń kategorię</a>
+				<a class="nav-link" href="#paymentRemoveModal" data-toggle="modal" data-target="#paymentRemoveModal">
+					<i class="fa fa-trash fa-fw"></i> Usuń kategorię
+				</a>
 			</button>
 		</div>
+		
 		<!-- User Data Editor -->	
 		<div class="settings_group offset-1 offset-sm-2 offset-md-0 col-xl-3 col-lg-4 col-md-5 col-sm-8 col-10">
 			<h4>
@@ -67,12 +91,224 @@
 				<a class="nav-link" href="#"><i class="fa fa-lock fa-fw"></i><i class="fa fa-refresh fa-fw"></i>Zmień hasło</a>
 			</button>
 		</div>
+		
 		<!-- Account Removing -->
 		<div class="settings_group last_group offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10">
 			<button class="btn_settings bg_del shadow">
 				<a class="nav-link" href="#"><i class="fa fa-user-times fa-fw"></i>Usuń konto</a>
 			</button>
 		</div>
+	</section>	
 		
 		<br />
+
+<!-- Add income category modal -->
+	<div class="modal fade" id="addIncomeModal" tabindex="-1" role="dialog" aria-labelledby="addIncomeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title" id="addIncomeModalLabel">Dodaj kategorię dochodów</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+								<form action="/settings/add-income-category" method="post" class="modal_line row shadow" id="addIncomeCategory">
+									<input type="text" name="name" class="modal_cell col-8 col-sm-9">
+									<div class="container modal_cell col-4 col-sm-3" style="padding: 0;">
+										<button  type="submit" class="btn_record modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+									</div>
+								</form>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Edit income category list modal -->
+	<div class="modal fade" id="incomeListModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form class="modal-content" action="/settings/edit-income-category" method="post" enctype="multipart/form-data">
+				<div class="modal-header">
+					<div class="modal-title" id="incomeModalLabel">Edycja kategorii dochodów</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+							{% for category in incomeCategories %}
+								<div class="modal_line row shadow" name="record" id="incomeCategory{{ category.id }}">
+									<input type="hidden" name="{{ category.id }}[id]" value="{{ category.id }}" />
+									<input type="text" name="{{ category.id }}[name]" class="modal_cell col-12 col-sm-12" value="{{ category.name }}">
+								</div>
+							{% endfor %}
+						</div>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn_confirm" >Zapisz</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+<!-- Delete income category modal -->
+	<div class="modal fade" id="incomeRemoveModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title" id="removeIncomeModalLabel">Edycja kategorii dochodów</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+							{% for category in incomeCategories %}
+								<iframe style="display:none;" name="incomeRemoveFrame{{ category.id }}"></iframe>
+								<form class="modal_line row shadow" id="incomeCategory{{ category.id }}" action="/settings/remove-income-category" method="post" enctype="multipart/form-data" target="incomeRemoveFrame{{ category.id }}">
+									<input type="hidden" name="id" value="{{ category.id }}" />
+									<input type="hidden" name="name" value="{{ category.name }}" />
+									<div type="text" name="name" class="modal_cell col-8 col-sm-9">{{ category.name }}</div>
+									<div class="container modal_cell col-4 col-sm-3" style="padding: 0;">
+										<button  type="submit" class="btn_record modal_button delete_record_button"><i class="fa fa-trash-o fa-fw"></i></button>
+									</div>
+								</form>
+							{% endfor %}
+						</div>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" data-dismiss="modal" aria-label="Close" class="btn btn_confirm" >Zapisz</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Add expense category modal -->
+	<div class="modal fade" id="addExpenseModal" tabindex="-1" role="dialog" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title" id="addExpenseModalLabel">Dodaj kategorię wydatków</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+								<form action="/settings/add-expense-category" method="post" class="modal_line row shadow" id="addExpenseCategory">
+									<input type="text" name="name" class="modal_cell col-8 col-sm-9">
+									<div class="container modal_cell col-4 col-sm-3" style="padding: 0;">
+										<button  type="submit" class="btn_record modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+									</div>
+								</form>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Edit expense category list modal -->
+		<div class="modal fade" id="expenseListModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form class="modal-content" action="/settings/edit-expense-category" method="post" enctype="multipart/form-data">
+				<div class="modal-header">
+					<div class="modal-title" id="expenseModalLabel">Edycja kategorii wydatków</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+							{% for category in expenseCategories %}
+								<div class="modal_line row shadow" name="record" id="expenseCategory{{ category.id }}">
+									<input type="hidden" name="{{ category.id }}[id]" value="{{ category.id }}" />
+									<input type="text" name="{{ category.id }}[name]" class="modal_cell col-12 col-sm-12" value="{{ category.name }}">
+								</div>
+							{% endfor %}
+						</div>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn_confirm" >Zapisz</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+<!-- Delete income category modal -->
+
+
+<!-- Add payment category modal -->
+	<div class="modal fade" id="addPaymentModal" tabindex="-1" role="dialog" aria-labelledby="addPaymentModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title" id="addPaymentModalLabel">Dodaj sposób płatności</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+								<form action="/settings/add-payment-category" method="post" class="modal_line row shadow" id="addPaymentCategory">
+									<input type="text" name="name" class="modal_cell col-8 col-sm-9">
+									<div class="container modal_cell col-4 col-sm-3" style="padding: 0;">
+										<button  type="submit" class="btn_record modal_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+									</div>
+								</form>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+<!-- Edit payment category list modal -->
+		<div class="modal fade" id="paymentListModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form class="modal-content" action="/settings/edit-payment-category" method="post" enctype="multipart/form-data">
+				<div class="modal-header">
+					<div class="modal-title" id="paymentModalLabel">Edycja sposobów wydatków</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+							{% for category in paymentCategories %}
+								<div class="modal_line row shadow" name="record" id="paymentCategory{{ category.id }}">
+									<input type="hidden" name="{{ category.id }}[id]" value="{{ category.id }}" />
+									<input type="text" name="{{ category.id }}[name]" class="modal_cell col-12 col-sm-12" value="{{ category.name }}">
+								</div>
+							{% endfor %}
+						</div>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn_confirm" >Zapisz</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+<!-- Delete income category modal -->
+
+
+{% endblock %}
+
+{% block footer %}
+<script src="/js/modal.js"></script>
 {% endblock %}

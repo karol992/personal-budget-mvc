@@ -36,7 +36,7 @@ class ShowBalance extends \Core\Model
     }
 	
 	
-	/** Create table with all user income categories sums also empty ones
+	/** Create table with all user income categories sums also empty ones (empty categories turned off)
 	 * @param assoc array $period [start, end]
 	 * @return assoc array $allIncomeSums [name, id, sum, list[]]
 	 */
@@ -46,10 +46,11 @@ class ShowBalance extends \Core\Model
 		foreach ($incomeData as $id) {
 			$this->incomeSum += $id['sum'];
 		}
-		return $this->addZeroSums($incomeCategories, $incomeData);
+		//return $this->addZeroSums($incomeCategories, $incomeData);
+		return $incomeData;
 	}
 	
-	/** Create table with all user expense categories sums also empty ones
+	/** Create table with all user expense categories sums also empty ones (empty categories turned off)
 	 * @param assoc array $period [start, end]
 	 * @return assoc array $allExpenseSums [name, id, sum]
 	 */
@@ -59,7 +60,8 @@ class ShowBalance extends \Core\Model
 		foreach ($expenseData as $ed) {
 			$this->expenseSum += $ed['sum'];
 		}
-		return $this->addZeroSums($expenseCategories, $expenseData);
+		//return $this->addZeroSums($expenseCategories, $expenseData);
+		return $expenseData;
 	}
 	
 	/** Fill array with user categories not occuring in $dataArray

@@ -16,7 +16,8 @@ class Expense extends Authenticated
 {
 
     /**
-     * Show the Add-Expense page
+     * Render the Add-Expense page
+	 * @_POST [expense_date]
      * @return void
      */
     public function indexAction($args = []) {
@@ -28,11 +29,15 @@ class Expense extends Authenticated
     }
 
 	/** Add an expense to the database
-	 * @return void*/
+	 * @_POST [expense_category, payment_category, expense_value, expense_date, expense_note]
+	 * @return void
+	 */
 	public function addExpenseAction() {
-		$args=[];
-		$expense = new AddExpense();
-		if (! $expense->send($_POST['expense_value'], $_POST['expense_date'], $_POST['expense_note'])) {
+		$args = [];
+		$expense = new AddExpense($_POST);
+		if ($expense->send($expense->expense_value, $expense->expense_date, $expense->expense_note)) {
+			Flash::addMessage($expense->successMessage);
+		} else {
 			Flash::addMessage('Operacja nie powiodła się.', 'warning');
 		}
 		$args['errors'] = $expense->errors;

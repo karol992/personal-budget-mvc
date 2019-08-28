@@ -1,3 +1,12 @@
+:root {
+  --color-bg: #FFFBD9;
+  --color-dark: #7F9949;
+  --color-medium: #BBCC99;
+  --border-dark: 2px solid var(--color-dark);
+  --color-warning-text: #6e1a22;
+  --color-warning-bg: #dc5565;
+}
+
 .con {
 	border-radius: 10px;
 	border: 2px solid #7F9949;
@@ -8,7 +17,7 @@
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
-.btn-balance {
+.btn_confirm {
 	background-color: #7F9949;
 	color: #FFFBD9;
 }
@@ -116,18 +125,30 @@ input[type=date]::-webkit-calendar-picker-indicator {
 }
 
 /* from settings.css*/
-.btn_settings {
-	/*font-size: 16px;*/
+.btn_record {
 	border: 2px solid #7F9949;
 	border-radius: 5px;
 	background-color: #BBCC99;
-	/*width: 100%;*/
 }
-.btn_settings:hover {
+.btn_record:hover {
 	background-color: #99AACC;
 	border: 2px solid #6973FA;
 }
 .bg_del:hover {
 	background-color: #dc3545;
 	border: 2px solid #6e1a22;
+}
+
+.button_checked {
+	background-color: #B399CC;
+	border-radius: 5px;
+	border: 2px solid #9379AC;
+	float: left; 
+	width: 50%; 
+	height:100%;
+	/*border-radius: 10px;
+	font-size: 16px;
+	margin: 5px;
+	min-width: 145px;
+	text-align: center;*/
 }

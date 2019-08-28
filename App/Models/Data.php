@@ -4,10 +4,9 @@ namespace App\Models;
 
 use PDO;
 use \App\Auth;
-use \App\Flash;
 
 /**
- * User model
+ * Data model
  * PHP version 7.0
  */
 class Data extends \Core\Model
@@ -39,7 +38,7 @@ class Data extends \Core\Model
      * @param string $table The name of searched table
 	 * @return assoc array [id, name] or null if not logged in
 	 */
-	protected static function getUserCategories($table) {
+	public static function getUserCategories($table) {
 		$db = static::getDB();
 		$query = $db->prepare("SELECT id, name FROM $table WHERE user_id=:id");
 		$query->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);

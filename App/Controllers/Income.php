@@ -16,7 +16,8 @@ class Income extends Authenticated
 {
 
     /**
-     * Show the Add-Income page
+     * Render the Add-Income page
+	 * @_POST [income_date]
      * @return void
      */
     public function indexAction($args = []) {
@@ -27,11 +28,15 @@ class Income extends Authenticated
     }
 	
 	/** Add an income to the database
-	 * @return void*/
+	 * @_POST [income_category, income_value, income_date, income_note]
+	 * @return void
+	 */
 	public function addIncomeAction() {
-		$args=[];
-		$income = new AddIncome();
-		if (! $income->send($_POST['income_value'], $_POST['income_date'], $_POST['income_note'])) {
+		$args = [];
+		$income = new AddIncome($_POST);
+		if ($income->send($income->income_value, $income->income_date, $income->income_note)) {
+			Flash::addMessage($income->successMessage);
+		} else {
 			Flash::addMessage('Operacja nie powiodła się.', 'warning');
 		}
 		$args['errors'] = $income->errors;
