@@ -86,4 +86,12 @@ class Settings extends Authenticated
 		$edit->addPaymentCategory();
 		$this->redirect('/settings/index');
     }
+	
+	/**
+     * Add payment category
+     * @return void
+     */
+    public function removeIncomeCategoryAction() {
+        Flash::addMessage('id: '.$_POST['id'].', transferId: '.$_POST['transferId'], 'warning');
+    }
 }

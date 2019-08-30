@@ -172,20 +172,20 @@
 						<div class="container">
 							{% for category in incomeCategories %}
 								<iframe style="display:none;" name="incomeRemoveFrame{{ category.id }}"></iframe>
-								<form class="modal_line row shadow hideDeleteIncome{{ category.id }}" action="/settings/remove-income-category" method="post" enctype="multipart/form-data" target="incomeRemoveFrame{{ category.id }}">
+								<form id="incomeForm{{ category.id }}" class="modal_line row shadow hideDeleteIncome{{ category.id }}" action="/settings/remove-income-category" method="post" enctype="multipart/form-data" target="incomeRemoveFrame{{ category.id }}">
+								<!-- target="incomeRemoveFrame{{ category.id }}" -->
 									<input type="hidden" name="id" value="{{ category.id }}" />
-									<input type="hidden" name="name" value="{{ category.name }}" />
-									<div style="pointer-events:none" type="text" name="name" class="modal_cell col-5">{{ category.name }}</div>
-									<select name="newName" class="modal_cell col-5">
+									<div type="text" class="modal_cell col-5">{{ category.name }}</div>
+									<select name="transferId" class="modal_cell col-5">
 										<option></option>
 										{% for newCategory in incomeCategories%}
 											{% if category.id != newCategory.id %}
-												<option class="hideDeleteIncome{{ newCategory.id }}" style="pointer-events:none" value="{{ newCategory.id }}">{{ newCategory.name }}</option>
+												<option class="hideDeleteIncome{{ newCategory.id }}" value="{{ newCategory.id }}">{{ newCategory.name }}</option>
 											{% endif %}
 										{% endfor %}
 									</select>
 									<div class="container modal_cell col-2" style="padding: 0;">
-										<button  class="btn_record modal_button submitDeleteIncome{{ category.id }}"><i class="fa fa-trash-o fa-fw"></i></button>
+										<button  type="submit" class="btn_record modal_button submitDeleteIncome{{ category.id }}"><i class="fa fa-trash-o fa-fw"></i></button>
 									</div>
 								</form>
 							{% endfor %}
