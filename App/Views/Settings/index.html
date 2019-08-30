@@ -162,7 +162,7 @@
 		<div class="modal-dialog modal-md" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<div class="modal-title" id="removeIncomeModalLabel">Edycja kategorii dochodów</div>
+					<div class="modal-title" id="removeIncomeModalLabel">Usuń kategorię dochodów</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -172,25 +172,32 @@
 						<div class="container">
 							{% for category in incomeCategories %}
 								<iframe style="display:none;" name="incomeRemoveFrame{{ category.id }}"></iframe>
-								<form class="modal_line row shadow" id="incomeCategory{{ category.id }}" action="/settings/remove-income-category" method="post" enctype="multipart/form-data" target="incomeRemoveFrame{{ category.id }}">
+								<form class="modal_line row shadow hideDeleteIncome{{ category.id }}" action="/settings/remove-income-category" method="post" enctype="multipart/form-data" target="incomeRemoveFrame{{ category.id }}">
 									<input type="hidden" name="id" value="{{ category.id }}" />
 									<input type="hidden" name="name" value="{{ category.name }}" />
-									<div type="text" name="name" class="modal_cell col-8 col-sm-9">{{ category.name }}</div>
-									<div class="container modal_cell col-4 col-sm-3" style="padding: 0;">
-										<button  type="submit" class="btn_record modal_button delete_record_button"><i class="fa fa-trash-o fa-fw"></i></button>
+									<div style="pointer-events:none" type="text" name="name" class="modal_cell col-5">{{ category.name }}</div>
+									<select name="newName" class="modal_cell col-5">
+										<option></option>
+										{% for newCategory in incomeCategories%}
+											{% if category.id != newCategory.id %}
+												<option class="hideDeleteIncome{{ newCategory.id }}" style="pointer-events:none" value="{{ newCategory.id }}">{{ newCategory.name }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+									<div class="container modal_cell col-2" style="padding: 0;">
+										<button  class="btn_record modal_button submitDeleteIncome{{ category.id }}"><i class="fa fa-trash-o fa-fw"></i></button>
 									</div>
 								</form>
 							{% endfor %}
 						</div>
 					</section>
 				</div>
-				<div class="modal-footer">
-					<button type="submit" data-dismiss="modal" aria-label="Close" class="btn btn_confirm" >Zapisz</button>
-				</div>
 			</div>
 		</div>
 	</div>
-
+	{% for category in incomeCategories %}
+	<button class="submitDeleteIncome{{ category.id }} hideDeleteIncome{{ category.id }}" >{{ category.id }}</button>
+	{% endfor %}
 <!-- Add expense category modal -->
 	<div class="modal fade" id="addExpenseModal" tabindex="-1" role="dialog" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
@@ -311,4 +318,11 @@
 
 {% block footer %}
 <script src="/js/modal.js"></script>
+{% for record in incomeCategories%}
+<script type="text/javascript">
+$('.submitDeleteIncome{{ record.id }}').on('click', function () {
+	$(".hideDeleteIncome{{ record.id }}").hide();
+});
+</script>
+{% endfor %}
 {% endblock %}
