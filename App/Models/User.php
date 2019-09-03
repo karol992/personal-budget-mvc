@@ -4,6 +4,7 @@ namespace App\Models;
 
 use PDO;
 use \App\Token;
+use \App\Auth;
 
 /**
  * User model
@@ -36,7 +37,9 @@ class User extends \Core\Model
      */
     public function save()
     {
-        $this->validate();
+        $this->validateName();
+        $this->validateEmail();
+        $this->validatePassword();
         if (empty($this->errors)) {
             $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
             $sql = 'INSERT INTO users (username, email, password_hash)
@@ -53,18 +56,30 @@ class User extends \Core\Model
         }
         return false;
     }
-
-    /**
-     * Validate current property values, adding valiation error messages to the errors array property
+	
+	/**
+     * Validate name values, adding validation error messages to the errors array property
      * @return void
      */
-    public function validate()
+    public function validateName()
     {
-        // Name
         if ($this->name == '') {
             $this->errors[] = 'Wymagana nazwa użytkownika.';
         }
-        // email address
+		if (strlen($this->name) < 3) {
+            $this->errors[] = 'Minimalna długość nazwy użytkownika to 3 znaki.';
+        }
+		if (strlen($this->name) > 50) {
+            $this->errors[] = 'Maksymalna długość nazwy użytkownika to 50 znaków.';
+        }
+    }
+	
+    /**
+     * Validate email values, adding validation error messages to the errors array property
+     * @return void
+     */
+    public function validateEmail()
+    {
 		if ($this->email == '') {
             $this->errors[] = 'Wymagany adres email.';
         } else if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
@@ -72,7 +87,14 @@ class User extends \Core\Model
         } else if (static::emailExists($this->email)) {
             $this->errors[] = 'Adres email zajęty.';
         }
-        // Password
+    }
+
+	/**
+     * Validate password values, adding validation error messages to the errors array property
+     * @return void
+     */
+    public function validatePassword()
+    {
         if (strlen($this->password) < 6) {
             $this->errors[] = 'Hasło musi zawierać conajmniej 6 znaków.';
         } else if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
@@ -83,7 +105,7 @@ class User extends \Core\Model
             $this->errors[] = 'Hasło może zawierać maksymalnie 50 znaków.';
         }
     }
-
+	
     /**
      * See if a user record already exists with the specified email
      * @param string $email email address to search for
@@ -176,4 +198,43 @@ class User extends \Core\Model
 		return ($copyPayments->execute() && $copyIncomes->execute() && $copyExpenses->execute());
 	}
 	
+	public function updateName() {
+		$this->validateName();
+		if (empty($this->errors)) {
+			$db = static::getDB();
+			$sql = "UPDATE users SET username = :username WHERE users.id = :id";
+			$query=$db->prepare($sql);
+			$query->bindValue(':username', $this->name, PDO::PARAM_STR);
+			$query->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);
+			return $query->execute();
+		}
+		return false;
+	}
+	
+	public function updateEmail() {
+		$this->validateEmail();
+		if (empty($this->errors)) {
+			$db = static::getDB();
+			$sql = "UPDATE users SET email = :email WHERE users.id = :id";
+			$query=$db->prepare($sql);
+			$query->bindValue(':email', $this->email, PDO::PARAM_STR);
+			$query->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);
+			return $query->execute();
+		}
+		return false;
+	}
+	
+	public function updatePassword() {
+		$this->validatePassword();
+		if (empty($this->errors)) {
+			$password_hash = password_hash($this->password, PASSWORD_DEFAULT);
+			$db = static::getDB();
+			$sql = "UPDATE users SET password_hash = :password_hash WHERE users.id = :id";
+			$query=$db->prepare($sql);
+			$query->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+			$query->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);
+			return $query->execute();
+		}
+		return false;
+	}
 }

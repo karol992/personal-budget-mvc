@@ -7,6 +7,8 @@ use \App\Models\Data;
 use \App\Models\DataProperties\AddCategory;
 use \App\Models\DataProperties\EditCategory;
 use \App\Models\DataProperties\RemoveCategory;
+use \App\Models\User;
+use \App\Auth;
 use \App\Flash;
 
 /**
@@ -24,7 +26,8 @@ class Settings extends Authenticated
         View::renderTemplate('Settings/index.html', [
 			'incomeCategories' => Data::getUserIncomeCats(),
 			'expenseCategories' => Data::getUserExpenseCats(),
-			'paymentCategories' => Data::getUserPaymentCats()
+			'paymentCategories' => Data::getUserPaymentCats(),
+			'user' => Auth::getUser()
 		]);
     }
 
@@ -117,4 +120,51 @@ class Settings extends Authenticated
 		$remove->removePaymentCategory();
 		$this->redirect('/settings/index');
     }
+	
+	/**
+     * Change name
+     * @return void
+     */
+    public function changeNameAction() {
+		$user = new User($_POST);
+		if($user->updateName()) {
+			Flash::addMessage('Imię zaktualizowane.');
+		}
+		$this->redirect('/settings/index');
+    }
+	
+	/**
+     * Change name
+     * @return void
+     */
+    public function changeEmailAction() {
+		$user = new User($_POST);
+		if ($user->updateEmail()) {
+			Flash::addMessage('Email zaktualizowany.');
+		}
+		$this->redirect('/settings/index');
+    }
+	
+	/**
+     * Change name
+     * @return void
+     */
+    public function changePasswordAction() {
+		$oldPasswordConfirm = User::authenticate(Auth::getUserEmail(),$_POST['oldpassword']);
+		if($oldPasswordConfirm) {
+			$user = new User($_POST);
+			if ($user->updatePassword()) {
+				Flash::addMessage('Hasło zaktualizowane.');
+			} else {
+				foreach($user->errors as $error) {
+					Flash::addMessage($error);
+				};
+			}
+		} else {
+			Flash::addMessage('Podano złe hasło');
+		}
+		$this->redirect('/settings/index');
+    }
+	
+	
 }

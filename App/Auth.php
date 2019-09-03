@@ -112,4 +112,12 @@ class Auth {
 		$user = static::getUser();
 		return $user->username ?? false;
 	}
+	
+	/** Get user email
+	 * @return string The user email or null if not logged in
+	 */
+	public static function getUserEmail() {
+		$user = static::getUser();
+		return $user->email ?? false;
+	}
 }
