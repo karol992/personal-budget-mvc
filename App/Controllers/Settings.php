@@ -97,4 +97,24 @@ class Settings extends Authenticated
 		$remove->removeIncomeCategory();
 		$this->redirect('/settings/index');
     }
+	
+	/**
+     * Add payment category
+     * @return void
+     */
+    public function removeExpenseCategoryAction() {
+		$remove = new RemoveCategory($_POST);
+		$remove->removeExpenseCategory();
+		$this->redirect('/settings/index');
+    }
+	
+	/**
+     * Add payment category
+     * @return void
+     */
+    public function removePaymentCategoryAction() {
+		$remove = new RemoveCategory($_POST);
+		$remove->removePaymentCategory();
+		$this->redirect('/settings/index');
+    }
 }
