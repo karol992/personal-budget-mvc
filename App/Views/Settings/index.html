@@ -160,7 +160,7 @@
 <!-- Delete income category modal -->
 	<div class="modal fade" id="incomeRemoveModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
-			<div class="modal-content">
+			<form class="modal-content" action="/settings/remove-income-category" method="post" enctype="multipart/form-data">
 				<div class="modal-header">
 					<div class="modal-title" id="removeIncomeModalLabel">Usuń kategorię dochodów</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -170,34 +170,41 @@
 				<div class="modal-body">
 					<section>
 						<div class="container">
-							{% for category in incomeCategories %}
-								<iframe style="display:none;" name="incomeRemoveFrame{{ category.id }}"></iframe>
-								<form id="incomeForm{{ category.id }}" class="modal_line row shadow hideDeleteIncome{{ category.id }}" action="/settings/remove-income-category" method="post" enctype="multipart/form-data" target="incomeRemoveFrame{{ category.id }}">
-								<!-- target="incomeRemoveFrame{{ category.id }}" -->
-									<input type="hidden" name="id" value="{{ category.id }}" />
-									<div type="text" class="modal_cell col-5">{{ category.name }}</div>
-									<select name="transferId" class="modal_cell col-5">
-										<option></option>
-										{% for newCategory in incomeCategories%}
-											{% if category.id != newCategory.id %}
-												<option class="hideDeleteIncome{{ newCategory.id }}" value="{{ newCategory.id }}">{{ newCategory.name }}</option>
-											{% endif %}
-										{% endfor %}
-									</select>
-									<div class="container modal_cell col-2" style="padding: 0;">
-										<button  type="submit" class="btn_record modal_button submitDeleteIncome{{ category.id }}"><i class="fa fa-trash-o fa-fw"></i></button>
-									</div>
-								</form>
-							{% endfor %}
+								<div class="modal_line row shadow">
+										<div class="modal_cell col-6">
+											Usuwana kategoria:
+										</div>
+										<select class="modal_cell col-6" id="deleteIncome" name="deleteId">
+											<option></option>
+											{% for category in incomeCategories%}
+													<option value="{{ category.id }}">
+													{{ category.name }}</option>
+											{% endfor %}
+										</select>
+								</div>
+								<div class="modal_line row shadow">
+										<div class="modal_cell col-6">
+											Przychody przenieść do:
+										</div>
+										<select class="modal_cell col-6" style="width: 100%;" name="transferId">
+											<option></option>
+											{% for newCategory in incomeCategories%}
+													<option value="{{ newCategory.id }}">
+													{{ newCategory.name }}</option>
+											{% endfor %}
+										</select>
+								</div>
+
 						</div>
 					</section>
 				</div>
-			</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn_confirm" >Usuń</button>
+				</div>
+			</form>
 		</div>
 	</div>
-	{% for category in incomeCategories %}
-	<button class="submitDeleteIncome{{ category.id }} hideDeleteIncome{{ category.id }}" >{{ category.id }}</button>
-	{% endfor %}
+	
 <!-- Add expense category modal -->
 	<div class="modal fade" id="addExpenseModal" tabindex="-1" role="dialog" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
@@ -318,11 +325,4 @@
 
 {% block footer %}
 <script src="/js/modal.js"></script>
-{% for record in incomeCategories%}
-<script type="text/javascript">
-$('.submitDeleteIncome{{ record.id }}').on('click', function () {
-	$(".hideDeleteIncome{{ record.id }}").hide();
-});
-</script>
-{% endfor %}
 {% endblock %}

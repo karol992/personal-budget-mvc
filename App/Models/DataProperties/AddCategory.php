@@ -64,7 +64,9 @@ class AddCategory extends \Core\Model
 			$query = $db->prepare($sql);
 			$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
 			$query->bindValue(':name', $this->name, PDO::PARAM_STR);
-			$query->execute();
+			if ($query->execute()) {
+				Flash::addMessage('Dodano kategorię '.$this->name.'.');;
+			}
 		} else {
 			foreach ($this->errors as $error) {
 				Flash::addMessage($error, 'warning');

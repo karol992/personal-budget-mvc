@@ -6,6 +6,7 @@ use \Core\View;
 use \App\Models\Data;
 use \App\Models\DataProperties\AddCategory;
 use \App\Models\DataProperties\EditCategory;
+use \App\Models\DataProperties\RemoveCategory;
 use \App\Flash;
 
 /**
@@ -92,6 +93,8 @@ class Settings extends Authenticated
      * @return void
      */
     public function removeIncomeCategoryAction() {
-        Flash::addMessage('id: '.$_POST['id'].', transferId: '.$_POST['transferId'], 'warning');
+		$remove = new RemoveCategory($_POST);
+		$remove->removeIncomeCategory();
+		$this->redirect('/settings/index');
     }
 }
