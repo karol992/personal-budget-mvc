@@ -53,8 +53,9 @@ class Data extends \Core\Model
 	 */
 	public static function getCategoryName($table, $id) {
 		$db = static::getDB();
-		$query = $db->prepare("SELECT name FROM $table WHERE id=:id");
+		$query = $db->prepare("SELECT name FROM $table WHERE id=:id AND user_id=:user_id");
 		$query->bindValue(':id', $id, PDO::PARAM_INT);
+		$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
 		$query->execute();
 		$name=$query->fetch();
 		return $name[0];
