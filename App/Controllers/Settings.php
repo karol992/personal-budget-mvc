@@ -7,6 +7,7 @@ use \App\Models\Data;
 use \App\Models\DataProperties\AddCategory;
 use \App\Models\DataProperties\EditCategory;
 use \App\Models\DataProperties\RemoveCategory;
+use \App\Models\DataProperties\DataCleaner;
 use \App\Models\User;
 use \App\Auth;
 use \App\Flash;
@@ -171,11 +172,13 @@ class Settings extends Authenticated
      * @return void
      */
 	public function deleteAccountAction() {
-		foreach($_POST as $key => $value) {
-			Flash::addMessage("POST: ".$key." = ".$value);
-		};
+		$passwordConfirm = User::authenticate(Auth::getUserEmail(),$_POST['password']);
+		if($passwordConfirm) {
+			DataCleaner::removeAccount();
+			$this->redirect('/logout');
+		} else {
+			Flash::addMessage('Podano złe hasło.');
+		}
 		$this->redirect('/settings/index');
-		
-		
 	}
 }

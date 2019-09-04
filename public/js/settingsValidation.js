@@ -67,5 +67,20 @@ $(document).ready(function() {
 			}
 		}
 	});
+	
+	$('#deleteAccount').validate({
+		rules: {
+			deleteConfirmation: {
+				required: true,
+				remote: '/account/validate-delete-confirmation'
+			}
+		},
+		messages: {
+			deleteConfirmation: {
+				required: 'Potwierdzenie wymagane.',
+				remote: 'Potwierdzenie niewłaściwe.'
+			}
+		}
+	});
 
 });

@@ -35,4 +35,15 @@ class Account extends \Core\Controller
 		echo json_encode($is_valid);
     }
 	
+	/**
+     * Validate if confirmation text is correct (AJAX) for account deleting
+     */
+    public function validateDeleteConfirmationAction() {
+		$is_valid = false;
+		if($_GET['deleteConfirmation'] == 'usuń konto') {
+			$is_valid = true;
+		}
+		header('Content-Type: application/json');
+		echo json_encode($is_valid);
+    }
 }
