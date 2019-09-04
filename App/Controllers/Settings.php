@@ -122,7 +122,7 @@ class Settings extends Authenticated
     }
 	
 	/**
-     * Change name
+     * Change name for logged user
      * @return void
      */
     public function changeNameAction() {
@@ -134,7 +134,7 @@ class Settings extends Authenticated
     }
 	
 	/**
-     * Change name
+     * Change email for logged user
      * @return void
      */
     public function changeEmailAction() {
@@ -146,7 +146,7 @@ class Settings extends Authenticated
     }
 	
 	/**
-     * Change name
+     * Change password for logged user
      * @return void
      */
     public function changePasswordAction() {
@@ -166,5 +166,16 @@ class Settings extends Authenticated
 		$this->redirect('/settings/index');
     }
 	
-	
+	/**
+     * Remove all user data and account
+     * @return void
+     */
+	public function deleteAccountAction() {
+		foreach($_POST as $key => $value) {
+			Flash::addMessage("POST: ".$key." = ".$value);
+		};
+		$this->redirect('/settings/index');
+		
+		
+	}
 }

@@ -68,26 +68,4 @@ $(document).ready(function() {
 		}
 	});
 
-	/**
-	 * Show password toggle button
-	 */
-	/*$('#inputPassword').hideShowPassword({
-		show: false,
-		innerToggle: 'focus',
-		states: {
-			shown: {
-				toggle: {
-					content: 'Ukryj'
-				}
-			},
-			hidden: {
-				toggle: {
-					content: 'Pokaż'
-				}
-			}
-		},
-		toggle: {
-			className: 'hideShowPassword-toggle showBtn'
-		}
-	});*/
 });

@@ -35,15 +35,4 @@ class Account extends \Core\Controller
 		echo json_encode($is_valid);
     }
 	
-	/**
-     * Validate if password is correct (AJAX) for password change
-     * @return void
-     */
-   /* public function passwordConfirmAction() {
-		$is_valid = 0;
-//		= ! User::authenticate(Auth::getUserEmail(),$_GET['oldpassword']);
-		header('Content-Type: application/json');
-		echo json_encode($is_valid);
-    }*/
-	
 }

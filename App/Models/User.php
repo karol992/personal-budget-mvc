@@ -198,6 +198,9 @@ class User extends \Core\Model
 		return ($copyPayments->execute() && $copyIncomes->execute() && $copyExpenses->execute());
 	}
 	
+	/** Update name of logged user
+	 * @return bolean True if name was updated, false otherwise
+	 */
 	public function updateName() {
 		$this->validateName();
 		if (empty($this->errors)) {
@@ -211,6 +214,9 @@ class User extends \Core\Model
 		return false;
 	}
 	
+	/** Update email of logged user
+	 * @return bolean True if email was updated, false otherwise
+	 */
 	public function updateEmail() {
 		$this->validateEmail();
 		if (empty($this->errors)) {
@@ -224,6 +230,9 @@ class User extends \Core\Model
 		return false;
 	}
 	
+	/** Update password of logged user
+	 * @return bolean True if password was updated, false otherwise
+	 */
 	public function updatePassword() {
 		$this->validatePassword();
 		if (empty($this->errors)) {
