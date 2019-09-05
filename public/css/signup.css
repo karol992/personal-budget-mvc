@@ -2,9 +2,9 @@
   --color-dark: #7F9949;
   --border-dark: 2px solid var(--color-dark);
 }
-body {
+/*body {
 	font-size: 16px;
-}
+}*/
 .form-box {
 	margin-left: auto;
 	margin-right: auto;

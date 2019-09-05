@@ -10,7 +10,8 @@ body {
 	background-color: var(--color-bg);
 	color: var(--color-dark);
     font-family: 'Open Sans', sans-serif;
-    font-size: calc(8px + 3vmin);
+	/* edit font-size: calc(8px + 3vmin);*/
+	font-size: 16px;
 }
 h1 {
 	font-size: calc(10px + 5vw);
