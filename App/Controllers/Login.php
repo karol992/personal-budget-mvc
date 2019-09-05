@@ -34,7 +34,7 @@ class Login extends \Core\Controller {
 		$remember_me = isset($_POST['remember_me']);
 		if($user) {
 			Auth::login($user, $remember_me);
-			Flash::addMessage('Zalogowano pomyślnie.');
+			Flash::addMessage('Zalogowano pomyślnie.','info');
 			$this->redirect(Auth::getReturnToPage());
 		} else {
 			Flash::addMessage('Logowanie nieudane.', Flash::WARNING);

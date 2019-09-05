@@ -10,7 +10,4 @@ $('.reload').on('click', function () {
    window.location.reload();
 });	
 
-function deleteCategory($id) {
-	;
-}
 

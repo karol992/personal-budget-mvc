@@ -3,7 +3,7 @@
 {% block title %}Expense{% endblock %}
 
 {% block css_styles %}
-	<link rel="stylesheet" href="/css/expense.css">
+	<link rel="stylesheet" href="/css/transaction.css">
 {% endblock %}
 
 {% block body %}
@@ -18,17 +18,17 @@
 				</div>
 			{% endif %}
 			<!-- Amount of expense -->
-			<div class="expense_section col-12 col-md-6">
+			<div class="transaction_section col-12 col-md-6">
 				<div><label for="expense_value">Kwota: </label></div>
 				<div><input type="number" name="expense_value" step="0.01" min="0.01" max="999999.99" value="{{ expense_value }}"required></div>
 			</div>
 			<!-- Date of expense -->
-			<div class="expense_section col-12 col-md-6">
+			<div class="transaction_section col-12 col-md-6">
 				<div><label for="expense_date">Data: </label></div>
 				<div><input type="date" name="expense_date" value="{{ transaction_date }}"></div>
 			</div>
 			<!-- Category of expense -->
-			<div class="expense_section col-12 col-md-6">
+			<div class="transaction_section col-12 col-md-6">
 				<div>Kategoria: </div>
 				<select name="expense_category">
 					{% for item in expense_cats %}
@@ -37,7 +37,7 @@
 				</select>
 			</div>
 			<!-- Expense payment -->
-			<div class="expense_section col-12 col-md-6">
+			<div class="transaction_section col-12 col-md-6">
 				<div>Płatność: </div>
 				<select name="payment_category">
 					{% for item in payment_cats %}
@@ -46,15 +46,15 @@
 				</select>
 			</div>
 			<!-- Expense note -->
-			<div class="expense_section col-12 col-md-6">
+			<div class="transaction_section col-12 col-md-6">
 				<label for="expense_note">Notatki: </label>
 				<input type="textarea" name="expense_note" placeholder="Opcjonalnie..." onfocus="this.placeholder=''" onblur="this.placeholder='Opcjonalnie...'" value=""maxlength="100">
 			</div>
 			<!-- Expense saving -->
-			<div class="expense_btn offset-4 offset-md-0 col-4 col-md-3">
+			<div class="transaction_btn offset-4 offset-md-0 col-4 col-md-3">
 				<button class="btn btn-success" type="submit" value="Submit">Dodaj</button>
 			</div>
-			<div class="expense_btn col-4 col-md-3">
+			<div class="transaction_btn col-4 col-md-3">
 				<button class="btn btn-danger" type="reset" value="Reset">Anuluj</button>
 			</div>
 		</form>

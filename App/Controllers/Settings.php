@@ -162,7 +162,7 @@ class Settings extends Authenticated
 				};
 			}
 		} else {
-			Flash::addMessage('Podano złe hasło');
+			Flash::addMessage('Podano złe hasło','warning');
 		}
 		$this->redirect('/settings/index');
     }
@@ -177,7 +177,7 @@ class Settings extends Authenticated
 			DataCleaner::removeAccount();
 			$this->redirect('/logout');
 		} else {
-			Flash::addMessage('Podano złe hasło.');
+			Flash::addMessage('Podano złe hasło.','warning');
 		}
 		$this->redirect('/settings/index');
 	}
