@@ -1,15 +1,4 @@
-:root {
-	--color-bg: #FFFBD9;
-	--color-dark: #7F9949;
-	--color-medium: #BBCC99;
-	--color-warning-text: #6e1a22;
-	--color-warning-bg: #dc5565;
-	--color-item-active: #B399CC;
-	--color-item-hover-bg: #99AACC;
-	--color-item-hover-brd: #6973FA;
-	--color-item-hover-del: #dc3545;
-	--color-btn-checked: #9379AC;
-}
+@import url('colors.css');
 body {
 	background-color: var(--color-bg);
 	color: var(--color-dark);
