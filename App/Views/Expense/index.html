@@ -8,6 +8,17 @@
 
 {% block body %}
 	<!-- Expense adding -->
+	<div id="info_ribbon"></div>
+	<!-- Errors of expense -->
+	{% if errors is not empty %}
+		<div id="errors" class="col-12">
+		{% for error in errors %}
+			<div class="error">{{ error }}</div>
+		{% endfor %}
+		</div>
+	{% endif %}
+	
+	
 		<form id="expense_form" class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10">
 			<!-- Errors of expense -->
 			{% if errors is not empty %}
@@ -64,25 +75,32 @@
 <script>
 const $form = $('#expense_form');
 const $submitBtn = $("#submitBtn");
-const $info = $("#success_info");
+const $info = $("#info_ribbon");
 $form.on("submit", function(e) {
     e.preventDefault();
     $submitBtn.prop('disabled', true);
 	$.ajax({
-        url: '/income/add-income-ajax',
+        url: '/expense/add-expense-ajax',
         method : "POST",
         dataType : "json",
         data: $(this).serialize()
-    }).always(function(response) {
+    }).done(function(response) {
+		$(".alert-warning").hide();
 		if(response.success) {
-			$(".alert-warning").hide();
+			$info.removeClass('alert-warning');
 			$info.addClass('ribbon_info alert-success');
 			$info.html(response.message);
+			$(".alert-success").show();
 			$submitBtn.prop('disabled', false);
 		} else {
 			location.reload(true);
 		}
-    });
+    }).fail(function() {
+		$info.removeClass('alert-success');
+		$info.addClass('ribbon_info alert-warning');
+		$info.html('Błąd połączenia z bazą danych.');
+		$submitBtn.prop('disabled', false);
+	});
 });
 </script>
 {% endblock %}
