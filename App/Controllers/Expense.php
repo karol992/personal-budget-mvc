@@ -43,4 +43,24 @@ class Expense extends Authenticated
 		$args['errors'] = $expense->errors;
 		$this->indexAction($args);
 	}
+	
+	/** Add an income to the database (AJAX)
+	 * @_POST [income_category, income_value, income_date, income_note]
+	 * @return void
+	 */
+	public function addExpenseAjaxAction() {
+		$expense = new AddExpense($_POST);
+		$response = [];
+		if ($expense->send($expense->expense_value, $expense->expense_date, $expense->expense_note)) {
+			$response['message']=$expense->successMessage;
+			$response['success'] = true;
+		} else {
+			$response['message']='Operacja nie powiodła się. ';
+			$response['success'] = false;
+			foreach ($expense->errors as $error) {
+				Flash::addMessage($error, 'warning');
+			};
+		}
+		echo json_encode($response);
+	}
 }

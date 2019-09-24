@@ -8,7 +8,7 @@
 
 {% block body %}
 	<!-- Expense adding -->
-		<form class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10" action="/expense/add-expense" method="post" enctype="multipart/form-data">
+		<form id="expense_form" class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10">
 			<!-- Errors of expense -->
 			{% if errors is not empty %}
 				<div class="col-12">
@@ -58,4 +58,31 @@
 				<button class="btn btn-danger" type="reset" value="Reset">Anuluj</button>
 			</div>
 		</form>
+{% endblock %}
+
+{% block footer %}
+<script>
+const $form = $('#expense_form');
+const $submitBtn = $("#submitBtn");
+const $info = $("#success_info");
+$form.on("submit", function(e) {
+    e.preventDefault();
+    $submitBtn.prop('disabled', true);
+	$.ajax({
+        url: '/income/add-income-ajax',
+        method : "POST",
+        dataType : "json",
+        data: $(this).serialize()
+    }).always(function(response) {
+		if(response.success) {
+			$(".alert-warning").hide();
+			$info.addClass('ribbon_info alert-success');
+			$info.html(response.message);
+			$submitBtn.prop('disabled', false);
+		} else {
+			location.reload(true);
+		}
+    });
+});
+</script>
 {% endblock %}

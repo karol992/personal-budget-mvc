@@ -8,15 +8,17 @@
 
 {% block body %}
 	<!-- Income adding -->
-		<form class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10" action="/income/add-income" method="post" enctype="multipart/form-data">
-			<!-- Errors of income -->
-			{% if errors is not empty %}
-				<div class="col-12">
-				{% for error in errors %}
-					<div class="error">{{ error }}</div>
-				{% endfor %}
-				</div>
-			{% endif %}
+	<div id="info_ribbon"></div>
+	<!-- Errors of income -->
+	{% if errors is not empty %}
+		<div id="errors" class="col-12">
+		{% for error in errors %}
+			<div class="error">{{ error }}</div>
+		{% endfor %}
+		</div>
+	{% endif %}
+
+		<form id="income_form" class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10" >
 			<!-- Amount of income -->
 			<div class="transaction_section col-12 col-md-6">
 				<div><label for="income_value">Kwota: </label></div>
@@ -44,10 +46,44 @@
 			</div>
 			<!-- Income saving -->
 			<div class="transaction_btn offset-4 offset-md-6 col-4 col-md-3">
-				<button class="btn btn-success" type="submit" value="Submit">Dodaj</button>
+				<button id="submitBtn" class="btn btn-success" type="submit" value="Submit">Dodaj</button>
 			</div>
 			<div class="transaction_btn col-4 col-md-3">
 				<button class="btn btn-danger" type="reset" value="Reset">Anuluj</button>
 			</div>
 		</form>
+{% endblock %}
+
+{% block footer %}
+<script>
+const $form = $('#income_form');
+const $submitBtn = $("#submitBtn");
+const $info = $("#info_ribbon");
+$form.on("submit", function(e) {
+    e.preventDefault();
+    $submitBtn.prop('disabled', true);
+	$.ajax({
+        url: '/income/add-income-ajax',
+        method : "POST",
+        dataType : "json",
+        data: $(this).serialize()
+    }).done(function(response) {
+		$(".alert-warning").hide();
+		if(response.success) {
+			$info.removeClass('alert-warning');
+			$info.addClass('ribbon_info alert-success');
+			$info.html(response.message);
+			$(".alert-success").show();
+			$submitBtn.prop('disabled', false);
+		} else {
+			location.reload(true);
+		}
+    }).fail(function() {
+		$info.removeClass('alert-success');
+		$info.addClass('ribbon_info alert-warning');
+		$info.html('Błąd połączenia z bazą danych.');
+		$submitBtn.prop('disabled', false);
+	});
+});
+</script>
 {% endblock %}
