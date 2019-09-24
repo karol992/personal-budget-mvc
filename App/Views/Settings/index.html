@@ -17,19 +17,19 @@
 
 <section id="modals">
 	<section id="incomeModals">
-{% include 'Settings/incomeModals.html' %}
+
 	</section>
 
 	<section id="expenseModals">
-{% include 'Settings/expenseModals.html' %}
+
 	</section>
 	
 	<section id="paymentModals">
-{% include 'Settings/paymentModals.html' %}
+
 	</section>
 
 	<section id="accountDataModals">
-{% include 'Settings/accountDataModals.html' %}
+
 	</section>
 		
 </section>
@@ -40,4 +40,30 @@
 <script src="/js/modal.js"></script>
 <script src="/js/hideShowPassword.min.js"></script>
 <script src="/js/settingsValidation.js"></script>
+<script>
+$('button.js_button').click(function(){
+  $(this).next('div.js_toggle_group').toggle("slow");
+});
+$('button.to_first').click(function(){
+  $(this).closest('ul').prepend($(this).closest('li'));
+});
+
+
+$('.upbutton').on('click', function () {
+    var previousObject = $(this).closest('li').prev('li');
+	$(this).closest('li').insertBefore(previousObject);
+});
+$('.downbutton').on('click', function () {
+    var nextObject = $(this).closest('li').next('li');
+	$(this).closest('li').insertAfter(nextObject);
+});
+
+$('.income_del').on('click', function() {
+	var value = $(this).attr("value");
+	var name = $(this).attr("name");
+	$('#deleteIncomeLabel').text(name);
+	$('#deleteIncomeId').val(value);
+});
+
+</script>
 {% endblock %}

@@ -7,6 +7,27 @@
 	display: inline-block;
 	width: 100%;
 }
+.settings_group2 {
+	/*border: 1px solid var(--color-dark);*/
+	color: rgba(0, 0, 0, 0.5);
+	text-align: center;
+	display: inline-block;
+	width: 100%;
+}
+.top10 {
+	margin-top: 10px;
+}
+.vertical_center {
+	margin: 0; 
+	position: absolute; 
+	top: 50%; 
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+.right {
+	right: 0;
+}
+
 .last_group {
 	margin-bottom: 20px;
 }
@@ -41,16 +62,17 @@
 .modal_line {
 	font-size: 16px;
 	color: black;
-	margin-bottom: 10px;
+	text-align: left;
+	/*margin-bottom: 10px;*/
 	border: 1px solid var(--color-dark);
-	border-left: none;
-	border-top: none;
+	/*border-left: none;
+	border-top: none;*/
 }
 .modal_cell {
 	padding: 5px;
-	border: 1px solid var(--color-dark);
+	/*border: 1px solid var(--color-dark);
 	border-right: none;
-	border-bottom: none;
+	border-bottom: none;*/
 	background-color: white;
 }
 .modal_button {
@@ -85,6 +107,11 @@
 	float: left; 
 	height:100%;
 }
+.input_area {
+	border: 2px solid var(--color-dark);
+	border-radius: 5px;
+	background-color: white;
+}
 .error {
 	font-size: 16px;
 }
@@ -95,4 +122,10 @@
 	color: white;
 	height: 100%;
 	width: 30%;
+}
+
+.modal_input {
+	padding: 5px;
+	border: none;
+	background-color: white;
 }
