@@ -205,4 +205,13 @@ class Settings extends Authenticated
 		}
 		$this->redirect('/settings/index');
 	}
+	
+	/**
+	 * Get name, id from user income categories (AJAX)
+	 * @return void
+	 */
+	public function getUserIncomeCatsAjaxAction() {
+		$response = Data::getUserIncomeCats();
+		echo json_encode($response);
+	}
 }

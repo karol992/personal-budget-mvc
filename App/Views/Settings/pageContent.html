@@ -10,7 +10,7 @@
 						<li class="modal_line modal_cell row shadow">
 							<div class="modal_cell col-12"  style="position: relative;">
 								<span>{{ category.name }} (Limit: <span id="income{{ category.id }}limit">{{ category.limit_value }}</span>)</span>
-								<div class="btn-group vertical_center right" role="group" aria-label="Basic example">
+								<div class="btn-group vertical_center right">
 									<button type="button" class="btn btn_record income_edit" href="#incomeEditModal" data-toggle="modal" data-target="#incomeEditModal" value="{{ category.id }}" name="{{ category.name }}"><i class="fa fa-pencil fa-fw"></i></button>
 									<button type="button" class="btn btn_record bg_record_del income_del"  value="{{ category.id }}" name="{{ category.name }}" href="#incomeRemoveModal" data-toggle="modal" data-target="#incomeRemoveModal">
 										<i class="fa fa-trash fa-fw"></i>

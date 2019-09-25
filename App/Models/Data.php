@@ -17,14 +17,14 @@ class Data extends \Core\Model
 	 */
 	public static function getUserIncomeCats() {
 		$table = 'incomes_category_assigned_to_users'; 
-		return static::getUserCategories2($table);
+		return static::getUserCategoriesExtended($table);
 	}
 	/** Load expense categories assigned to current user.
 	 * @return assoc array [id, name]
 	 */
 	public static function getUserExpenseCats() {
 		$table = 'expenses_category_assigned_to_users'; 
-		return static::getUserCategories2($table);
+		return static::getUserCategoriesExtended($table);
 	}
 	/** Load payment categories assigned to current user.
 	 * @return assoc array [id, name]
@@ -46,7 +46,7 @@ class Data extends \Core\Model
 		return $query->fetchAll();
 	}
 	
-	public static function getUserCategories2($table) {
+	public static function getUserCategoriesExtended($table) {
 		$db = static::getDB();
 		$query = $db->prepare("SELECT id, name, limited, limit_value FROM $table WHERE user_id=:id");
 		$query->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);

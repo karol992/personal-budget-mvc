@@ -80,12 +80,9 @@
 										<div class="modal_cell col-6">
 											Przychody przenieść do:
 										</div>
-										<select class="modal_cell col-6" style="width: 100%;" name="transferId">
+										<select id="deleteIncomeSelect" class="modal_cell col-6" style="width: 100%;" name="transferId">
 											<option></option>
-											{% for newCategory in incomeCategories%}
-													<option value="{{ newCategory.id }}">
-													{{ newCategory.name }}</option>
-											{% endfor %}
+												
 										</select>
 								</div>
 						</div>
