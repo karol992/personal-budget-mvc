@@ -69,6 +69,21 @@ class Data extends \Core\Model
 		return $name[0];
 	}
 	
+	/**  Return searched id of category_name
+	 * @param string $table Table name with searched category
+	 * @param string $name Searched category name
+	 * @return int $id Id of searched category
+	 */
+	public static function getCategoryId($table, $name) {
+		$db = static::getDB();
+		$query = $db->prepare("SELECT id FROM $table WHERE name=:name AND user_id=:user_id");
+		$query->bindValue(':name', $name, PDO::PARAM_STR);
+		$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
+		$query->execute();
+		$id=$query->fetch();
+		return $id[0];
+	}
+	
 	/** Query execution based on id and period
 	 * @param $sql, string, user SQL query
 	 * @param $id, integer

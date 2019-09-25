@@ -71,7 +71,31 @@ class Settings extends Authenticated
 		$edit->addIncomeCategory();
 		$this->redirect('/settings/index');
     }
-
+	
+	/**
+     * Add income category (AJAX)
+     * @return void
+     */
+    public function addIncomeCategoryAjaxAction() {
+        $edit = new AddCategory($_POST);
+		$response = [];
+		if ($edit->addIncomeCategory()) {
+			$response['message']=$edit->successMessage;
+			$response['success'] = true;
+			$response['name'] = $edit->name;
+			//$response['id'] = 234;
+			$response['id'] = Data::getCategoryId("incomes_category_assigned_to_users", $edit->name);
+		} else {
+			$response['message']='Operacja nie powiodła się. ';
+			$response['success'] = false;
+			$response['errors'] = "";
+			foreach ($edit->errors as $error) {
+				$response['errors'] .= $error;
+			};
+		}
+		echo json_encode($response);
+    }
+	
 	/**
      * Add expense category
      * @return void
