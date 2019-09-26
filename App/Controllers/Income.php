@@ -42,4 +42,24 @@ class Income extends Authenticated
 		$args['errors'] = $income->errors;
 		$this->indexAction($args);
 	}
+	
+	/** Add an income to the database (AJAX)
+	 * @_POST [income_category, income_value, income_date, income_note]
+	 * @return void
+	 */
+	public function addIncomeAjaxAction() {
+		$income = new AddIncome($_POST);
+		$response = [];
+		if ($income->send($income->income_value, $income->income_date, $income->income_note)) {
+			$response['message']=$income->successMessage;
+			$response['success'] = true;
+		} else {
+			$response['message']='Operacja nie powiodła się. ';
+			$response['success'] = false;
+			foreach ($income->errors as $error) {
+				Flash::addMessage($error, 'warning');
+			};
+		}
+		echo json_encode($response);
+	}
 }

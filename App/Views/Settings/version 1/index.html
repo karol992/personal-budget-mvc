@@ -8,32 +8,30 @@
 {% endblock %}
 
 {% block body %}
-<div id="info_ribbon"></div>
-	
+		
 <section id="pageContent">
-	{% include 'Settings/pageContent.html' %}
+{% include 'Settings/pageContent.html' %}
 </section>	
 		
 		<br />
 
 <section id="modals">
-
 	<section id="incomeModals">
-		{% include 'Settings/incomeModals.html' %}
+{% include 'Settings/incomeModals.html' %}
 	</section>
 
 	<section id="expenseModals">
-
+{% include 'Settings/expenseModals.html' %}
 	</section>
 	
 	<section id="paymentModals">
-
+{% include 'Settings/paymentModals.html' %}
 	</section>
 
 	<section id="accountDataModals">
-		{% include 'Settings/accountDataModals.html' %}
+{% include 'Settings/accountDataModals.html' %}
 	</section>
-	
+		
 </section>
 
 {% endblock %}
@@ -42,6 +40,4 @@
 <script src="/js/modal.js"></script>
 <script src="/js/hideShowPassword.min.js"></script>
 <script src="/js/settingsValidation.js"></script>
-<script src="/js/settings.js"></script>
-<script src="/js/settingsIncomes.js"></script>
 {% endblock %}

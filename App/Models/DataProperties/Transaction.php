@@ -22,9 +22,9 @@ abstract class Transaction extends \Core\Model
      * @param array $data  Initial property values
      * @return void
      */
-    public function __construct($data = [])
+    public function __construct($data=[])
     {
-        foreach ($data as $key => $value) {
+		foreach ($data as $key => $value) {
             $this->$key = $value;
         };
 		$this->userId = Auth::getUserId();
@@ -56,12 +56,14 @@ abstract class Transaction extends \Core\Model
      */
 	protected function validate($value, $date, $comment) {
 		//Value
-        if ($value <= 0 ) {
-            $this->errors[] = 'Kwota musi być większa od zera.';
-        }
-		if ($value >= 1000000 ) {
+        if (!is_numeric($value)) {
+			$this->errors[] = 'Kwota musi być liczbą.';
+		} else if ($value <= 0.01 ) {
+            $this->errors[] = 'Kwota musi być dodatnia.';
+        } else	if ($value >= 1000000 ) {
             $this->errors[] = 'Kwota musi być mniejsza niż milion.';
         }
+		
 		//Date
 		$date_error = Timer::dateValidation($date);
 		if($date_error) {

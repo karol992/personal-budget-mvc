@@ -36,7 +36,7 @@ class RemoveCategory extends \Core\Model
 		foreach ($data as $key => $value) {
 			$this->$key=$value;
         };
-}
+	}
 	
 	protected function deleteCategory() {
 		$sql = "DELETE FROM ".$this->categoryTable." WHERE ".$this->categoryTable.".id = :id";
@@ -62,17 +62,11 @@ class RemoveCategory extends \Core\Model
 		if(empty($this->errors)) {
 			$transferCategoryName = Data::getCategoryName($this->categoryTable, $this->transferId);
 			$deleteCategoryName = Data::getCategoryName($this->categoryTable, $this->deleteId);
-			if ($this->updateRecords()) {
-				Flash::addMessage('Kategorię pozycji '.$deleteCategoryName.' zmieniono na '.$transferCategoryName);
-				if ($this->deleteCategory()) {
-					Flash::addMessage('Usunięto kategorię: '.$deleteCategoryName);
-					return true;
-				}
+			if (($this->updateRecords()) && ($this->deleteCategory())) {
+				$this->successMessage = 'Kategorię pozycji '.$deleteCategoryName.' zmieniono na '.$transferCategoryName.'. '.
+				'Usunięto kategorię: '.$deleteCategoryName.'. ';
+				return true;
 			}
-		} else {
-			foreach ($this->errors as $error) {
-				Flash::addMessage($error, 'warning');
-			};
 		}
 		return false;
 	}

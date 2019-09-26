@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\Data;
 use \App\Models\DataProperties\AddCategory;
+use \App\Models\DataProperties\EditAllCategories;
 use \App\Models\DataProperties\EditCategory;
 use \App\Models\DataProperties\RemoveCategory;
 use \App\Models\DataProperties\DataCleaner;
@@ -37,9 +38,29 @@ class Settings extends Authenticated
      * @return void
      */
     public function editIncomeCategoryAction() {
-		$edit = new EditCategory($_POST);
+		$edit = new EditAllCategories($_POST);
 		$edit->updateIncomeCategories();
 		$this->redirect('/settings/index');
+    }
+	
+	/**
+     * Edit income category (AJAX)
+     * @return void
+     */
+    public function editIncomeCategoryAjaxAction() {
+		$edit = new EditCategory($_POST);
+		$response = [];
+		$response['message']="";
+		$edit->updateIncomeCategory();
+		if (empty($edit->errors)) {
+			$response['success']=true;
+		} else {
+			$response['success']=false;
+			foreach ($edit->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
     }
 	
 	/**
@@ -47,7 +68,7 @@ class Settings extends Authenticated
      * @return void
      */
     public function editExpenseCategoryAction() {
-        $edit = new EditCategory($_POST);
+        $edit = new EditAllCategories($_POST);
 		$edit->updateExpenseCategories();
 		$this->redirect('/settings/index');
     }
@@ -57,7 +78,7 @@ class Settings extends Authenticated
      * @return void
      */
     public function editPaymentCategoryAction() {
-        $edit = new EditCategory($_POST);
+        $edit = new EditAllCategories($_POST);
 		$edit->updatePaymentCategories();
 		$this->redirect('/settings/index');
     }
@@ -71,7 +92,29 @@ class Settings extends Authenticated
 		$edit->addIncomeCategory();
 		$this->redirect('/settings/index');
     }
-
+	
+	/**
+     * Add income category (AJAX)
+     * @return void
+     */
+    public function addIncomeCategoryAjaxAction() {
+        $edit = new AddCategory($_POST);
+		$response = [];
+		if ($edit->addIncomeCategory()) {
+			$response['message']=$edit->successMessage;
+			$response['success'] = true;
+			$response['name'] = $edit->name;
+			$response['id'] = Data::getCategoryId("incomes_category_assigned_to_users", $edit->name);
+		} else {
+			$response['message']='Operacja nie powiodła się. ';
+			$response['success'] = false;
+			foreach ($edit->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
+    }
+	
 	/**
      * Add expense category
      * @return void
@@ -93,7 +136,7 @@ class Settings extends Authenticated
     }
 	
 	/**
-     * Add payment category
+     * Remove Income Category
      * @return void
      */
     public function removeIncomeCategoryAction() {
@@ -103,7 +146,28 @@ class Settings extends Authenticated
     }
 	
 	/**
-     * Add payment category
+     * Remove Income Category (AJAX)
+     * @return void
+     */
+    public function removeIncomeCategoryAjaxAction() {
+        $remove = new RemoveCategory($_POST);
+		$response = [];
+		if ($remove->removeIncomeCategory()) {
+			$response['message']=$remove->successMessage;
+			$response['success'] = true;
+			$response['deleteId'] = $remove->deleteId;
+		} else {
+			$response['message']='Operacja nie powiodła się. ';
+			$response['success'] = false;
+			foreach ($remove->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
+    }
+	
+	/**
+     * Remove Expense Category
      * @return void
      */
     public function removeExpenseCategoryAction() {
@@ -113,7 +177,7 @@ class Settings extends Authenticated
     }
 	
 	/**
-     * Add payment category
+     * Remove Payment Category
      * @return void
      */
     public function removePaymentCategoryAction() {
@@ -162,7 +226,7 @@ class Settings extends Authenticated
 				};
 			}
 		} else {
-			Flash::addMessage('Podano złe hasło');
+			Flash::addMessage('Podano złe hasło','warning');
 		}
 		$this->redirect('/settings/index');
     }
@@ -177,8 +241,17 @@ class Settings extends Authenticated
 			DataCleaner::removeAccount();
 			$this->redirect('/logout');
 		} else {
-			Flash::addMessage('Podano złe hasło.');
+			Flash::addMessage('Podano złe hasło.','warning');
 		}
 		$this->redirect('/settings/index');
+	}
+	
+	/**
+	 * Get name, id from user income categories (AJAX)
+	 * @return void
+	 */
+	public function getUserIncomeCatsAjaxAction() {
+		$response = Data::getUserIncomeCats();
+		echo json_encode($response);
 	}
 }

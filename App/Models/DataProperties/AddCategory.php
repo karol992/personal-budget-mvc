@@ -65,12 +65,11 @@ class AddCategory extends \Core\Model
 			$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
 			$query->bindValue(':name', $this->name, PDO::PARAM_STR);
 			if ($query->execute()) {
-				Flash::addMessage('Dodano kategorię '.$this->name.'.');;
+				$this->successMessage = 'Dodano kategorię '.$this->name.'.';
+				return true;
 			}
 		} else {
-			foreach ($this->errors as $error) {
-				Flash::addMessage($error, 'warning');
-			};
+			return false;
 		}
 	}
 	

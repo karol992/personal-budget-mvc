@@ -17,14 +17,14 @@ class Data extends \Core\Model
 	 */
 	public static function getUserIncomeCats() {
 		$table = 'incomes_category_assigned_to_users'; 
-		return static::getUserCategories($table);
+		return static::getUserCategoriesExtended($table);
 	}
 	/** Load expense categories assigned to current user.
 	 * @return assoc array [id, name]
 	 */
 	public static function getUserExpenseCats() {
 		$table = 'expenses_category_assigned_to_users'; 
-		return static::getUserCategories($table);
+		return static::getUserCategoriesExtended($table);
 	}
 	/** Load payment categories assigned to current user.
 	 * @return assoc array [id, name]
@@ -46,6 +46,14 @@ class Data extends \Core\Model
 		return $query->fetchAll();
 	}
 	
+	public static function getUserCategoriesExtended($table) {
+		$db = static::getDB();
+		$query = $db->prepare("SELECT id, name, limited, limit_value FROM $table WHERE user_id=:id");
+		$query->bindValue(':id', Auth::getUserId(), PDO::PARAM_INT);
+		$query->execute();
+		return $query->fetchAll();
+	}
+	
 	/**  Return searched name of category_id
 	 * @param string $table Table name with searched category
 	 * @param int $category_id Searched category id
@@ -59,6 +67,21 @@ class Data extends \Core\Model
 		$query->execute();
 		$name=$query->fetch();
 		return $name[0];
+	}
+	
+	/**  Return searched id of category_name
+	 * @param string $table Table name with searched category
+	 * @param string $name Searched category name
+	 * @return int $id Id of searched category
+	 */
+	public static function getCategoryId($table, $name) {
+		$db = static::getDB();
+		$query = $db->prepare("SELECT id FROM $table WHERE name=:name AND user_id=:user_id");
+		$query->bindValue(':name', $name, PDO::PARAM_STR);
+		$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
+		$query->execute();
+		$id=$query->fetch();
+		return $id[0];
 	}
 	
 	/** Query execution based on id and period

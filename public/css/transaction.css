@@ -1,17 +1,17 @@
 .container {
-	border: 1px solid #7F9949;
+	border: 1px solid var(--color-dark);
 	margin-top: 20px;
 	margin-bottom: 20px;
 	width: 100%;
 	display: table;
 }
-.expense_section{
+.transaction_section{
 	display: inline-block;
 	height: 15vmin;
 	min-height: 90px;
 	padding: 5px;
 }
-.expense_btn {
+.transaction_btn {
 	padding: 5px;
 	display: inline-block;
 	height: 10vmin;

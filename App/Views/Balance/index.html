@@ -11,43 +11,17 @@
 {% endblock %}
 
 {% block body %}
-	<!-- Choose period of balance -->
-	<div class="container"> 
-			<div class="dropdown">
-				 <button class="con margin20 offset-lg-10 offset-md-9 offset-sm-8 offset-7 col-lg-2 col-md-3 col-sm-4 col-5 btn btn_confirm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Zakres
-				</button>
-				<div class="dropdown-menu col-lg-2 col-md-3 col-sm-4 col-5" aria-labelledby="dropdownMenu2">
-						<form action="/balance/index" method="post">
-						<button class="dropdown-item" type="submit" name="balance_period" value="current_month">Bieżący miesiąc</button>
-						<button class="dropdown-item" type="submit" name="balance_period" value="last_month">Poprzedni miesiąc</button>
-						<button class="dropdown-item" type="submit" name="balance_period" value="current_year">Bieżący rok</button></form>
-					<button class="dropdown-item" type="button" href="#dateModal" data-toggle="modal" data-target="#dateModal">
-						Niestandardowy
-					</button>			
-				</div>
-			</div>
-	</div>
 
-	<!-- Display period of balance -->
-	<div class="info_ribbon">
-		<div class="inB">Zakres bilansu:</div>
-		<div class="inB">
-			<div class="inB">{{ balance_period.start }}</div>
-			<div class="inB"> - </div>
-			<div class="inB">{{ balance_period.end }}</div>
-		</div>
-	</div>
-		
+	<section id="periodDropdown">
+		{% include 'Balance/periodDropdown.html' %}
+	</section>
+	
 	<!------mainBody----------------------------------------------------------------------------------->
-	<section><!-- Contains incomes, expense pie chart, expenses. -->
+	<section id="balanceBody"><!-- Contains incomes, expense pie chart, expenses. -->
 		<div class="container"> 
 			<div class="row">
-			
 				<div class="col-md-6">
-				
 					<!-- Incomes categories. -->
-					
 						<div id="income_table">
 						Przychody
 						{% if incomes is empty %}
@@ -63,11 +37,7 @@
 									</div>
 						{% endfor %}
 						</div>
-					
-					
 					<!-- Expenses categories. -->
-					
-					
 						<div id="expense_table">
 						{% if expenses is not empty %}
 						Wydatki:
@@ -82,7 +52,6 @@
 									</div>
 						{% endfor %}
 						</div>
-					
 				</div>
 				
 				<div class="col-md-6"> 
@@ -129,150 +98,33 @@
 		<div style="padding: 30px;"></div>
 	</footer>
 	
-	<!------dateModal----------------------------------------------------------------------------------->	
-	<div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<form action="/balance/index" method="post" enctype="multipart/form-data">
+	
+	<section id="balanceModals">
+	<!---legendModal------------------------------------------------------------------------------------------>
+		<div class="modal fade" id="legendModal" tabindex="-1" role="dialog" aria-labelledby="legendModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<form class="modal-content" action="" method="post" enctype="multipart/form-data">
 					<div class="modal-header">
-						<h5 class="modal-title">Niestandardowy okres</h5>
+						<h5 class="modal-title" id="legendModalLabel">Legenda</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
-						<section>
-							<div class="container">
-								<div class="row">
-									<label class="offset-1 col-2" for="balance_start_day">Od: </label>
-									<input class="col-7" type="date" name="balance_start_day" value="">
-								</div>
-								<div class="row">
-									<label class="offset-1 col-2" for="balance_end_day">Do: </label>
-									<input class="col-7" type="date" name="balance_end_day" value="">
-								</div>
-							</div>
-						</section>
+						<div id="legendwrapper">
+							<div id="legenddiv"></div>
+						</div>
 					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn_confirm" value="Submit">OK</button>
-					</div>
+					
 				</form>
 			</div>
 		</div>
-	</div>
 
-	<!---legendModal------------------------------------------------------------------------------------------>
-	<div class="modal fade" id="legendModal" tabindex="-1" role="dialog" aria-labelledby="legendModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<form class="modal-content" action="" method="post" enctype="multipart/form-data">
-				<div class="modal-header">
-					<h5 class="modal-title" id="legendModalLabel">Legenda</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div id="legendwrapper">
-						<div id="legenddiv"></div>
-					</div>
-				</div>
-				
-			</form>
-		</div>
-	</div>
+		{% include 'Balance/incomeListModal.html' %}
 
-	<!------incomeListModal---------------------------------------------------------------------------->
-	{% for income in incomes %}	
-		<div class="modal fade" id="incomeListModal{{ income.id }}" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content" action="" method="post" enctype="multipart/form-data">
-					<div class="modal-header">
-						<div class="modal-title" id="incomeModalLabel{{ income.id }}">{{ income.name }}</div>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<section>
-							<h5>Szczegółowa lista</h5>
-							<div class="container">
-								{% for record in income.list %}
-									<iframe style="display:none;" name="incomeFrame{{ record.id }}"></iframe>
-									<form action="/balance/edit-income" target="incomeFrame{{ record.id }}" method="post" class="modal_line row shadow" id="tempIncome{{ record.id }}">
-										<!--<input type="hidden" name="modalTarget" value="incomeListModal{{ income.id }}" />-->
-										<input type="hidden" name="income_id" value="{{ record.id }}" />
-										<input type="number" name="amount" class="modal_cell col-6 col-sm-6 col-lg-2" step="0.01" value="{{ record.amount }}" min="0.01">
-										<input type="date" name="income_date" class="modal_cell col-6 col-sm-6 col-lg-3" value="{{ record.date }}">
-										<input type="text" name="comment" class="modal_cell col-8 col-sm-9 col-lg-5" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="{{ record.comment }}">
-										<div class="container modal_cell col-4 col-sm-3 col-lg-2" style="padding: 0;">
-											<button name="action" value="update" type="submit" class="btn_record modal_button edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
-											<button name="action" value="delete" type="submit" class="btn_record bg_del modal_button delete_record_button"><i class="fa fa-trash fa-fw"></i></button>
-										</div>
-									</form>
-								{% endfor %}
-							</div>
-						</section>
-					</div>
-					<div class="modal-footer">
-						<button onclick="window.location.reload();" type="submit" class="btn btn_confirm" data-dismiss="modal" value="Submit">Odśwież zestawienie</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	{% endfor %}
-
-	<!------expenseListModal---------------------------------------------------------------------------->
-	{% for expense in expenses %}	
-
-	<div class="modal fade" id="expenseListModal{{ expense.id }}" tabindex="-1" role="dialog" aria-labelledby="listModalLabel{{ expense.id }}" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<div class="modal-title" id="expenseModalLabel{{ expense.id }}">{{ expense.name }}</div>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<section>
-						{% if expense.list is not empty %}
-						<h5>Szczegółowa lista</h5>
-						{% else %}
-						<h5>Brak wpisów</h5>
-						{% endif %}
-						<div class="container">
-							{% for record in expense.list %}
-								<iframe style="display:none;" name="expenseFrame{{ record.id }}"></iframe>
-								<form action="/balance/edit-expense" target="expenseFrame{{ record.id }}" method="post" class="modal_line row shadow" id="tempExpense$tempExpenseID">
-										<input type="hidden" name="expense_id" value="{{ record.id}}" />
-										<input type="number" name="amount" class="modal_cell col-12 col-sm-4 col-lg-2" step="0.01" value="{{ record.amount }}" min="0.01" />
-										<input type="date" name="expense_date" class="modal_cell col-6 col-sm-4 col-lg-3" value="{{ record.date }}" />
-										<select name="payment" class="modal_cell col-6 col-sm-4 col-lg-2">
-											{% for pay in payment_cats%}
-											<option value="{{ pay.id }}" 
-												{% if pay.id==record.payId %} selected{% endif %}
-											>{{ pay.name }}</option>
-											{% endfor %}
-										</select>
-										<input type="text" name="comment" class="modal_cell col-8 col-lg-3" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="{{ record.comment }}" />
-										<div class="container modal_cell col-4 col-lg-2" style="padding: 0;">
-											<button name="action" value="update" type="submit" class="btn_record modal_button edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
-											<button name="action" value="delete" type="submit" class="btn_record bg_del modal_button delete_record_button"><i class="fa fa-trash fa-fw"></i></button>
-										</div>
-								</form>
-							{% endfor %}
-						</div>
-					</section>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn_confirm reload" data-dismiss="modal" value="Submit">Odśwież zestawienie</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	{% endfor %}
-
+		{% include 'Balance/expenseListModal.html' %}
+	
+	</section>
 {% endblock %}
 
 {% block footer %}

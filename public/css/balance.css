@@ -1,15 +1,6 @@
-:root {
-  --color-bg: #FFFBD9;
-  --color-dark: #7F9949;
-  --color-medium: #BBCC99;
-  --border-dark: 2px solid var(--color-dark);
-  --color-warning-text: #6e1a22;
-  --color-warning-bg: #dc5565;
-}
-
 .con {
 	border-radius: 10px;
-	border: 2px solid #7F9949;
+	border: var(--color-dark);
 	padding: 10px;
 	margin-bottom: 10px;
 }
@@ -18,14 +9,14 @@
 	margin-bottom: 20px;
 }
 .btn_confirm {
-	background-color: #7F9949;
-	color: #FFFBD9;
+	background-color: var(--color-dark);
+	color: var(--color-bg);
 }
 .dropdown-item {
 	padding-left: 10px;
 }
 .dropdown-item:hover {
-	background-color: #99AACC;
+	background-color: var(--color-item-hover-bg);
 }
 
 input,option,select,input[type=textarea] {
@@ -41,11 +32,11 @@ input[type=date]::-webkit-inner-spin-button {
 }
 input[type=date]::-webkit-calendar-picker-indicator {
 	opacity: 1;
-	color: #7F9949;
+	color: var(--color-dark);
 }
 
 .brd {
-	border: 2px solid #7F9949;
+	border: 2px solid var(--color-dark);
 }
 .b_line {
 	font-size: 16px;
@@ -55,7 +46,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 /* Balance left cell*/
 .blcell {
 	padding: 5px;
-	border: 1px solid #7F9949;
+	border: 1px solid var(--color-dark);
 	border-right: none;
 	background-color: white;
 }
@@ -63,19 +54,19 @@ input[type=date]::-webkit-calendar-picker-indicator {
 .brcell {
 	text-align: right;
 	padding: 5px;
-	border: 1px solid #7F9949;
+	border: 1px solid var(--color-dark);
 	border-left: none;
 	background-color: white;
 }
 .btn_list {
-	border: 1px solid #7F9949;
+	border: 1px solid var(--color-dark);
 	border-left: none;
 	padding: 0px;
 	border-radius: 0px;
-	background-color: #BBCC99;
+	background-color: var(--color-medium);
 }
 .b_border {
-	border: 1px solid #7F9949;
+	border: 1px solid var(--color-dark);
 }
 .b_sum {
 	font-size: 28px;
@@ -84,7 +75,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 	line-height: 42px;
 	text-align: center;
 	padding: 5px;
-	border: 1px solid #7F9949;
+	border: 1px solid var(--color-dark);
 	background-color: white;
 	margin-bottom: 20px;
 }
@@ -92,13 +83,13 @@ input[type=date]::-webkit-calendar-picker-indicator {
 	font-size: 16px;
 	color: black;
 	margin-bottom: 10px;
-	border: 1px solid #7F9949;
+	border: 1px solid var(--color-dark);
 	border-left: none;
 	border-top: none;
 }
 .modal_cell {
 	padding: 5px;
-	border: 1px solid #7F9949;
+	border: 1px solid var(--color-dark);
 	border-right: none;
 	border-bottom: none;
 	background-color: white;
@@ -126,29 +117,25 @@ input[type=date]::-webkit-calendar-picker-indicator {
 
 /* from settings.css*/
 .btn_record {
-	border: 2px solid #7F9949;
+	border: 2px solid var(--color-dark);
 	border-radius: 5px;
-	background-color: #BBCC99;
+	background-color: var(--color-medium);
 }
 .btn_record:hover {
-	background-color: #99AACC;
-	border: 2px solid #6973FA;
+	background-color: var(--color-item-hover-bg);
+	border: 2px solid var(--color-item-hover-brd)
 }
 .bg_del:hover {
-	background-color: #dc3545;
-	border: 2px solid #6e1a22;
+	background-color: var(--color-item-hover-del);
+	border: 2px solid var(--color-warning-text);
 }
 
+/* used by modal.js */
 .button_checked {
-	background-color: #B399CC;
+	background-color: var(--color-item-active);
 	border-radius: 5px;
-	border: 2px solid #9379AC;
+	border: 2px solid var(--color-btn-checked);
 	float: left; 
 	width: 50%; 
 	height:100%;
-	/*border-radius: 10px;
-	font-size: 16px;
-	margin: 5px;
-	min-width: 145px;
-	text-align: center;*/
 }

@@ -26,11 +26,8 @@ class EditCategory extends \Core\Model
      */
     public function __construct($data = [])
     {
-		$this->table = [];
-		foreach ($data as $id => $key) {
-            foreach ($key as $key=> $value) {
-				$this->table[$id][$key]=$value;
-			};
+		foreach ($data as $key => $value) {
+            $this->$key = $value;
         };
     }
 	
@@ -39,97 +36,62 @@ class EditCategory extends \Core\Model
      * @set $errors[] Strings
      * @return void
      */
-	protected function checkName($record) {
+	protected function checkName() {
 		$validation = true;
-		
 		$userCategories = [];
 		$userCategories = Data::getUserCategories($this->tableName);
 		foreach($userCategories as $category) {
-			if (strtolower($category['name']) == strtolower($record['name'])) {
-				if ($category['id'] != $record['id']) {
+			if (strtolower($category['name']) == strtolower($this->name)) {
+				if ($category['id'] != $this->id) {
 					$this->errors[] = 'Błąd ('.$category['name'].'): istnieje już taka kategoria.';
 					$validation = false;
-				} else if ($category['name'] == $record['name']) {
+				} else if ($category['name'] == $this->name) {
 					return false; //Do not update because of no change
 				}
 			}
 		};
 		
-		if (mb_strlen($record['name']) > 50) {
-            $this->errors[] = 'Błąd ('.substr($record['name'], 0, 15).'...): nazwa może zawierać maksymalnie 50 znaków.';
+		if (mb_strlen($this->name) > 50) {
+            $this->errors[] = 'Błąd ('.substr($this->name, 0, 15).'...): nazwa może zawierać maksymalnie 50 znaków.';
 			$validation = false;
-        } else if (mb_strlen($record['name']) < 3) {
-            $this->errors[] = 'Błąd ('.$record['name'].'): nazwa musi zawierać przynajmniej 3 znaki. ';
+        } else if (mb_strlen($this->name) < 3) {
+            $this->errors[] = 'Błąd ('.$this->name.'): nazwa musi zawierać przynajmniej 3 znaki. ';
 			$validation = false;
         }
-		if (preg_match('/^[a-z ąęćżźńłóś]+$/i', $record['name']) == 0) {
-            $this->errors[] = 'Błąd ('.$record['name'].'): nazwa może zawierać tylko litery i spacje.';
+		if (preg_match('/^[a-z ąęćżźńłóś]+$/i', $this->name) == 0) {
+            $this->errors[] = 'Błąd ('.$this->name.'): nazwa może zawierać tylko litery i spacje.';
 			$validation = false;
         }
 		return $validation;
 	}
 	
 	/** 
-     * @return boolean True if category is updated
+     * @return void
      */
-	protected function updateCategoryRecords() {
-		foreach($this->table as $table=>$id) {
-			if ($this->checkName($id)) {
-				$db = static::getDB();
-				$query = $db->prepare("UPDATE ".$this->tableName." tb SET name = :name WHERE tb.id = :id;");
-				$query->bindValue(':name', $id['name'], PDO::PARAM_STR);
-				$query->bindValue(':id', $id['id'], PDO::PARAM_INT);
-				$query->execute();
-			}
-		};
-		foreach ($this->errors as $error) {
-			Flash::addMessage($error, 'warning');
-		};
-	}
-	
-	public function updateIncomeCategories() {
-		$this->tableName = 'incomes_category_assigned_to_users';
-		return $this->updateCategoryRecords();
-	}
-	
-	public function updateExpenseCategories() {
-		$this->tableName = 'expenses_category_assigned_to_users';
-		return $this->updateCategoryRecords();
-	}
-	
-	public function updatePaymentCategories() {
-		$this->tableName = 'payment_methods_assigned_to_users';
-		return $this->updateCategoryRecords();
-	}
-	
-	/** Add new category
-	*
-	protected function addCategory() {
-		$this->validateName();
-		if(empty($this->errors)) {
-			$sql = "INSERT INTO ".$this->tableName." (id, user_id, name) VALUES (NULL, :user_id, :name)";
+	protected function updateCategoryRecord() {
+		if ($this->checkName()) {
 			$db = static::getDB();
-			$query = $db->prepare($sql);
-			$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
+			$query = $db->prepare("UPDATE ".$this->tableName." tb SET name = :name WHERE tb.id = :id;");
 			$query->bindValue(':name', $this->name, PDO::PARAM_STR);
-			$query->execute();
+			$query->bindValue(':id', $this->id, PDO::PARAM_INT);
+			return $query->execute();
 		}
+		return false;
 	}
 	
-	public function addIncomeCategory() {
-		$this->tableName = "incomes_category_assigned_to_users";
-		return $this->addCategory();
+	public function updateIncomeCategory() {
+		$this->tableName = 'incomes_category_assigned_to_users';
+		return $this->updateCategoryRecord();
 	}
 	
-	public function addExpenseCategory() {
-		$this->tableName = "expenses_category_assigned_to_users";
-		return $this->addCategory();
+	public function updateExpenseCategory() {
+		$this->tableName = 'expenses_category_assigned_to_users';
+		return $this->updateCategoryRecord();
 	}
 	
-	public function addPaymentCategory() {
-		$this->tableName = "payment_methods_assigned_to_users";
-		return $this->addCategory();
+	public function updatePaymentCategory() {
+		$this->tableName = 'payment_methods_assigned_to_users';
+		return $this->updateCategoryRecord();
 	}
-	*/
 	
 }
