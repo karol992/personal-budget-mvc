@@ -3,20 +3,34 @@
 						Wydatki
 			</button>
 			<div class="settings_group2 js_toggle_group" style="display: none;">
-						<section>
-							<div class="container">
-								{% for category in expenseCategories %}
-									<div class="modal_line modal_cell row shadow" name="record" id="expenseCategory{{ category.id }}">
-										<div class="modal_cell col-12"  style="position: relative;">
-												{{ category.name }}
-											<div class="btn-group vertical_center right" role="group" aria-label="Basic example" style="">
-												<button type="button" class="btn btn_record"><i class="fa fa-pencil fa-fw"></i></button>
-												<button type="button" class="btn btn_record bg_record_del"><i class="fa fa-trash fa-fw"></i></button>
-											</div>
-										</div>
-									</div>
-								{% endfor %}
+				<div class="container">
+					<ul id="expenseCategoryList" class="list-unstyled"  style="margin-bottom: 0;">
+					{% for category in expenseCategories %}
+						<li id="expense{{ category.id }}Record" class="modal_line modal_cell row shadow">
+							<div class="modal_cell col-12"  style="position: relative;">
+								<span id="expense{{ category.id }}name">{{ category.name }}</span>
+								<div class="btn-group vertical_center right">
+									<button id="expense{{ category.id }}editBtn" type="button" class="btn btn_record expense_edit" href="#expenseEditModal" data-toggle="modal" data-target="#expenseEditModal" value="{{ category.id }}" name="{{ category.name }}"><i class="fa fa-pencil fa-fw"></i></button>
+									<button  id="expense{{ category.id }}delBtn"  type="button" class="btn btn_record bg_record_del expense_del"  value="{{ category.id }}" name="{{ category.name }}" href="#expenseRemoveModal" data-toggle="modal" data-target="#expenseRemoveModal">
+										<i class="fa fa-trash fa-fw"></i>
+									</button>
+								</div>
 							</div>
-						</section>
+						</li>
+					{% endfor %}
+					</ul>
+					<div class="modal_line modal_cell row shadow">
+						<div class="modal_cell col-12"  style="position: relative;">
+							<i>Dodaj:</i>
+							<form id="addExpenseCategory">
+								<div class="btn-group vertical_center right" role="group" aria-label="Basic example">
+									<input id="addExpenseCategoryInput" type="text" class="btn input_area" name="name" placeholder="Nowa kategoria" onfocus="this.placeholder=''" onblur="this.placeholder='Nowa kategoria'">
+									<button type="submit" class="btn btn_record" id="addExpenseCategoryBtn"><i class="fa fa-plus fa-fw"></i></button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal_line modal_cell row shadow alert-success js_settings_info" id="expenseCategoryInfo" hidden></div>
+				</div>
 			</div>
 		</div>

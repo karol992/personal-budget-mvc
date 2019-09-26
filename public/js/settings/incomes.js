@@ -90,6 +90,7 @@ $addIncomeForm.on("submit", function(e) {
 		$incomeInfo.addClass('error').removeAttr('hidden').show().html('Błąd połączenia z bazą danych.');
 	}).always(function() {
 		$incomeSubmitBtn.prop('disabled', false);
+		$('#addIncomeCategoryInput').val('');
 	});
 });
 

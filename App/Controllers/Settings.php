@@ -177,6 +177,27 @@ class Settings extends Authenticated
     }
 	
 	/**
+     * Remove Expense Category (AJAX)
+     * @return void
+     */
+    public function removeExpenseCategoryAjaxAction() {
+        $remove = new RemoveCategory($_POST);
+		$response = [];
+		if ($remove->removeExpenseCategory()) {
+			$response['message']=$remove->successMessage;
+			$response['success'] = true;
+			$response['deleteId'] = $remove->deleteId;
+		} else {
+			$response['message']='Operacja nie powiodła się. ';
+			$response['success'] = false;
+			foreach ($remove->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
+    }
+	
+	/**
      * Remove Payment Category
      * @return void
      */
