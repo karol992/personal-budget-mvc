@@ -17,7 +17,7 @@ class Data extends \Core\Model
 	 */
 	public static function getUserIncomeCats() {
 		$table = 'incomes_category_assigned_to_users'; 
-		return static::getUserCategoriesExtended($table);
+		return static::getUserCategories($table);
 	}
 	/** Load expense categories assigned to current user.
 	 * @return assoc array [id, name]

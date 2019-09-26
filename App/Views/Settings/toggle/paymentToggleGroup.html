@@ -1,0 +1,22 @@
+		<div class="top10 offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10">
+			<button class="btn_settings shadow settings_group2 nav-link js_button">
+						Płatności
+			</button>
+			<div class="settings_group2 js_toggle_group" style="display: none;">
+						<section>
+							<div class="container">
+								{% for category in paymentCategories %}
+									<div class="modal_line modal_cell row shadow" name="record" id="paymentCategory{{ category.id }}">
+										<div class="modal_cell col-12"  style="position: relative;">
+												{{ category.name }}
+											<div class="btn-group vertical_center right" role="group" aria-label="Basic example" style="">
+												<button type="button" class="btn btn_record"><i class="fa fa-pencil fa-fw"></i></button>
+												<button type="button" class="btn btn_record bg_record_del"><i class="fa fa-trash fa-fw"></i></button>
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+						</section>
+			</div>
+		</div>

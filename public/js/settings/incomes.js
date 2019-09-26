@@ -49,7 +49,7 @@ $addIncomeForm.on("submit", function(e) {
 					$('<div class="modal_cell col-12"  style="position: relative;">').append(
 						$('<span id="income'+categoryId+'name">'+categoryName+'</span>'),
 						$('<div class="btn-group vertical_center right">').append(
-							$('<button type="button" class="btn btn_record income_edit" href="#incomeEditModal" data-toggle="modal" data-target="#incomeEditModal">').
+							$('<button id="income'+categoryId+'editBtn" type="button" class="btn btn_record income_edit" href="#incomeEditModal" data-toggle="modal" data-target="#incomeEditModal">').
 								attr('value', categoryId).
 								attr('name', categoryName).
 								on('click', function() {
@@ -59,7 +59,7 @@ $addIncomeForm.on("submit", function(e) {
 									$('#editIncomeId').val(editValue);
 								}).
 								append($('<i class="fa fa-pencil fa-fw">')),
-							$('<button type="button" class="btn btn_record bg_record_del income_del" href="#incomeRemoveModal" data-toggle="modal" data-target="#incomeRemoveModal">').
+							$('<button id="income'+categoryId+'delBtn" type="button" class="btn btn_record bg_record_del income_del" href="#incomeRemoveModal" data-toggle="modal" data-target="#incomeRemoveModal">').
 								attr('value', categoryId).
 								attr('name', categoryName).
 								on('click', function() {
@@ -107,9 +107,13 @@ $incomeEditForm.on("submit", function(e) {
 		data: $(this).serialize()
 	}).done(function(response) {
 		if(response.success) {
-			$('#income'+$('#editIncomeId').val()+'name').empty().html($('#editIncomeLabel').val());
-			$('#income'+$('#editIncomeId').val()+'editBtn').attr('name', $('#editIncomeLabel').val());
-			$('#income'+$('#editIncomeId').val()+'delBtn').attr('name', $('#editIncomeLabel').val());
+			var editName = $('#editIncomeLabel').val();
+			var editId = $('#editIncomeId').val();
+			$('#income'+editId+'name').empty().html(editName);
+			$('#income'+editId+'editBtn').attr('name', editName);
+			//$('#income'+editId+'editBtn').attr('value', editId);
+			$('#income'+editId+'delBtn').attr('name', editName);
+			//$('#income'+editId+'delBtn').attr('value', editId);
 		} else {
 			$incomeInfo.removeAttr('hidden').addClass('error').empty().show();
 			$incomeInfo.html(response.message);
