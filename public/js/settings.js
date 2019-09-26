@@ -1,3 +1,4 @@
+
 $('button.js_button').click(function(){
   $(this).next('div.js_toggle_group').toggle("slow");
 });
@@ -8,9 +9,9 @@ $('.income_del').on('click', function() {
 	$('#deleteIncomeLabel').text(delName);
 	$('#deleteIncomeId').val(delValue);
 	$.ajax({
-        url: '/settings/get-user-income-cats-ajax',
-        method : "POST",
-    }).done(function(response) {
+		url: '/settings/get-user-income-cats-ajax',
+		method : "POST",
+	}).done(function(response) {
 		var array = JSON.parse(response);
 		$('#deleteIncomeSelect').empty();
 		$('#deleteIncomeSelect').append('<option></option>');
@@ -20,8 +21,8 @@ $('.income_del').on('click', function() {
 	}).fail(function() {
 		alert("fail");
 	});
-	
 });
+
 $('.income_edit').on('click', function() {
 	var editValue = $(this).attr("value");
 	var editName = $(this).attr("name");
@@ -29,27 +30,13 @@ $('.income_edit').on('click', function() {
 	$('#editIncomeId').val(editValue);
 });
 
-//For the future
-$('button.to_first').click(function(){
-  $(this).closest('ul').prepend($(this).closest('li'));
-});
-$('.upbutton').on('click', function () {
-    var previousObject = $(this).closest('li').prev('li');
-	$(this).closest('li').insertBefore(previousObject);
-});
-$('.downbutton').on('click', function () {
-    var nextObject = $(this).closest('li').next('li');
-	$(this).closest('li').insertAfter(nextObject);
-});
-
-
-
 const $addIncomeForm = $('#addIncomeCategory');
 const $incomeSubmitBtn = $("#addIncomeCategoryBtn");
-const $incomeInfo = $("#addIncomeCategoryInfo");
+const $incomeInfo = $("#incomeCategoryInfo");
 $addIncomeForm.on("submit", function(e) {
     e.preventDefault();
     $incomeSubmitBtn.prop('disabled', true);
+	$incomeInfo.empty().hide();
 	$.ajax({
         url: '/settings/add-income-category-ajax',
         method : "POST",
@@ -60,8 +47,8 @@ $addIncomeForm.on("submit", function(e) {
 			var categoryId = response.id;
 			var categoryName = response.name;
 			var limit = 0.00;
-			$('#aaa').append(
-				$('<li class="modal_line modal_cell row shadow">').append(
+			$('#incomeCategoryList').append(
+				$('<li id="income'+categoryId+'Record" class="modal_line modal_cell row shadow">').append(
 					$('<div class="modal_cell col-12"  style="position: relative;">').append(
 						$('<span>').append('<span>'+categoryName+' (Limit: <span id="income'+categoryId+'limit">'+limit.toPrecision(3)+'</span>)</span>'),
 						$('<div class="btn-group vertical_center right">').append(
@@ -83,21 +70,70 @@ $addIncomeForm.on("submit", function(e) {
 									var delName = $(this).attr("name");
 									$('#deleteIncomeLabel').text(delName);
 									$('#deleteIncomeId').val(delValue);
+									$.ajax({
+										url: '/settings/get-user-income-cats-ajax',
+										method : "POST",
+									}).done(function(response) {
+										var array = JSON.parse(response);
+										$('#deleteIncomeSelect').empty();
+										$('#deleteIncomeSelect').append('<option></option>');
+										$.each(array, function(){
+											$('#deleteIncomeSelect').append('<option value="'+this['id']+'">'+this['name']+'</option>');
+										});
+									}).fail(function() {
+										alert("fail");
+									});
 								}).
 								append($('<i class="fa fa-trash fa-fw">'))
 			))));
-			$incomeInfo.hide();
-			$incomeInfo.html('');
 		} else {
-			$incomeInfo.show();
-			$incomeInfo.addClass('top10');
-			$incomeInfo.html(response.errors);
+			$incomeInfo.addClass('error').removeAttr('hidden').show().html(response.message);
 		}
     }).fail(function() {
-		$incomeInfo.show();
-		$incomeInfo.addClass('top10');
-		$incomeInfo.html('Błąd połączenia z bazą danych.');
+		$incomeInfo.addClass('error').removeAttr('hidden').show().html('Błąd połączenia z bazą danych.');
 	}).always(function() {
 		$incomeSubmitBtn.prop('disabled', false);
 	});
 });
+
+
+
+const $incomeRemoveForm = $('#incomeRemoveForm');
+const $incomeRemoveBtn = $("#deleteIncomeBtn");
+$incomeRemoveForm.on("submit", function(e) {
+	e.preventDefault();
+    $incomeRemoveBtn.prop('disabled', true);
+	$incomeInfo.removeAttr('hidden').removeClass('error').empty().show();
+	$.ajax({
+		url: '/settings/remove-income-category-ajax',
+		method : "POST",
+		dataType : "json",
+		data: $(this).serialize()
+	}).done(function(response) {
+		if(response.success) {
+			$('#income'+response.deleteId+'Record').remove();
+			$incomeInfo.html(response.message);
+		} else {
+			$incomeInfo.addClass('error').html(response.message);
+		}
+	}).fail(function() {
+		$incomeInfo.addClass('error').html('Błąd połączenia z bazą danych.');
+	}).always(function() {
+		$('#incomeRemoveModal').modal('toggle');
+		$incomeRemoveBtn.prop('disabled', false);
+	});
+});
+
+ //For the future
+$('button.to_first').click(function(){
+  $(this).closest('ul').prepend($(this).closest('li'));
+});
+$('.upbutton').on('click', function () {
+    var previousObject = $(this).closest('li').prev('li');
+	$(this).closest('li').insertBefore(previousObject);
+});
+$('.downbutton').on('click', function () {
+    var nextObject = $(this).closest('li').next('li');
+	$(this).closest('li').insertAfter(nextObject);
+});
+

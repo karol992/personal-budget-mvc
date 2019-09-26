@@ -48,7 +48,7 @@ h1 {
 	padding: 18px 7px 7px 7px;
 }
 .error {
-	color: red;
+	color: red !important;
 }
 .inB {
 	display: inline-block;
@@ -70,14 +70,4 @@ h1 {
 .alert-info {
 	font-size: calc(8px + 3vmin);
 	text-align: center;
-}
-.alert-success {
-	background-color: var(--color-medium);
-	color: var(--color-bg);
-	text-shadow: -1px 0 var(--color-dark), 0 1px var(--color-dark), 1px 0 var(--color-dark), 0 -1px var(--color-dark);
-}
-.alert-warning {
-	background-color: var(--color-warning-bg);
-	color: var(--color-bg);
-	text-shadow: -1px 0 var(--color-warning-text), 0 1px var(--color-warning-text), 1px 0 var(--color-warning-text), 0 -1px var(--color-warning-text);
 }

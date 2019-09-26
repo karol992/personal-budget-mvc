@@ -130,3 +130,9 @@
 	border: none;
 	background-color: white;
 }
+
+.settings_info {
+	background-color: var(--color-medium);
+	color: var(--color-bg);
+	text-shadow: -1px 0 var(--color-dark), 0 1px var(--color-dark), 1px 0 var(--color-dark), 0 -1px var(--color-dark);
+}
