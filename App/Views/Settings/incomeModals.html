@@ -4,7 +4,7 @@
 <!-- Edit income category list modal -->
 	<div class="modal fade" id="incomeEditModal" tabindex="-1" role="dialog" aria-labelledby="incomeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
-			<form class="modal-content" action="/settings/edit-income-category" method="post" enctype="multipart/form-data">
+			<form id="incomeEditForm" class="modal-content">
 				<div class="modal-header">
 					<div class="modal-title" id="incomeModalLabel">Edycja kategorii dochodów</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -25,7 +25,7 @@
 					</section>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn_confirm" >Zapisz</button>
+					<button type="submit" id="editIncomeBtn" class="btn btn_confirm" >Zapisz</button>
 				</div>
 			</form>
 		</div>

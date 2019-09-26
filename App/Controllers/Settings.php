@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\Data;
 use \App\Models\DataProperties\AddCategory;
+use \App\Models\DataProperties\EditAllCategories;
 use \App\Models\DataProperties\EditCategory;
 use \App\Models\DataProperties\RemoveCategory;
 use \App\Models\DataProperties\DataCleaner;
@@ -37,9 +38,29 @@ class Settings extends Authenticated
      * @return void
      */
     public function editIncomeCategoryAction() {
-		$edit = new EditCategory($_POST);
+		$edit = new EditAllCategories($_POST);
 		$edit->updateIncomeCategories();
 		$this->redirect('/settings/index');
+    }
+	
+	/**
+     * Edit income category (AJAX)
+     * @return void
+     */
+    public function editIncomeCategoryAjaxAction() {
+		$edit = new EditCategory($_POST);
+		$response = [];
+		$response['message']="";
+		$edit->updateIncomeCategory();
+		if (empty($edit->errors)) {
+			$response['success']=true;
+		} else {
+			$response['success']=false;
+			foreach ($edit->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
     }
 	
 	/**
@@ -47,7 +68,7 @@ class Settings extends Authenticated
      * @return void
      */
     public function editExpenseCategoryAction() {
-        $edit = new EditCategory($_POST);
+        $edit = new EditAllCategories($_POST);
 		$edit->updateExpenseCategories();
 		$this->redirect('/settings/index');
     }
@@ -57,7 +78,7 @@ class Settings extends Authenticated
      * @return void
      */
     public function editPaymentCategoryAction() {
-        $edit = new EditCategory($_POST);
+        $edit = new EditAllCategories($_POST);
 		$edit->updatePaymentCategories();
 		$this->redirect('/settings/index');
     }
