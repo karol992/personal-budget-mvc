@@ -1,7 +1,15 @@
-/* onclick trash-button on the list of income categories */
+/* 
+Controller passes categories when page loads.
+Page content updates every single category modification (add new, edit, delete) by AJAX requests in jQuery functions.
+*/
+
+/*	Onclick trash-button on the list of income categories. 
+	Load 
+*/
 $('.income_del').on('click', function() {
-	var delValue = $(this).attr("value");
-	var delName = $(this).attr("name");
+	$button = $(this);
+	var delValue = $button.attr("value");
+	var delName = $button.attr("name");
 	$('#deleteIncomeLabel').text(delName);
 	$('#deleteIncomeId').val(delValue);
 	$.ajax({
@@ -12,7 +20,9 @@ $('.income_del').on('click', function() {
 		$('#deleteIncomeSelect').empty();
 		$('#deleteIncomeSelect').append('<option></option>');
 		$.each(array, function(){
-			$('#deleteIncomeSelect').append('<option value="'+this['id']+'">'+this['name']+'</option>');
+			if(this['id'] != $button.attr('value')) {
+				$('#deleteIncomeSelect').append('<option value="'+this['id']+'">'+this['name']+'</option>');
+			}
 		});
 	}).fail(function() {
 		alert("fail");
@@ -63,8 +73,9 @@ $addIncomeForm.on("submit", function(e) {
 								attr('value', categoryId).
 								attr('name', categoryName).
 								on('click', function() {
-									var delValue = $(this).attr("value");
-									var delName = $(this).attr("name");
+									$button = $(this);
+									var delValue = $button.attr("value");
+									var delName = $button.attr("name");
 									$('#deleteIncomeLabel').text(delName);
 									$('#deleteIncomeId').val(delValue);
 									$.ajax({
@@ -75,7 +86,9 @@ $addIncomeForm.on("submit", function(e) {
 										$('#deleteIncomeSelect').empty();
 										$('#deleteIncomeSelect').append('<option></option>');
 										$.each(array, function(){
-											$('#deleteIncomeSelect').append('<option value="'+this['id']+'">'+this['name']+'</option>');
+											if(this['id'] != $button.attr('value')) {
+												$('#deleteIncomeSelect').append('<option value="'+this['id']+'">'+this['name']+'</option>');
+											}
 										});
 									}).fail(function() {
 										alert("fail");
