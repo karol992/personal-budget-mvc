@@ -15,12 +15,22 @@
 					<section>
 						<div class="container">
 							<div class="modal_line row shadow">
-										<div class="modal_cell col-6">
-											Edytowana kategoria:
-										</div>
-										<input type="text" class="modal_cell col-6" id="editExpenseLabel" name="name" value="" />
-										<input type="hidden" id="editExpenseId" name="id" value="" />
+								<div class="modal_cell col-6">
+									<div class="vertical_center">
+										Edytowana kategoria:
+									</div>
 								</div>
+								<input type="text" class="modal_cell col-6" id="editExpenseLabel" name="name" value="" />
+								<input type="hidden" id="editExpenseId" name="id" value="" />
+							</div>
+							<div class="modal_line row shadow">
+								<div class="modal_cell col-6">
+									<div  class="vertical_center">
+										<input type="checkbox" id="editExpenseLimited" name="limited"> Limit
+									</div>
+								</div>
+								<input type="number" class="modal_cell col-6" id="editExpenseLimitValue" name="limit_value" value="" />
+							</div>
 						</div>
 					</section>
 				</div>

@@ -63,8 +63,8 @@ class RemoveCategory extends \Core\Model
 			$transferCategoryName = Data::getCategoryName($this->categoryTable, $this->transferId);
 			$deleteCategoryName = Data::getCategoryName($this->categoryTable, $this->deleteId);
 			if (($this->updateRecords()) && ($this->deleteCategory())) {
-				$this->successMessage = 'Kategorię pozycji '.$deleteCategoryName.' zmieniono na '.$transferCategoryName.'. '.
-				'Usunięto kategorię: '.$deleteCategoryName.'. ';
+				$this->successMessage = 'Pozycje z kategorii '.$deleteCategoryName.' przeniesiono do '.$transferCategoryName.'. '.
+				'Kategorię '.$deleteCategoryName.' usunięto. ';
 				return true;
 			}
 		}

@@ -9,8 +9,11 @@
 						<li id="expense{{ category.id }}Record" class="modal_line modal_cell row shadow">
 							<div class="modal_cell col-12"  style="position: relative;">
 								<span id="expense{{ category.id }}name">{{ category.name }}</span>
+								{% if category.limited == true %}
+								<span>(Limit: {{ category.limit_value }})</span>
+								{% endif %}
 								<div class="btn-group vertical_center right">
-									<button id="expense{{ category.id }}editBtn" type="button" class="btn btn_record expense_edit" href="#expenseEditModal" data-toggle="modal" data-target="#expenseEditModal" value="{{ category.id }}" name="{{ category.name }}"><i class="fa fa-pencil fa-fw"></i></button>
+									<button id="expense{{ category.id }}editBtn" type="button" class="btn btn_record expense_edit" href="#expenseEditModal" data-toggle="modal" data-target="#expenseEditModal" value="{{ category.id }}" name="{{ category.name }}" data-limited="{{ category.limited }}" data-limit-value="{{ category.limit_value }}"><i class="fa fa-pencil fa-fw"></i></button>
 									<button  id="expense{{ category.id }}delBtn"  type="button" class="btn btn_record bg_record_del expense_del"  value="{{ category.id }}" name="{{ category.name }}" href="#expenseRemoveModal" data-toggle="modal" data-target="#expenseRemoveModal">
 										<i class="fa fa-trash fa-fw"></i>
 									</button>

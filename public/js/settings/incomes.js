@@ -1,22 +1,19 @@
 /* 
-Controller passes categories when page loads.
-Page content updates every single category modification (add new, edit, delete) by AJAX requests in jQuery functions.
+Page content updates every single income category modification (add new, edit, delete) in jQuery functions and executes its in AJAX request.
 */
 
-/*	Onclick trash-button on the list of income categories. 
-	Load 
-*/
-$('.income_del').on('click', function() {
+/* Fill <select> in #incomeRemoveModal (AjAX request) */
+function fillDeleteIncomeSelect() {
 	$button = $(this);
-	var delValue = $button.attr("value");
-	var delName = $button.attr("name");
+	let delValue = $button.attr("value");
+	let delName = $button.attr("name");
 	$('#deleteIncomeLabel').text(delName);
 	$('#deleteIncomeId').val(delValue);
 	$.ajax({
 		url: '/settings/get-user-income-cats-ajax',
 		method : "POST",
 	}).done(function(response) {
-		var array = JSON.parse(response);
+		let array = JSON.parse(response);
 		$('#deleteIncomeSelect').empty();
 		$('#deleteIncomeSelect').append('<option></option>');
 		$.each(array, function(){
@@ -27,15 +24,41 @@ $('.income_del').on('click', function() {
 	}).fail(function() {
 		alert("fail");
 	});
-});
+};
 
-/* onclick pencil-button on the list of income categories */
-$('.income_edit').on('click', function() {
-	var editValue = $(this).attr("value");
-	var editName = $(this).attr("name");
+/* Fill category properties in #incomeEditModal*/
+function passIncomeCategory() {
+	let editValue = $(this).attr("value");
+	let editName = $(this).attr("name");
 	$('#editIncomeLabel').val(editName);
 	$('#editIncomeId').val(editValue);
-});
+};
+
+/*	Onclick trash-button on the list of income categories. 
+*/
+$('.income_del').on('click', fillDeleteIncomeSelect);
+
+/* Onclick pencil-button on the list of income categories */
+$('.income_edit').on('click', passIncomeCategory);
+
+/* Append new income category to #incomeToggleGroup*/
+function appendIncomeToList(categoryId, categoryName) {
+	$('#incomeCategoryList').append(
+		$('<li id="income'+categoryId+'Record" class="modal_line modal_cell row shadow">').append(
+			$('<div class="modal_cell col-12"  style="position: relative;">').append(
+				$('<span id="income'+categoryId+'name">'+categoryName+'</span>'),
+				$('<div class="btn-group vertical_center right">').append(
+					$('<button id="income'+categoryId+'editBtn" type="button" class="btn btn_record income_edit" href="#incomeEditModal" data-toggle="modal" data-target="#incomeEditModal">').
+						attr('value', categoryId).
+						attr('name', categoryName).
+						on('click', passIncomeCategory).
+						append($('<i class="fa fa-pencil fa-fw">')),
+					$('<button id="income'+categoryId+'delBtn" type="button" class="btn btn_record bg_record_del income_del" href="#incomeRemoveModal" data-toggle="modal" data-target="#incomeRemoveModal">').
+						attr('value', categoryId).
+						attr('name', categoryName).
+						on('click', fillDeleteIncomeSelect).
+						append($('<i class="fa fa-trash fa-fw">'))
+))))};
 
 /* new income-category: ajax-request to database and page-update */
 const $addIncomeForm = $('#addIncomeCategory');
@@ -54,48 +77,7 @@ $addIncomeForm.on("submit", function(e) {
 			if(response.success) {
 			var categoryId = response.id;
 			var categoryName = response.name;
-			$('#incomeCategoryList').append(
-				$('<li id="income'+categoryId+'Record" class="modal_line modal_cell row shadow">').append(
-					$('<div class="modal_cell col-12"  style="position: relative;">').append(
-						$('<span id="income'+categoryId+'name">'+categoryName+'</span>'),
-						$('<div class="btn-group vertical_center right">').append(
-							$('<button id="income'+categoryId+'editBtn" type="button" class="btn btn_record income_edit" href="#incomeEditModal" data-toggle="modal" data-target="#incomeEditModal">').
-								attr('value', categoryId).
-								attr('name', categoryName).
-								on('click', function() {
-									var editValue = $(this).attr("value");
-									var editName = $(this).attr("name");
-									$('#editIncomeLabel').val(editName);
-									$('#editIncomeId').val(editValue);
-								}).
-								append($('<i class="fa fa-pencil fa-fw">')),
-							$('<button id="income'+categoryId+'delBtn" type="button" class="btn btn_record bg_record_del income_del" href="#incomeRemoveModal" data-toggle="modal" data-target="#incomeRemoveModal">').
-								attr('value', categoryId).
-								attr('name', categoryName).
-								on('click', function() {
-									$button = $(this);
-									var delValue = $button.attr("value");
-									var delName = $button.attr("name");
-									$('#deleteIncomeLabel').text(delName);
-									$('#deleteIncomeId').val(delValue);
-									$.ajax({
-										url: '/settings/get-user-income-cats-ajax',
-										method : "POST",
-									}).done(function(response) {
-										var array = JSON.parse(response);
-										$('#deleteIncomeSelect').empty();
-										$('#deleteIncomeSelect').append('<option></option>');
-										$.each(array, function(){
-											if(this['id'] != $button.attr('value')) {
-												$('#deleteIncomeSelect').append('<option value="'+this['id']+'">'+this['name']+'</option>');
-											}
-										});
-									}).fail(function() {
-										alert("fail");
-									});
-								}).
-								append($('<i class="fa fa-trash fa-fw">'))
-			))));
+			appendIncomeToList(categoryId, categoryName);
 		} else {
 			$incomeInfo.addClass('error').removeAttr('hidden').show().html(response.message);
 		}
@@ -125,9 +107,7 @@ $incomeEditForm.on("submit", function(e) {
 			var editId = $('#editIncomeId').val();
 			$('#income'+editId+'name').empty().html(editName);
 			$('#income'+editId+'editBtn').attr('name', editName);
-			//$('#income'+editId+'editBtn').attr('value', editId);
 			$('#income'+editId+'delBtn').attr('name', editName);
-			//$('#income'+editId+'delBtn').attr('value', editId);
 		} else {
 			$incomeInfo.removeAttr('hidden').addClass('error').empty().show();
 			$incomeInfo.html(response.message);

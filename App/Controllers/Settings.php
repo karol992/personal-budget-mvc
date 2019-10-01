@@ -74,6 +74,26 @@ class Settings extends Authenticated
     }
 	
 	/**
+     * Edit expense category (AJAX)
+     * @return void
+     */
+    public function editExpenseCategoryAjaxAction() {
+		$edit = new EditCategory($_POST);
+		$response = [];
+		$response['message']="";
+		$edit->updateExpenseCategory();
+		if (empty($edit->errors)) {
+			$response['success']=true;
+		} else {
+			$response['success']=false;
+			foreach ($edit->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
+    }
+	
+	/**
      * Edit payment category
      * @return void
      */
