@@ -295,4 +295,13 @@ class Settings extends Authenticated
 		$response = Data::getUserIncomeCats();
 		echo json_encode($response);
 	}
+	
+	/**
+	 * Get name, id from user expense categories (AJAX)
+	 * @return void
+	 */
+	public function getUserExpenseCatsAjaxAction() {
+		$response = Data::getUserExpenseCats();
+		echo json_encode($response);
+	}
 }

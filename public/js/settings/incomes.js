@@ -2,6 +2,14 @@
 Page content updates every single income category modification (add new, edit, delete) in jQuery functions and executes its in AJAX request.
 */
 
+const $addIncomeForm = $('#addIncomeCategory');
+const $incomeSubmitBtn = $("#addIncomeCategoryBtn");
+const $incomeInfo = $("#incomeCategoryInfo");
+const $incomeEditForm = $('#incomeEditForm');
+const $incomeEditBtn = $("#editIncomeBtn");
+const $incomeRemoveForm = $('#incomeRemoveForm');
+const $incomeRemoveBtn = $("#deleteIncomeBtn");
+
 /* Fill <select> in #incomeRemoveModal (AjAX request) */
 function fillDeleteIncomeSelect() {
 	$button = $(this);
@@ -22,7 +30,7 @@ function fillDeleteIncomeSelect() {
 			}
 		});
 	}).fail(function() {
-		alert("fail");
+		alert("income delete fail");
 	});
 };
 
@@ -34,8 +42,7 @@ function passIncomeCategory() {
 	$('#editIncomeId').val(editValue);
 };
 
-/*	Onclick trash-button on the list of income categories. 
-*/
+/*	Onclick trash-button on the list of income categories. */
 $('.income_del').on('click', fillDeleteIncomeSelect);
 
 /* Onclick pencil-button on the list of income categories */
@@ -60,10 +67,7 @@ function appendIncomeToList(categoryId, categoryName) {
 						append($('<i class="fa fa-trash fa-fw">'))
 ))))};
 
-/* new income-category: ajax-request to database and page-update */
-const $addIncomeForm = $('#addIncomeCategory');
-const $incomeSubmitBtn = $("#addIncomeCategoryBtn");
-const $incomeInfo = $("#incomeCategoryInfo");
+/* New income-category: ajax-request to database and page-update */
 $addIncomeForm.on("submit", function(e) {
     e.preventDefault();
     $incomeSubmitBtn.prop('disabled', true);
@@ -89,9 +93,7 @@ $addIncomeForm.on("submit", function(e) {
 	});
 });
 
-/* edit income category: ajax-request to database and page-update */
-const $incomeEditForm = $('#incomeEditForm');
-const $incomeEditBtn = $("#editIncomeBtn");
+/* Edit income category: ajax-request to database and page-update */
 $incomeEditForm.on("submit", function(e) {
 	e.preventDefault();
     $incomeEditBtn.prop('disabled', true);
@@ -113,16 +115,14 @@ $incomeEditForm.on("submit", function(e) {
 			$incomeInfo.html(response.message);
 		}
 	}).fail(function() {
-		alert("fail");
+		incomeInfo.addClass('error').html('Błąd połączenia z bazą danych.');
 	}).always(function() {
 		$('#incomeEditModal').modal('toggle');
 		$incomeEditBtn.prop('disabled', false);
 	});
 });
 
-/* delete income category: ajax-request to database and page-update */
-const $incomeRemoveForm = $('#incomeRemoveForm');
-const $incomeRemoveBtn = $("#deleteIncomeBtn");
+/* Delete income category: ajax-request to database and page-update */
 $incomeRemoveForm.on("submit", function(e) {
 	e.preventDefault();
     $incomeRemoveBtn.prop('disabled', true);

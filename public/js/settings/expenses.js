@@ -2,7 +2,39 @@
 Page content updates every single expesne category modification (add new, edit, delete)in jQuery functions and executes its in AJAX request.
 */
 
-/* Fill category properties in #incomeEditModal*/
+const $addExpenseForm = $('#addExpenseCategory');
+const $expenseSubmitBtn = $("#addExpenseCategoryBtn");
+const $expenseInfo = $("#expenseCategoryInfo");
+const $expenseEditForm = $('#expenseEditForm');
+const $expenseEditBtn = $("#editExpenseBtn");
+const $expenseRemoveForm = $('#expenseRemoveForm');
+const $expenseRemoveBtn = $("#deleteExpenseBtn");
+
+/* Fill <select> in #expenseRemoveModal (AjAX request) */
+function fillDeleteExpenseSelect() {
+	$button = $(this);
+	let delValue = $button.attr("value");
+	let delName = $button.attr("name");
+	$('#deleteExpenseLabel').text(delName);
+	$('#deleteExpenseId').val(delValue);
+	$.ajax({
+		url: '/settings/get-user-expense-cats-ajax',
+		method : "POST",
+	}).done(function(response) {
+		let array = JSON.parse(response);
+		$('#deleteExpenseSelect').empty();
+		$('#deleteExpenseSelect').append('<option></option>');
+		$.each(array, function(){
+			if(this['id'] != $button.attr('value')) {
+				$('#deleteExpenseSelect').append('<option value="'+this['id']+'">'+this['name']+'</option>');
+			}
+		});
+	}).fail(function() {
+		alert("delete fail");
+	});
+};
+
+/* Fill category properties in #expenseEditModal */
 function passExpenseCategory() {
 	let editValue = $(this).attr("value");
 	let editName = $(this).attr("name");
@@ -23,25 +55,20 @@ function passExpenseCategory() {
 	$('#editExpenseLimitValue').val(editLimitValue);
 };
 
-/* onclick pencil-button on the list of income categories */
+/*	Onclick trash-button on the list of expense categories. */
+$('.expense_del').on('click', fillDeleteExpenseSelect);
+
+/* Onclick pencil-button on the list of expense categories */
 $('.expense_edit').on('click', passExpenseCategory);
 
-
+/* Change expense limit checkbox in #expenseEditModal */
 $('#editExpenseLimited').change(function() {
 	$('#editExpenseLimitValue').prop("readonly", !$(this).prop('checked'));
 	$('#editExpenseLimitValue').toggle();
 	$('#editExpenseLimitEmpty').toggle();
 });
 
-
-/* new expense-category: ajax-request to database and page-update */
-const $addExpenseForm = $('#addExpenseCategory');
-const $expenseSubmitBtn = $("#addExpenseCategoryBtn");
-const $expenseInfo = $("#expenseCategoryInfo");
-
-/* edit income category: ajax-request to database and page-update */
-const $expenseEditForm = $('#expenseEditForm');
-const $expenseEditBtn = $("#editExpenseBtn");
+/* Edit expense category: ajax-request to database and page-update */
 $expenseEditForm.on("submit", function(e) {
 	e.preventDefault();
     $expenseEditBtn.prop('disabled', true);
@@ -77,5 +104,30 @@ $expenseEditForm.on("submit", function(e) {
 	}).always(function() {
 		$('#expenseEditModal').modal('toggle');
 		$expenseEditBtn.prop('disabled', false);
+	});
+});
+
+/* Delete expense category: ajax-request to database and page-update */
+$expenseRemoveForm.on("submit", function(e) {
+	e.preventDefault();
+    $expenseRemoveBtn.prop('disabled', true);
+	$expenseInfo.removeAttr('hidden').removeClass('error').empty().show();
+	$.ajax({
+		url: '/settings/remove-expense-category-ajax',
+		method : "POST",
+		dataType : "json",
+		data: $(this).serialize()
+	}).done(function(response) {
+		if(response.success) {
+			$('#expense'+response.deleteId+'Record').remove();
+			$expenseInfo.html(response.message);
+		} else {
+			$expenseInfo.addClass('error').html(response.message);
+		}
+	}).fail(function() {
+		$expenseInfo.addClass('error').html('Błąd połączenia z bazą danych.');
+	}).always(function() {
+		$('#expenseRemoveModal').modal('toggle');
+		$expenseRemoveBtn.prop('disabled', false);
 	});
 });
