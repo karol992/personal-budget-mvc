@@ -61,6 +61,54 @@ $('.expense_del').on('click', fillDeleteExpenseSelect);
 /* Onclick pencil-button on the list of expense categories */
 $('.expense_edit').on('click', passExpenseCategory);
 
+/* Append new expense category to #expenseToggleGroup*/
+function appendExpenseToList(categoryId, categoryName) {
+	$('#expenseCategoryList').append(
+		$('<li id="expense'+categoryId+'Record" class="modal_line modal_cell row shadow">').append(
+			$('<div class="modal_cell col-12"  style="position: relative;">').append(
+				$('<span id="expense'+categoryId+'name">'+categoryName+'</span>'),
+				$('<span id="expense'+categoryId
+				+'limit" style="display:none;"> (Limit: <span id="expense'+categoryId
+				+'limitValue">0.00</span>)</span>'),
+				$('<div class="btn-group vertical_center right">').append(
+					$('<button id="expense'+categoryId+'editBtn" type="button" class="btn btn_record expense_edit" href="#expenseEditModal" data-toggle="modal" data-target="#expenseEditModal" data-limited="false" data-limit-value="0.00">').
+						attr('value', categoryId).
+						attr('name', categoryName).
+						on('click', passExpenseCategory).
+						append($('<i class="fa fa-pencil fa-fw">')),
+					$('<button id="expense'+categoryId+'delBtn" type="button" class="btn btn_record bg_record_del expense_del" href="#expenseRemoveModal" data-toggle="modal" data-target="#expenseRemoveModal">').
+						attr('value', categoryId).
+						attr('name', categoryName).
+						on('click', fillDeleteExpenseSelect).
+						append($('<i class="fa fa-trash fa-fw">'))
+))))};
+
+/* New income-category: ajax-request to database and page-update */
+$addExpenseForm.on("submit", function(e) {
+    e.preventDefault();
+    $expenseSubmitBtn.prop('disabled', true);
+	$expenseInfo.empty().hide();
+	$.ajax({
+        url: '/settings/add-expense-category-ajax',
+        method : "POST",
+        dataType : "json",
+        data: $(this).serialize()
+    }).done(function(response) {
+			if(response.success) {
+			var categoryId = response.id;
+			var categoryName = response.name;
+			appendExpenseToList(categoryId, categoryName);
+		} else {
+			$expenseInfo.addClass('error').removeAttr('hidden').show().html(response.message);
+		}
+    }).fail(function() {
+		$expenseInfo.addClass('error').removeAttr('hidden').show().html('Błąd połączenia z bazą danych.');
+	}).always(function() {
+		$expenseSubmitBtn.prop('disabled', false);
+		$('#addExpenseCategoryInput').val('');
+	});
+});
+
 /* Change expense limit checkbox in #expenseEditModal */
 $('#editExpenseLimited').change(function() {
 	$('#editExpenseLimitValue').prop("readonly", !$(this).prop('checked'));

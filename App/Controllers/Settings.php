@@ -146,6 +146,28 @@ class Settings extends Authenticated
     }
 	
 	/**
+     * Add expense category (AJAX)
+     * @return void
+     */
+    public function addExpenseCategoryAjaxAction() {
+        $edit = new AddCategory($_POST);
+		$response = [];
+		if ($edit->addExpenseCategory()) {
+			$response['message']=$edit->successMessage;
+			$response['success'] = true;
+			$response['name'] = $edit->name;
+			$response['id'] = Data::getCategoryId("expenses_category_assigned_to_users", $edit->name);
+		} else {
+			$response['message']='Operacja nie powiodła się. ';
+			$response['success'] = false;
+			foreach ($edit->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
+    }
+	
+	/**
      * Add payment category
      * @return void
      */
