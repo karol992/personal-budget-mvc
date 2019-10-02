@@ -1,11 +1,11 @@
-	<!-- INCOMES MODALS -->
+	<!-- PAYMENTS MODALS -->
 
-<!-- Edit income category list modal -->
-	<div class="modal fade" id="incomeEditModal" tabindex="-1" role="dialog" aria-labelledby="incomeModalLabel" aria-hidden="true">
+<!-- Edit payment category list modal -->
+	<div class="modal fade" id="paymentEditModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
-			<form id="incomeEditForm" class="modal-content">
+			<form id="paymentEditForm" class="modal-content">
 				<div class="modal-header">
-					<div class="modal-title" id="incomeModalLabel">Edycja kategorii dochodów</div>
+					<div class="modal-title" id="paymentModalLabel">Edycja kategorii płatności</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -19,14 +19,14 @@
 												Edytowana kategoria:
 											</div>
 										</div>
-										<input type="text" class="modal_cell col-6" id="editIncomeLabel" name="name" value="" />
-										<input type="hidden" id="editIncomeId" name="id" value="" />
+										<input type="text" class="modal_cell col-6" id="editPaymentLabel" name="name" value="" />
+										<input type="hidden" id="editPaymentId" name="id" value="" />
 								</div>
 						</div>
 					</section>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" id="editIncomeBtn" class="btn btn_confirm" >Zapisz</button>
+					<button type="submit" id="editPaymentBtn" class="btn btn_confirm" >Zapisz</button>
 				</div>
 			</form>
 		</div>
@@ -34,11 +34,11 @@
 
 	<!-- Delete income category modal -->
 
-	<div class="modal fade" id="incomeRemoveModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+	<div class="modal fade" id="paymentRemoveModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
-			<form id="incomeRemoveForm" class="modal-content">
+			<form id="paymentRemoveForm" class="modal-content">
 				<div class="modal-header">
-					<div class="modal-title" id="removeIncomeModalLabel">Usuń kategorię dochodów</div>
+					<div class="modal-title" id="removePaymentModalLabel">Usuń kategorię płatności</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -50,14 +50,14 @@
 									<div class="modal_cell col-6">
 										Usuwana kategoria:
 									</div>
-									<div class="modal_cell col-6" id="deleteIncomeLabel"></div>
-									<input type="hidden" id="deleteIncomeId" name="deleteId" value="" />
+									<div class="modal_cell col-6" id="deletePaymentLabel"></div>
+									<input type="hidden" id="deletePaymentId" name="deleteId" value="" />
 								</div>
 								<div class="modal_line row shadow">
 									<div class="modal_cell col-6">
-										Przychody przenieść do:
+										Pozycje przenieść do:
 									</div>
-									<select id="deleteIncomeSelect" class="modal_cell col-6" style="width: 100%;" name="transferId">
+									<select id="deletePaymentSelect" class="modal_cell col-6" style="width: 100%;" name="transferId">
 										<option></option>
 									</select>
 								</div>
@@ -65,7 +65,7 @@
 					</section>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" id="deleteIncomeBtn" class="btn btn-danger" >Usuń</button>
+					<button type="submit" id="deletePaymentBtn" class="btn btn-danger" >Usuń</button>
 				</div>
 			</form>
 		</div>
