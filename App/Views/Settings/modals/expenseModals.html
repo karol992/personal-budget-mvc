@@ -23,13 +23,15 @@
 								<input type="text" class="modal_cell col-6" id="editExpenseLabel" name="name" value="" />
 								<input type="hidden" id="editExpenseId" name="id" value="" />
 							</div>
-							<div class="modal_line row shadow">
+							<div class="modal_line row shadow" style="height: 42px;">
 								<div class="modal_cell col-6">
-									<div  class="vertical_center">
-										<input type="checkbox" id="editExpenseLimited" name="limited"> Limit
+									<div class="vertical_center">
+										<input type="checkbox" id="editExpenseLimited" name="limited">
+										Limit
 									</div>
 								</div>
-								<input type="number" class="modal_cell col-6" id="editExpenseLimitValue" name="limit_value" value="" />
+								<input type="number" class="modal_cell col-6" id="editExpenseLimitValue" name="limit_value" step="0.01" min="0.00" max="999999.99" value="" />
+								<div id="editExpenseLimitEmpty" class="modal_cell col-6"></div>
 							</div>
 						</div>
 					</section>

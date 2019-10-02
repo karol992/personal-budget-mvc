@@ -31,11 +31,9 @@ class EditCategory extends \Core\Model
         };
 		$this->user_id = Auth::getUserId();
 		if(isset($this->limited)) {
-			if ($this->limited == "on") {
-				$this->limited =1;
-			} else if ($this->limited == "off") {
-				$this->limited = 0;
-			}
+			$this->limited = 1;
+		} else {
+			$this->limited = 0;
 		}
     }
 	
@@ -96,9 +94,10 @@ class EditCategory extends \Core\Model
 	protected function updateCategoryRecord() {
 		if ($this->checkName()) {
 			$db = static::getDB();
-			$query = $db->prepare("UPDATE ".$this->tableName." tb SET name = :name WHERE tb.id = :id;");
+			$query = $db->prepare("UPDATE ".$this->tableName." tb SET name = :name WHERE tb.id = :id AND tb.user_id = :user_id;");
 			$query->bindValue(':name', $this->name, PDO::PARAM_STR);
 			$query->bindValue(':id', $this->id, PDO::PARAM_INT);
+			$query->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
 			return $query->execute();
 		}
 		return false;

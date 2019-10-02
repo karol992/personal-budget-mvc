@@ -1,9 +1,10 @@
-		<section class="top10 offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10">
+		<section id="incomeToggleGroup" class="top10 offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10">
 			<button class="btn_settings shadow settings_group2 nav-link js_button">
 						Przychody
 			</button>
 			<div class="settings_group2 js_toggle_group" style="display: none;">
 				<div class="container">
+					<div class="modal_line modal_cell row shadow alert-success js_settings_info" id="incomeCategoryInfo" hidden></div>
 					<ul id="incomeCategoryList" class="list-unstyled"  style="margin-bottom: 0;">
 					{% for category in incomeCategories %}
 						<li id="income{{ category.id }}Record" class="modal_line modal_cell row shadow">
@@ -30,7 +31,7 @@
 							</form>
 						</div>
 					</div>
-					<div class="modal_line modal_cell row shadow alert-success js_settings_info" id="incomeCategoryInfo" hidden></div>
+					
 				</div>
 			</div>
 		</section>
