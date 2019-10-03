@@ -1,15 +1,17 @@
 .container {
 	border: 1px solid var(--color-dark);
+	border-radius: 0.25em;
 	margin-top: 20px;
 	margin-bottom: 20px;
 	width: 100%;
-	display: table;
+	/*display: table;*/
 }
 .transaction_section{
 	display: inline-block;
-	height: 15vmin;
-	min-height: 90px;
-	padding: 5px;
+	margin-top: 0.375em;
+	/*height: 15vmin;*/
+	/*min-height: 90px;*/
+	/*padding: 5px;*/
 }
 .transaction_btn {
 	padding: 5px;
@@ -31,7 +33,7 @@
 input,option,select,input[type=textarea] {
 	padding-left: 10px;
 	width: 100%;
-    font-size: calc(12px + 2vmin);
+    /*font-size: calc(12px + 2vmin);*/
 }
 input[type=number]::-webkit-inner-spin-button {
 	opacity: 1;
@@ -42,3 +44,4 @@ input[type=date]::-webkit-inner-spin-button {
 input[type=date]::-webkit-calendar-picker-indicator {
 	opacity: 1;
 }
+
