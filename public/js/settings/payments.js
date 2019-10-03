@@ -1,80 +1,80 @@
 /* 
-Page content updates every single income category modification (add new, edit, delete) in jQuery functions and executes its in AJAX request.
+Page content updates every single payment category modification (add new, edit, delete) in jQuery functions and executes its in AJAX request.
 */
 $(document).ready(function() {
 	
-	const $addIncomeForm = $('#addIncomeCategory');
-	const $incomeSubmitBtn = $("#addIncomeCategoryBtn");
-	const $incomeInfo = $("#incomeCategoryInfo");
-	const $incomeEditForm = $('#incomeEditForm');
-	const $incomeEditBtn = $("#editIncomeBtn");
-	const $incomeRemoveForm = $('#incomeRemoveForm');
-	const $incomeRemoveBtn = $("#deleteIncomeBtn");
+	const $addPaymentForm = $('#addPaymentCategory');
+	const $paymentSubmitBtn = $("#addPaymentCategoryBtn");
+	const $paymentInfo = $("#paymentCategoryInfo");
+	const $paymentEditForm = $('#paymentEditForm');
+	const $paymentEditBtn = $("#editPaymentBtn");
+	const $paymentRemoveForm = $('#paymentRemoveForm');
+	const $paymentRemoveBtn = $("#deletePaymentBtn");
 
-	/* Fill <select> in #incomeRemoveModal (AjAX request) */
-	function fillDeleteIncomeSelect() {
+	/* Fill <select> in #expenseRemoveModal (AjAX request) */
+	function fillDeletePaymentSelect() {
 		$button = $(this);
 		let delValue = $button.attr("value");
 		let delName = $button.attr("name");
-		$('#deleteIncomeLabel').text(delName);
-		$('#deleteIncomeId').val(delValue);
+		$('#deletePaymentLabel').text(delName);
+		$('#deletePaymentId').val(delValue);
 		$.ajax({
-			url: '/settings/get-user-income-cats-ajax',
+			url: '/settings/get-user-payment-cats-ajax',
 			method : "POST",
 		}).done(function(response) {
 			let array = JSON.parse(response);
-			$('#deleteIncomeSelect').empty();
-			$('#deleteIncomeSelect').append('<option></option>');
+			$('#deletePaymentSelect').empty();
+			$('#deletePaymentSelect').append('<option></option>');
 			$.each(array, function(){
 				if(this['id'] != $button.attr('value')) {
-					$('#deleteIncomeSelect').append('<option value="'+this['id']+'">'+this['name']+'</option>');
+					$('#deletePaymentSelect').append('<option value="'+this['id']+'">'+this['name']+'</option>');
 				}
 			});
 		}).fail(function() {
-			alert("income delete fail");
+			alert("payment delete fail");
 		});
 	};
 
-	/* Fill category properties in #incomeEditModal*/
-	function passIncomeCategory() {
+	/* Fill category properties in #paymentEditModal*/
+	function passPaymentCategory() {
 		let editValue = $(this).attr("value");
 		let editName = $(this).attr("name");
-		$('#editIncomeLabel').val(editName);
-		$('#editIncomeId').val(editValue);
+		$('#editPaymentLabel').val(editName);
+		$('#editPaymentId').val(editValue);
 	};
 
-	/*	Onclick trash-button on the list of income categories. */
-	$('.income_del').on('click', fillDeleteIncomeSelect);
+	/*	Onclick trash-button on the list of payment categories. */
+	$('.payment_del').on('click', fillDeletePaymentSelect);
 
-	/* Onclick pencil-button on the list of income categories */
-	$('.income_edit').on('click', passIncomeCategory);
+	/* Onclick pencil-button on the list of payment categories */
+	$('.payment_edit').on('click', passPaymentCategory);
 
-	/* Append new income category to #incomeToggleGroup*/
-	function appendIncomeToList(categoryId, categoryName) {
-		$('#incomeCategoryList').append(
-			$('<li id="income'+categoryId+'Record" class="modal_line modal_cell row shadow">').append(
+	/* Append new payment category to #paymentToggleGroup*/
+	function appendPaymentToList(categoryId, categoryName) {
+		$('#paymentCategoryList').append(
+			$('<li id="payment'+categoryId+'Record" class="modal_line modal_cell row shadow">').append(
 				$('<div class="modal_cell col-12"  style="position: relative;">').append(
-					$('<span id="income'+categoryId+'name">'+categoryName+'</span>'),
+					$('<span id="payment'+categoryId+'name">'+categoryName+'</span>'),
 					$('<div class="btn-group vertical_center right">').append(
-						$('<button id="income'+categoryId+'editBtn" type="button" class="btn btn_record income_edit" href="#incomeEditModal" data-toggle="modal" data-target="#incomeEditModal">').
+						$('<button id="payment'+categoryId+'editBtn" type="button" class="btn btn_record payment_edit" href="#paymentEditModal" data-toggle="modal" data-target="#paymentEditModal">').
 							attr('value', categoryId).
 							attr('name', categoryName).
-							on('click', passIncomeCategory).
+							on('click', passPaymentCategory).
 							append($('<i class="fa fa-pencil fa-fw">')),
-						$('<button id="income'+categoryId+'delBtn" type="button" class="btn btn_record bg_record_del income_del" href="#incomeRemoveModal" data-toggle="modal" data-target="#incomeRemoveModal">').
+						$('<button id="payment'+categoryId+'delBtn" type="button" class="btn btn_record bg_record_del payment_del" href="#paymentRemoveModal" data-toggle="modal" data-target="#paymentRemoveModal">').
 							attr('value', categoryId).
 							attr('name', categoryName).
-							on('click', fillDeleteIncomeSelect).
+							on('click', fillDeletePaymentSelect).
 							append($('<i class="fa fa-trash fa-fw">'))
 	))))};
 
-	/* New income-category: ajax-request to database and page-update */
-	$addIncomeForm.on("submit", function(e) {
+	/* New payment-category: ajax-request to database and page-update */
+	$addPaymentForm.on("submit", function(e) {
 		e.preventDefault();
-		$incomeSubmitBtn.prop('disabled', true);
-		$incomeInfo.empty().hide();
+		$paymentSubmitBtn.prop('disabled', true);
+		$paymentInfo.empty().hide();
 		$.ajax({
-			url: '/settings/add-income-category-ajax',
+			url: '/settings/add-payment-category-ajax',
 			method : "POST",
 			dataType : "json",
 			data: $(this).serialize()
@@ -82,69 +82,69 @@ $(document).ready(function() {
 				if(response.success) {
 				var categoryId = response.id;
 				var categoryName = response.name;
-				appendIncomeToList(categoryId, categoryName);
+				appendPaymentToList(categoryId, categoryName);
 			} else {
-				$incomeInfo.addClass('error').removeAttr('hidden').show().html(response.message);
+				$paymentInfo.addClass('error').removeAttr('hidden').show().html(response.message);
 			}
 		}).fail(function() {
-			$incomeInfo.addClass('error').removeAttr('hidden').show().html('Błąd połączenia z bazą danych.');
+			$paymentInfo.addClass('error').removeAttr('hidden').show().html('Błąd połączenia z bazą danych.');
 		}).always(function() {
-			$incomeSubmitBtn.prop('disabled', false);
-			$('#addIncomeCategoryInput').val('');
+			$paymentSubmitBtn.prop('disabled', false);
+			$('#addPaymentCategoryInput').val('');
 		});
 	});
 
-	/* Edit income category: ajax-request to database and page-update */
-	$incomeEditForm.on("submit", function(e) {
+	/* Edit payment category: ajax-request to database and page-update */
+	$paymentEditForm.on("submit", function(e) {
 		e.preventDefault();
-		$incomeEditBtn.prop('disabled', true);
-		$incomeInfo.empty().hide();
+		$paymentEditBtn.prop('disabled', true);
+		$paymentInfo.empty().hide();
 		$.ajax({
-			url: '/settings/edit-income-category-ajax',
+			url: '/settings/edit-payment-category-ajax',
 			method : "POST",
 			dataType : "json",
 			data: $(this).serialize()
 		}).done(function(response) {
 			if(response.success) {
-				var editName = $('#editIncomeLabel').val();
-				var editId = $('#editIncomeId').val();
-				$('#income'+editId+'name').empty().html(editName);
-				$('#income'+editId+'editBtn').attr('name', editName);
-				$('#income'+editId+'delBtn').attr('name', editName);
+				var editName = $('#editPaymentLabel').val();
+				var editId = $('#editPaymentId').val();
+				$('#payment'+editId+'name').empty().html(editName);
+				$('#payment'+editId+'editBtn').attr('name', editName);
+				$('#payment'+editId+'delBtn').attr('name', editName);
 			} else {
-				$incomeInfo.removeAttr('hidden').addClass('error').empty().show();
-				$incomeInfo.html(response.message);
+				$paymentInfo.removeAttr('hidden').addClass('error').empty().show();
+				$paymentInfo.html(response.message);
 			}
 		}).fail(function() {
-			incomeInfo.addClass('error').html('Błąd połączenia z bazą danych.');
+			paymentInfo.addClass('error').html('Błąd połączenia z bazą danych.');
 		}).always(function() {
-			$('#incomeEditModal').modal('toggle');
-			$incomeEditBtn.prop('disabled', false);
+			$('#paymentEditModal').modal('toggle');
+			$paymentEditBtn.prop('disabled', false);
 		});
 	});
 
-	/* Delete income category: ajax-request to database and page-update */
-	$incomeRemoveForm.on("submit", function(e) {
+	/* Delete payment category: ajax-request to database and page-update */
+	$paymentRemoveForm.on("submit", function(e) {
 		e.preventDefault();
-		$incomeRemoveBtn.prop('disabled', true);
-		$incomeInfo.removeAttr('hidden').removeClass('error').empty().show();
+		$paymentRemoveBtn.prop('disabled', true);
+		$paymentInfo.removeAttr('hidden').removeClass('error').empty().show();
 		$.ajax({
-			url: '/settings/remove-income-category-ajax',
+			url: '/settings/remove-payment-category-ajax',
 			method : "POST",
 			dataType : "json",
 			data: $(this).serialize()
 		}).done(function(response) {
 			if(response.success) {
-				$('#income'+response.deleteId+'Record').remove();
-				$incomeInfo.html(response.message);
+				$('#payment'+response.deleteId+'Record').remove();
+				$paymentInfo.html(response.message);
 			} else {
-				$incomeInfo.addClass('error').html(response.message);
+				$paymentInfo.addClass('error').html(response.message);
 			}
 		}).fail(function() {
-			$incomeInfo.addClass('error').html('Błąd połączenia z bazą danych.');
+			$paymentInfo.addClass('error').html('Błąd połączenia z bazą danych.');
 		}).always(function() {
-			$('#incomeRemoveModal').modal('toggle');
-			$incomeRemoveBtn.prop('disabled', false);
+			$('#paymentRemoveModal').modal('toggle');
+			$paymentRemoveBtn.prop('disabled', false);
 		});
 	});
 	

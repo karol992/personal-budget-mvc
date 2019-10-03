@@ -104,6 +104,26 @@ class Settings extends Authenticated
     }
 	
 	/**
+     * Edit payment category (AJAX)
+     * @return void
+     */
+    public function editPaymentCategoryAjaxAction() {
+		$edit = new EditCategory($_POST);
+		$response = [];
+		$response['message']="";
+		$edit->updatePaymentCategory();
+		if (empty($edit->errors)) {
+			$response['success']=true;
+		} else {
+			$response['success']=false;
+			foreach ($edit->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
+    }
+	
+	/**
      * Add income category
      * @return void
      */
@@ -178,6 +198,28 @@ class Settings extends Authenticated
     }
 	
 	/**
+     * Add payment category (AJAX)
+     * @return void
+     */
+    public function addPaymentCategoryAjaxAction() {
+        $edit = new AddCategory($_POST);
+		$response = [];
+		if ($edit->addPaymentCategory()) {
+			$response['message']=$edit->successMessage;
+			$response['success'] = true;
+			$response['name'] = $edit->name;
+			$response['id'] = Data::getCategoryId("payment_methods_assigned_to_users", $edit->name);
+		} else {
+			$response['message']='Operacja nie powiodła się. ';
+			$response['success'] = false;
+			foreach ($edit->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
+    }
+	
+	/**
      * Remove Income Category
      * @return void
      */
@@ -248,7 +290,28 @@ class Settings extends Authenticated
 		$remove->removePaymentCategory();
 		$this->redirect('/settings/index');
     }
-	
+
+	/**
+     * Remove Payment Category (AJAX)
+     * @return void
+     */
+    public function removePaymentCategoryAjaxAction() {
+        $remove = new RemoveCategory($_POST);
+		$response = [];
+		if ($remove->removePaymentCategory()) {
+			$response['message']=$remove->successMessage;
+			$response['success'] = true;
+			$response['deleteId'] = $remove->deleteId;
+		} else {
+			$response['message']='Operacja nie powiodła się. ';
+			$response['success'] = false;
+			foreach ($remove->errors as $error) {
+				$response['message'] .= $error;
+			};
+		}
+		echo json_encode($response);
+    }
+
 	/**
      * Change name for logged user
      * @return void
@@ -324,6 +387,15 @@ class Settings extends Authenticated
 	 */
 	public function getUserExpenseCatsAjaxAction() {
 		$response = Data::getUserExpenseCats();
+		echo json_encode($response);
+	}
+	
+	/**
+	 * Get name, id from user payment categories (AJAX)
+	 * @return void
+	 */
+	public function getUserPaymentCatsAjaxAction() {
+		$response = Data::getUserPaymentCats();
 		echo json_encode($response);
 	}
 }
