@@ -4,6 +4,7 @@ body {
 	color: var(--color-dark);
     font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
+	min-width: 300px;
 }
 h1 {
 	font-size: calc(10px + 5vw);
@@ -13,7 +14,13 @@ h1 {
 /* <header> stylization */
 .ribbon {
 	background-color: var(--color-dark);
-	min-height: 70px;
+	min-height: 40px;
+}
+.nav_icon {
+	font-size: 0.8em;
+}
+.center {
+	margin: 0 auto;
 }
 .logo {
 	padding: 10px;
@@ -52,6 +59,9 @@ h1 {
 }
 .inB {
 	display: inline-block;
+}
+.floatLeft {
+	float: left;
 }
 .hidden {
 	display: none;

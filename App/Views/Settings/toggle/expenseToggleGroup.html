@@ -1,9 +1,11 @@
-		<div class="top10 offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10">
-			<button class="btn_settings shadow settings_group2 nav-link js_button">
+		<div class="container">
+			<div id="expenseToggleGroup" class="top10 offset-xl-3 offset-lg-2 offset-md-1 col-xl-6 col-lg-8 col-md-10 col-12 center">
+				<div class="shadow row">
+					<button class="btn_settings nav-link js_button">
 						Wydatki
-			</button>
-			<div class="settings_group2 js_toggle_group" style="display: none;">
-				<div class="container">
+					</button>
+				</div>
+				<div class="js_toggle_group" style="display: none;">
 					<div class="modal_line modal_cell row shadow alert-success js_settings_info" id="expenseCategoryInfo" hidden></div>
 					<ul id="expenseCategoryList" class="list-unstyled"  style="margin-bottom: 0;">
 					{% for category in expenseCategories %}

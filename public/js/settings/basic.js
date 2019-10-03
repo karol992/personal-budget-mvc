@@ -1,7 +1,6 @@
-
 $('button.js_button').click(function(){
-  $(this).next('div.js_toggle_group').toggle("slow");
-  $(this).next('div.js_toggle_group').find('.js_settings_info').empty().hide();
+  $(this).parent().next('div.js_toggle_group').slideToggle(50);
+  $(this).parent().next('div.js_toggle_group').find('.js_settings_info').empty().hide();
 });
 
  //For the future
