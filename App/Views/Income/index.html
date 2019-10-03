@@ -7,8 +7,6 @@
 {% endblock %}
 
 {% block body %}
-	<!-- Income adding 
-	<div id="info_ribbon"></div>-->
 	<!-- Errors of income -->
 	{% if errors is not empty %}
 		<div id="errors" class="col-12">
@@ -57,13 +55,15 @@
 					</div>
 					{% endfor %}
 				</div>
-				<!-- Income note -->
+				
 				<div class="transaction_section col-12 col-md-6">
+					<!-- Income note -->
 					<div>
 						<label for="income_note">Notatki: </label>
 						<input class="form-control col-12" type="textarea" name="income_note" placeholder="Opcjonalnie..." onfocus="this.placeholder=''" onblur="this.placeholder='Opcjonalnie...'"
 						value="" maxlength="100">
 					</div>
+					<!-- Income saving -->
 					<div class="row d-sm-block d-none">
 						<div class="transaction_btn offset-1 col-5">
 							<button id="submitBtn" class="btn btn-success" type="submit" value="Submit">Dodaj</button>
