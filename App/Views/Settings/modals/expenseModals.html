@@ -1,0 +1,82 @@
+	<!-- EXPENSES MODALS -->
+
+<!-- Edit expense category list modal -->
+	<div class="modal fade" id="expenseEditModal" tabindex="-1" role="dialog" aria-labelledby="expenseModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form id="expenseEditForm" class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title" id="expenseModalLabel">Edycja kategorii wydatków</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+							<div class="modal_line row shadow">
+								<div class="modal_cell col-6">
+									<div class="vertical_center">
+										Edytowana kategoria:
+									</div>
+								</div>
+								<input type="text" class="modal_cell col-6" id="editExpenseLabel" name="name" value="" />
+								<input type="hidden" id="editExpenseId" name="id" value="" />
+							</div>
+							<div class="modal_line row shadow" style="height: 42px;">
+								<div class="modal_cell col-6">
+									<div class="vertical_center">
+										<input type="checkbox" id="editExpenseLimited" name="limited">
+										Limit
+									</div>
+								</div>
+								<input type="number" class="modal_cell col-6" id="editExpenseLimitValue" name="limit_value" step="0.01" min="0.00" max="999999.99" value="" />
+								<div id="editExpenseLimitEmpty" class="modal_cell col-6"></div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" id="editExpenseBtn" class="btn btn_confirm" >Zapisz</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Delete expense category modal -->
+
+	<div class="modal fade" id="expenseRemoveModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form id="expenseRemoveForm" class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title" id="removeExpenseModalLabel">Usuń kategorię dochodów</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<div class="container">
+								<div class="modal_line row shadow">
+										<div class="modal_cell col-6">
+											Usuwana kategoria:
+										</div>
+										<div class="modal_cell col-6" id="deleteExpenseLabel"></div>
+										<input type="hidden" id="deleteExpenseId" name="deleteId" value="" />
+								</div>
+								<div class="modal_line row shadow">
+										<div class="modal_cell col-6">
+											Wydatki przenieść do:
+										</div>
+										<select id="deleteExpenseSelect" class="modal_cell col-6" style="width: 100%;" name="transferId">
+											<option></option>
+										</select>
+								</div>
+						</div>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" id="deleteExpenseBtn" class="btn btn-danger" >Usuń</button>
+				</div>
+			</form>
+		</div>
+	</div>

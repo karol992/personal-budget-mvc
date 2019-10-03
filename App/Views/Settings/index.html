@@ -11,7 +11,10 @@
 <div id="info_ribbon"></div>
 	
 <section id="pageContent">
-	{% include 'Settings/pageContent.html' %}
+	{% include 'Settings/toggle/incomeToggleGroup.html' %}
+	{% include 'Settings/toggle/expenseToggleGroup.html' %}
+	{% include 'Settings/toggle/paymentToggleGroup.html' %}
+	{% include 'Settings/toggle/accountToggleGroup.html' %}
 </section>	
 		
 		<br />
@@ -19,19 +22,19 @@
 <section id="modals">
 
 	<section id="incomeModals">
-		{% include 'Settings/incomeModals.html' %}
+		{% include 'Settings/modals/incomeModals.html' %}
 	</section>
 
 	<section id="expenseModals">
-
+		{% include 'Settings/modals/expenseModals.html' %}
 	</section>
 	
 	<section id="paymentModals">
-
+		{% include 'Settings/modals/paymentModals.html' %}
 	</section>
 
 	<section id="accountDataModals">
-		{% include 'Settings/accountDataModals.html' %}
+		{% include 'Settings/modals/accountDataModals.html' %}
 	</section>
 	
 </section>
@@ -39,9 +42,9 @@
 {% endblock %}
 
 {% block footer %}
-<script src="/js/modal.js"></script>
-<script src="/js/hideShowPassword.min.js"></script>
-<script src="/js/settingsValidation.js"></script>
-<script src="/js/settings.js"></script>
-<script src="/js/settingsIncomes.js"></script>
+<script src="/js/settings/basic.js"></script>
+<script src="/js/settings/incomes.js"></script>
+<script src="/js/settings/expenses.js"></script>
+<script src="/js/settings/payments.js"></script>
+<script src="/js/settings/validation.js"></script>
 {% endblock %}

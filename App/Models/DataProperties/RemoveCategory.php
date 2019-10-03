@@ -36,24 +36,27 @@ class RemoveCategory extends \Core\Model
 		foreach ($data as $key => $value) {
 			$this->$key=$value;
         };
+		$this->user_id = Auth::getUserId();
 	}
 	
 	protected function deleteCategory() {
-		$sql = "DELETE FROM ".$this->categoryTable." WHERE ".$this->categoryTable.".id = :id";
+		$sql = "DELETE FROM ".$this->categoryTable." WHERE id = :id AND user_id = :user_id";
 		$db = static::getDB();
 		$query = $db->prepare($sql);
 		$query->bindValue(':id', $this->deleteId, PDO::PARAM_INT);
+		$query->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
 		return $query->execute();
 	}
 	
 	protected function updateRecords() {
 		$sql = "UPDATE ".$this->recordsTable.
 			" SET ".$this->categoryKey." = :transferId 
-			WHERE ".$this->recordsTable.".".$this->categoryKey." = :id";
+			WHERE ".$this->categoryKey." = :id AND user_id = :user_id";
 		$db = static::getDB();
 		$query = $db->prepare($sql);
 		$query->bindValue(':transferId', $this->transferId, PDO::PARAM_INT);
 		$query->bindValue(':id', $this->deleteId, PDO::PARAM_INT);
+		$query->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
 		return $query->execute();
 	}
 	
@@ -63,8 +66,8 @@ class RemoveCategory extends \Core\Model
 			$transferCategoryName = Data::getCategoryName($this->categoryTable, $this->transferId);
 			$deleteCategoryName = Data::getCategoryName($this->categoryTable, $this->deleteId);
 			if (($this->updateRecords()) && ($this->deleteCategory())) {
-				$this->successMessage = 'Kategorię pozycji '.$deleteCategoryName.' zmieniono na '.$transferCategoryName.'. '.
-				'Usunięto kategorię: '.$deleteCategoryName.'. ';
+				$this->successMessage = 'Pozycje z kategorii "'.$deleteCategoryName.'" przeniesiono do "'.$transferCategoryName.'". '.
+				'Kategorię "'.$deleteCategoryName.'" usunięto. ';
 				return true;
 			}
 		}

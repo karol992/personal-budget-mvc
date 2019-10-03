@@ -1,6 +1,5 @@
 	<!-- INCOMES MODALS -->
 
-
 <!-- Edit income category list modal -->
 	<div class="modal fade" id="incomeEditModal" tabindex="-1" role="dialog" aria-labelledby="incomeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
@@ -16,7 +15,9 @@
 						<div class="container">
 							<div class="modal_line row shadow">
 										<div class="modal_cell col-6">
-											Edytowana kategoria:
+											<div  class="vertical_center">
+												Edytowana kategoria:
+											</div>
 										</div>
 										<input type="text" class="modal_cell col-6" id="editIncomeLabel" name="name" value="" />
 										<input type="hidden" id="editIncomeId" name="id" value="" />
@@ -46,19 +47,19 @@
 					<section>
 						<div class="container">
 								<div class="modal_line row shadow">
-										<div class="modal_cell col-6">
-											Usuwana kategoria:
-										</div>
-										<div class="modal_cell col-6" id="deleteIncomeLabel"></div>
-										<input type="hidden" id="deleteIncomeId" name="deleteId" value="" />
+									<div class="modal_cell col-6">
+										Usuwana kategoria:
+									</div>
+									<div class="modal_cell col-6" id="deleteIncomeLabel"></div>
+									<input type="hidden" id="deleteIncomeId" name="deleteId" value="" />
 								</div>
 								<div class="modal_line row shadow">
-										<div class="modal_cell col-6">
-											Przychody przenieść do:
-										</div>
-										<select id="deleteIncomeSelect" class="modal_cell col-6" style="width: 100%;" name="transferId">
-											<option></option>
-										</select>
+									<div class="modal_cell col-6">
+										Przychody przenieść do:
+									</div>
+									<select id="deleteIncomeSelect" class="modal_cell col-6" style="width: 100%;" name="transferId">
+										<option></option>
+									</select>
 								</div>
 						</div>
 					</section>
