@@ -35,25 +35,35 @@ $(document).ready(function() {
 	/* Prototype: show ribbon with data for limit request */
 	const $expenseValue = $("#expense_value");
 	const $limit = $("#limit_ribbon");
+	const date = $('#expense_date').val();
 	$expenseValue.on("change", function() {
-		let value = $(this).val();
-		let category_id = $("input[name='expense_category']:checked").val();
-		$limit.addClass('alert-success');
-		$limit.html("value:"+value+" cat:"+category_id);
+		$checked = $("input[name='expense_category']:checked");
+		let limited = $checked.attr("data-limited"); // 0 or 1
+		if (limited==1) {
+			let value = $(this).val();
+			let category_id = $checked.val();
+			let limit_value = $checked.attr("data-limit-value");
+			$limit.html("value:"+value+" cat:"+category_id+" limit_value:"+limit_value+" date:"+date);
+		} else {
+			$limit.empty();
+		}
 	});
 	const $category = $("input[name='expense_category']");
 	$category.on("change", function() {
-		let value = $expenseValue.val();
-		let category_id = $(this).val();
-		$limit.addClass('alert-success');
-		$limit.html("value:"+value+" category:"+category_id);
+		$checked = $(this);
+		let limited = $checked.attr("data-limited"); // 0 or 1
+		if (limited==1) {
+			let value = $expenseValue.val();
+			let category_id = $checked.val();
+			let limit_value = $checked.attr("data-limit-value");
+			$limit.html("value:"+value+" cat:"+category_id+" limit_value:"+limit_value+" date:"+date);
+		} else {
+			$limit.empty();
+		}
 	});
 	/* Things to do:
-		- (ajax/twig[expense_cats]) get limited of [category_id] category expense
-		if (limited==true) {
-			- (ajax) get limit_value of [category_id] expenses
-			- (ajax) get sum of [category_id] expenses 
-		}
+		-
+		- (ajax) get sum of [category_id] expenses
 	*/
 });
 

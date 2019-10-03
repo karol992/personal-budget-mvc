@@ -34,12 +34,12 @@
 				<!-- Date of expense -->
 				<div class="transaction_section col-12 col-md-6">
 					<label for="expense_date">Data: </label>
-					<input class="form-control" type="date" name="expense_date" value="{{ transaction_date }}">
+					<input id="expense_date" class="form-control" type="date" name="expense_date" value="{{ transaction_date }}">
 				</div>
 			</div>
 			
 			<div class="row" >
-				<div id="limit_ribbon">
+				<div class="alert-success" id="limit_ribbon">
 				</div>
 			</div>
 			
@@ -53,8 +53,7 @@
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<div class="input-group-text">
-									<input type="radio" name="expense_category" id="radio{{ item.id }}" value="{{ item.id }}" style="width: 0.8em;"
-									{% if item==firstExpense %}checked{% endif %}>
+									<input type="radio" name="expense_category" id="radio{{ item.id }}" value="{{ item.id }}" style="width: 0.8em;" data-limited="{{ item.limited }}" data-limit-value="{{ item.limit_value }}" {% if item==firstExpense %}checked{% endif %}>
 								</div>
 							</div>
 							<label class="form-control" for="radio{{ item.id }}" >{{ item.name }}</label>
