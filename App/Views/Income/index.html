@@ -7,8 +7,6 @@
 {% endblock %}
 
 {% block body %}
-	<!-- Income adding -->
-	<div id="info_ribbon"></div>
 	<!-- Errors of income -->
 	{% if errors is not empty %}
 		<div id="errors" class="col-12">
@@ -18,72 +16,86 @@
 		</div>
 	{% endif %}
 
-		<form id="income_form" class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10" >
-			<!-- Amount of income -->
-			<div class="transaction_section col-12 col-md-6">
-				<div><label for="income_value">Kwota: </label></div>
-				<div><input type="number" name="income_value" step="0.01" min="0.01" max="999999.99"  value="{{ income_value }}" required></div>
+		<form id="income_form">
+		
+		<div class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10">
+		
+			<div class="row" >
+				<div id="info_ribbon">
+				</div>
 			</div>
-			<!-- Date of income -->
-			<div class="transaction_section col-12 col-md-6">
-				<div><label for="income_date">Data: </label></div>
-				<div><input type="date" name="income_date" value="{{ transaction_date }}"></div>
+			
+			<div class="row">
+				<!-- Amount of income -->
+				<div class="transaction_section col-12 col-md-6">
+					<label for="income_value">Kwota: </label>
+					<input class="form-control" type="number" name="income_value" step="0.01" min="0.01" max="999999.99"  value="{{ income_value }}" required>
+				</div>
+				<!-- Date of income -->
+				<div class="transaction_section col-12 col-md-6">
+					<label for="income_date">Data: </label>
+					<input class="form-control" type="date" name="income_date" value="{{ transaction_date }}">
+				</div>
 			</div>
-			<!-- Category of income -->
-			<div class="transaction_section col-12 col-md-6">
-				<div>Kategoria: </div>
-				<select name="income_category">
-							{% for item in income_cats %}
-								<option value="{{ item.id }}">{{ item.name }} </option>
-							{% endfor %}
-				</select>
+			
+			<div class="row">
+				<!-- Category of income -->
+				<div class="transaction_section col-12 col-md-6">
+					<label>Kategoria: </label>
+					{% set firstItem = income_cats|first %}
+					{% for item in income_cats %}
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<div class="input-group-text">
+								<input type="radio" name="income_category" id="radio{{ item.id }}" value="{{ item.id }}" style="width: 0.8em;"
+								{% if item==firstItem %}checked{% endif %}>
+							</div>
+						</div>
+						<label class="form-control" for="radio{{ item.id }}" >{{ item.name }}</label>
+					</div>
+					{% endfor %}
+				</div>
+				
+				<div class="transaction_section col-12 col-md-6">
+					<!-- Income note -->
+					<div>
+						<label for="income_note">Notatki: </label>
+						<input class="form-control col-12" type="textarea" name="income_note" placeholder="Opcjonalnie..." onfocus="this.placeholder=''" onblur="this.placeholder='Opcjonalnie...'"
+						value="" maxlength="100">
+					</div>
+					<!-- Income saving -->
+					<div class="row d-sm-block d-none">
+						<div class="transaction_btn offset-1 col-5">
+							<button id="submitBtn" class="btn btn-success" type="submit" value="Submit">Dodaj</button>
+						</div>
+						<div class="transaction_btn col-5">
+							<button class="btn btn-danger" type="reset" value="Reset">Anuluj</button>
+						</div>
+					</div>
+				</div>
 			</div>
-			<!-- Income note -->
-			<div class="transaction_section col-12 col-md-6">
-				<label for="income_note">Notatki: </label>
-				<input type="textarea" name="income_note" placeholder="Opcjonalnie..." onfocus="this.placeholder=''" onblur="this.placeholder='Opcjonalnie...'"
-				value="" maxlength="100">
+			
+			<div class="row">
+				<br />
 			</div>
-			<!-- Income saving -->
-			<div class="transaction_btn offset-4 offset-md-6 col-4 col-md-3">
-				<button id="submitBtn" class="btn btn-success" type="submit" value="Submit">Dodaj</button>
+			
+		</div>
+		
+		<div class="offset-4 col-8 d-sm-none d-block" id="buttons_footer">
+			<div class="row">
+				<div class="transaction_btn col-6">
+					<button id="submitBtn" class="btn btn-success" type="submit" value="Submit">Dodaj</button>
+				</div>
+				<div class="transaction_btn col-6">
+					<button class="btn btn-danger" type="reset" value="Reset">Anuluj</button>
+				</div>
 			</div>
-			<div class="transaction_btn col-4 col-md-3">
-				<button class="btn btn-danger" type="reset" value="Reset">Anuluj</button>
-			</div>
+		</div>
 		</form>
+		
+		
 {% endblock %}
 
 {% block footer %}
-<script>
-const $form = $('#income_form');
-const $submitBtn = $("#submitBtn");
-const $info = $("#info_ribbon");
-$form.on("submit", function(e) {
-    e.preventDefault();
-    $submitBtn.prop('disabled', true);
-	$.ajax({
-        url: '/income/add-income-ajax',
-        method : "POST",
-        dataType : "json",
-        data: $(this).serialize()
-    }).done(function(response) {
-		$(".alert-warning").hide();
-		if(response.success) {
-			$info.removeClass('alert-warning');
-			$info.addClass('ribbon_info alert-success');
-			$info.html(response.message);
-			$(".alert-success").show();
-			$submitBtn.prop('disabled', false);
-		} else {
-			location.reload(true);
-		}
-    }).fail(function() {
-		$info.removeClass('alert-success');
-		$info.addClass('ribbon_info alert-warning');
-		$info.html('Błąd połączenia z bazą danych.');
-		$submitBtn.prop('disabled', false);
-	});
-});
-</script>
+<script src="/js/income.js"></script>
 {% endblock %}

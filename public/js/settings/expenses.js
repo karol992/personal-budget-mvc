@@ -1,5 +1,5 @@
 /* 
-Page content updates every single expesne category modification (add new, edit, delete)in jQuery functions and executes its in AJAX request.
+Page content updates every single expense category modification (add new, edit, delete)in jQuery functions and executes its in AJAX request.
 */
 
 $(document).ready(function() {
