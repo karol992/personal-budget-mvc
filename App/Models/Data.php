@@ -101,11 +101,11 @@ class Data extends \Core\Model
 	}
 	
 	/** 
-	 * @param $id, integer Expense Category id
+	 * @param $cat_id, integer Expense Category id
 	 * @param $period, assoc array [start, end]
 	 * @return string $sum Sum of category expenses in period
 	 */
-	public static function getExpenseSum($id, $cat_id, $period) {
+	public static function getExpenseSum($cat_id, $period) {
 		$sql = "SELECT SUM(ex.amount) FROM expenses ex 
 		ON ex.user_id = :user_id 
 		AND ex.expense_category_assigned_to_user_id = :cat_id 

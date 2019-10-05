@@ -63,4 +63,15 @@ class Expense extends Authenticated
 		}
 		echo json_encode($response);
 	}
+	
+	/** Get (AJAX)
+	 * @_POST []
+	 * @return 
+	 */
+	public function getPeriodedSumAjaxAction() {
+		$cat_id = $_POST['cat_id'];
+		//$period;
+		//Data::getExpenseSum($cat_id, $period);
+		//echo json_encode($response);
+	}
 }
