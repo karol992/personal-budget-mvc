@@ -100,4 +100,26 @@ class Data extends \Core\Model
 		return $query->fetchAll();
 	}
 	
+	/** 
+	 * @param $id, integer Expense Category id
+	 * @param $period, assoc array [start, end]
+	 * @return string $sum Sum of category expenses in period
+	 */
+	public static function getExpenseSum($id, $cat_id, $period) {
+		$sql = "SELECT SUM(ex.amount) FROM expenses ex 
+		ON ex.user_id = :user_id 
+		AND ex.expense_category_assigned_to_user_id = :cat_id 
+		AND (ex.date_of_expense BETWEEN :start AND :end);";
+		$db = static::getDB();
+		$query = $db->prepare($sql);
+		$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
+		$query->bindValue(':cat_id', $cat_id, PDO::PARAM_INT);
+		$query->bindValue(':start', $period['start'], PDO::PARAM_STR);
+		$query->bindValue(':end', $period['end'], PDO::PARAM_STR);
+		$query->execute();
+		$sum=$query->fetch();
+		return $sum[0];
+	}
+	
+	
 }
