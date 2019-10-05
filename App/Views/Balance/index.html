@@ -62,9 +62,9 @@
 					{% endif %}
 					{% if expense_sum != 0 %}
 					Wykres wydatków
-					<div class="b_border shadow"> <!-- Pie chart with expenses. -->
+					<div> <!-- Pie chart with expenses. -->
 						<div class="ratioparent">
-							<div id="chartdiv" class="ratiochild"></div>
+							<div id="chartdiv" class="ratiochild b_border shadow"></div>
 						</div>
 					</div>
 					<div> <!-- External pie chart legend. Internal has non-rwd display-->
@@ -77,7 +77,7 @@
 					<!--  Sum & Comment. -->
 						<div class="b_line b_sum row shadow">
 							<div class="blcell col-7">Bilans</div>
-							<div class="brcell col-5">{{ "%.2f"|format(balance_value) }}</div>
+							<div class="brcell col-5 b_right_brd_r">{{ "%.2f"|format(balance_value) }}</div>
 						</div>
 						<div class="b_line b_motivation shadow" style="{{ motivation_info.0 }}">
 							<div class="inB">
