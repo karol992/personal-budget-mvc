@@ -36,6 +36,7 @@ $(document).ready(function() {
 	const $expenseValue = $("#expense_value");
 	const $limit = $("#limit_ribbon");
 	const date = $('#expense_date').val();
+	
 	$expenseValue.on("change", function() {
 		$checked = $("input[name='expense_category']:checked");
 		let limited = $checked.attr("data-limited"); // 0 or 1
@@ -44,11 +45,26 @@ $(document).ready(function() {
 			let category_id = $checked.val();
 			let limit_value = $checked.attr("data-limit-value");
 			$limit.html("value:"+value+" cat:"+category_id+" limit_value:"+limit_value+" date:"+date);
+			$.ajax({
+				url: '/expense/get-perioded-sum-ajax',
+				method : "POST",
+				dataType : "json",
+				data: {
+					"cat_id" : category_id,
+					"date" : date
+				}
+			}).done(function(response) {
+				console.log("ajax done: "+response);
+			}).fail(function() {
+				console.log("ajax fail");
+			});
 		} else {
 			$limit.empty();
 		}
 	});
+	
 	const $category = $("input[name='expense_category']");
+	
 	$category.on("change", function() {
 		$checked = $(this);
 		let limited = $checked.attr("data-limited"); // 0 or 1
