@@ -49,6 +49,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 	border: 1px solid var(--color-dark);
 	border-right: none;
 	background-color: white;
+	border-radius: 0.25em 0em 0em 0.25em;
 }
 /* Balance right cell*/
 .brcell {
@@ -64,12 +65,22 @@ input[type=date]::-webkit-calendar-picker-indicator {
 	padding: 0px;
 	border-radius: 0px;
 	background-color: var(--color-medium);
+	border-radius: 0em 0.25em 0.25em 0em;
 }
 .b_border {
 	border: 1px solid var(--color-dark);
 }
+#chartdiv {
+	border-radius: 0.25em 0.25em 0em 0em;
+}
+#legend_btn {
+	border-radius: 0em 0em 0.25em 0.25em;
+}
 .b_sum {
 	font-size: 28px;
+}
+.b_right_brd_r {
+	border-radius: 0em 0.25em 0.25em 0em;
 }
 .b_motivation {
 	line-height: 42px;
@@ -78,6 +89,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 	border: 1px solid var(--color-dark);
 	background-color: white;
 	margin-bottom: 20px;
+	border-radius: 0.25em;
 }
 .modal_line {
 	font-size: 16px;

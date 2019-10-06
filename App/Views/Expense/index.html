@@ -21,7 +21,7 @@
 		<div class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10">
 		
 			<div class="row" >
-				<div id="info_ribbon">
+				<div id="limit_ribbon">
 				</div>
 			</div>
 			
@@ -29,17 +29,17 @@
 				<!-- Amount of expense -->
 				<div class="transaction_section col-12 col-md-6">
 					<label for="expense_value">Kwota: </label>
-					<input id="expense_value" class="form-control" type="number" name="expense_value" step="0.01" min="0.01" max="999999.99"  value="{{ expense_value }}" required>
+					<input id="expense_value" class="form-control" type="number" name="expense_value" step="0.01" min="0.01" max="999999.99" required>
 				</div>
 				<!-- Date of expense -->
 				<div class="transaction_section col-12 col-md-6">
 					<label for="expense_date">Data: </label>
-					<input class="form-control" type="date" name="expense_date" value="{{ transaction_date }}">
+					<input id="expense_date" class="form-control" type="date" name="expense_date" value="{{ transaction_date }}">
 				</div>
 			</div>
 			
 			<div class="row" >
-				<div id="limit_ribbon">
+				<div class="alert-success" id="info_ribbon">
 				</div>
 			</div>
 			
@@ -53,8 +53,7 @@
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<div class="input-group-text">
-									<input type="radio" name="expense_category" id="radio{{ item.id }}" value="{{ item.id }}" style="width: 0.8em;"
-									{% if item==firstExpense %}checked{% endif %}>
+									<input type="radio" name="expense_category" id="radio{{ item.id }}" value="{{ item.id }}" style="width: 0.8em;" data-limited="{{ item.limited }}" data-limit-value="{{ item.limit_value }}" data-name="{{ item.name }}" {% if item==firstExpense %}checked{% endif %}>
 								</div>
 							</div>
 							<label class="form-control" for="radio{{ item.id }}" >{{ item.name }}</label>

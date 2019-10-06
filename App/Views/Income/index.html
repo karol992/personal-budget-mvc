@@ -47,8 +47,7 @@
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<div class="input-group-text">
-								<input type="radio" name="income_category" id="radio{{ item.id }}" value="{{ item.id }}" style="width: 0.8em;"
-								{% if item==firstItem %}checked{% endif %}>
+								<input type="radio" name="income_category" id="radio{{ item.id }}" value="{{ item.id }}" style="width: 0.8em;" data-limited="{{ item.limited }}" data-limit-value="{{ item.limit_value }}" {% if item==firstItem %}checked{% endif %}>
 							</div>
 						</div>
 						<label class="form-control" for="radio{{ item.id }}" >{{ item.name }}</label>

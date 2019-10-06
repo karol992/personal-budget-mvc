@@ -40,6 +40,17 @@ class Timer {
 		return $period;
 	}
 	
+	/** Custom Month Interval
+     * @return array $period with two dates: first day and last day of custom month
+     */
+	public static function customMonthPeriod($date) {
+		$period = [];
+		$day = new \DateTime($date);
+		$period['start'] = $day->format('Y-m-01');
+		$period['end'] = $day->format('Y-m-t');
+		return $period;
+	}
+	
 	/** Current Year Interval
      * @return array $period with two dates: first day and last day of current year
      */

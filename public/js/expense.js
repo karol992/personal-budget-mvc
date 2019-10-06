@@ -1,59 +1,159 @@
 /* Add expense: AJAX request, limit information */
 $(document).ready(function() {
-	
 	const $form = $('#expense_form');
 	const $submitBtn = $("#submitBtn");
 	const $info = $("#info_ribbon");
+	const $expenseValue = $("#expense_value");
+	const $limit = $("#limit_ribbon");
+	const $category = $("input[name='expense_category']");
+	const $dateInput = $('#expense_date');
+	
+	/* Show alert message */
+	function alertInfo(text) {
+		$info.removeClass('alert-success');
+		$info.addClass('alert-danger');
+		$info.html(text);
+	}
+	
+	/* Show non-alert message */
+	function successInfo(text) {
+		$info.removeClass('alert-danger');
+		$info.addClass('alert-success');
+		$info.html(text);
+	}
+	
+	/* Prepare text with limit informations. */
+	function infoText(name, limit_value, beforeSum, afterSum) {
+		let message = '<div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;">'+name+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;">Limit: '+limit_value+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;"> W miesiącu: '+beforeSum+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;"> Łącznie: '+afterSum+'</div>';
+		return message;
+	}
+	
+	/* If checked category has limit show limit informations. */
+	function showEstimation(amount) {
+		if ($("input[name='expense_category']:checked").attr("data-limited")==1) {
+			updateInfo(amount);
+		} else {
+			$info.empty();
+		}
+	}
+	
+	/* Show expense value syntax errors. */
+	function validateValueWithInfo(input_value) {
+		if (input_value != '') {
+			if (input_value.length > 9) {
+				alertInfo("Za długa wartości wydatku.");
+				$expenseValue.val("");
+				return false;
+			} else if ((input_value <= 0) || (input_value.match(/^0+[,.]0+$/) != null)){
+				alertInfo(input_value+' (Wartość wydatku musi być większa od zera.)');
+				return false;
+			} else if (input_value >= 1000000){
+				alertInfo(input_value+' (Wartość wydatku musi być mniejsza niż milion.)');
+				return false;
+			} else if ((input_value.match(/^\d{1,6}[,.]?\d{0,2}$/) != null) 
+							&& (input_value.match(/^\d{1,6}[,.]$/) == null)) {
+				return true;
+			}  else {
+				alertInfo(input_value+'<br/> (Niepoprawny format wartości wydatku.)');
+				return false;
+			}
+		}
+		alertInfo("Nie podano wartości wydatku.");
+		return false;
+	}
+	
+	/* Check expense value syntax. */
+	function validateValue(input_value) {
+		if (input_value===0) return true; //show limit when value===0
+		if (input_value != '') {
+			if (input_value.length > 9) {
+				return false;
+			} else if ((input_value < 0) || (input_value.match(/^0+[,.]0+$/) != null)){
+				return false;
+			} else if (input_value >= 1000000){
+				return false;
+			} else if ((input_value.match(/^\d{1,6}[,.]?\d{0,2}$/) != null) 
+							&& (input_value.match(/^\d{1,6}[,.]$/) == null)) {
+				return true;
+			}  else {
+				return false;
+			}
+		}
+		return false;
+	}
+	
+	/* Get and show limit informations. */
+	function updateInfo(amount) {
+		if (amount==='') amount=0;
+		if(validateValue(amount)) {
+			$checked = $("input[name='expense_category']:checked");
+			let category_id = $checked.val();
+			let limit_value = $checked.attr("data-limit-value");
+			let date = $dateInput.val();
+			$.ajax({
+				url: '/expense/get-perioded-sum-ajax',
+				method : "POST",
+				dataType : "json",
+				data: {
+					"cat_id" : category_id,
+					"date" : date,
+					"amount" : amount
+				}
+			}).done(function(response) {
+				if (response.success) {
+					let name = $checked.attr("data-name");
+					let text = infoText(name,limit_value,response.beforeSum,response.afterSum);
+					response.limit_reached ? alertInfo(text) : successInfo(text);
+				} else {
+					alertInfo(response.error);
+				}
+			}).fail(function() {
+				alertInfo('Błąd połączenia z bazą danych.');
+			});
+		} else {
+			$info.empty();
+		}
+	}
+
 	/* Add expense (AJAX request) */
 	$form.on("submit", function(e) {
 		e.preventDefault();
 		$submitBtn.prop('disabled', true);
-		$.ajax({
-			url: '/expense/add-expense-ajax',
-			method : "POST",
-			dataType : "json",
-			data: $(this).serialize()
-		}).done(function(response) {
-			$(".alert-warning").hide();
-			if(response.success) {
-				$info.removeClass('alert-danger');
-				$info.addClass('alert-success');
-				$info.html(response.message);
-				$(".alert-success").show();
-				$submitBtn.prop('disabled', false);
-			} else {
-				location.reload(true);
-			}
-		}).fail(function() {
-			$info.removeClass('alert-success');
-			$info.addClass('alert-danger');
-			$info.html('Błąd połączenia z bazą danych.');
-			$submitBtn.prop('disabled', false);
-		});
+		if(validateValueWithInfo($expenseValue.val())) {
+			$.ajax({
+				url: '/expense/add-expense-ajax',
+				method : "POST",
+				dataType : "json",
+				data: $(this).serialize()
+			}).done(function(response) {
+				if(response.success) {
+					successInfo(response.message);
+				} else {
+					location.reload(true);
+				}
+			}).fail(function() {
+				alertInfo('Błąd połączenia z bazą danych.');
+			});
+		}
+		$expenseValue.val("");
+		setTimeout(function() {$submitBtn.prop('disabled', false);}, 1000);
+		$expenseValue.focus();
 	});
 	
-	/* Prototype: show ribbon with data for limit request */
-	const $expenseValue = $("#expense_value");
-	const $limit = $("#limit_ribbon");
-	$expenseValue.on("change", function() {
-		let value = $(this).val();
-		let category_id = $("input[name='expense_category']:checked").val();
-		$limit.addClass('alert-success');
-		$limit.html("value:"+value+" cat:"+category_id);
+	/* Execute user events */
+	$expenseValue.keyup(function() {
+		$value = $(this).val();
+		$(this).prop('disabled', true);
+		($value.length>9) ? $value($value.slice(0, -1)) : false;
+		showEstimation($value);
+		$(this).prop('disabled', false);
+		$(this).focus();
 	});
-	const $category = $("input[name='expense_category']");
-	$category.on("change", function() {
-		let value = $expenseValue.val();
-		let category_id = $(this).val();
-		$limit.addClass('alert-success');
-		$limit.html("value:"+value+" category:"+category_id);
-	});
-	/* Things to do:
-		- (ajax/twig[expense_cats]) get limited of [category_id] category expense
-		if (limited==true) {
-			- (ajax) get limit_value of [category_id] expenses
-			- (ajax) get sum of [category_id] expenses 
-		}
-	*/
+	$expenseValue.keydown(function() { ($(this).val().length>10) ? $(this).val($(this).val().slice(0, -1)) : false; });
+	$category.on("change", function() { showEstimation($expenseValue.val()) });
+	$dateInput.on("change", function() { showEstimation($expenseValue.val()); });
+	
+	/* show first limit when document loaded */
+	showEstimation(0);
 });
 
