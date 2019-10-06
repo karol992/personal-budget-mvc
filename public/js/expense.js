@@ -8,33 +8,36 @@ $(document).ready(function() {
 	const $category = $("input[name='expense_category']");
 	const $dateInput = $('#expense_date');
 	
+	/* Show alert message */
 	function alertInfo(text) {
 		$info.removeClass('alert-success');
 		$info.addClass('alert-danger');
 		$info.html(text);
 	}
 	
+	/* Show non-alert message */
 	function successInfo(text) {
 		$info.removeClass('alert-danger');
 		$info.addClass('alert-success');
 		$info.html(text);
 	}
 	
+	/* Prepare text with limit informations. */
 	function infoText(name, limit_value, beforeSum, afterSum) {
 		let message = '<div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;">'+name+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;">Limit: '+limit_value+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;"> W miesiącu: '+beforeSum+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;"> Łącznie: '+afterSum+'</div>';
 		return message;
 	}
 	
-	function showEstimation($valueInput) {
-		$checked = $("input[name='expense_category']:checked");
-		let limited = $checked.attr("data-limited"); // 0 or 1
-		if (limited==1) {
-			updateInfo($valueInput, $checked);
+	/* If checked category has limit show limit informations. */
+	function showEstimation(amount) {
+		if ($("input[name='expense_category']:checked").attr("data-limited")==1) {
+			updateInfo(amount);
 		} else {
 			$info.empty();
 		}
 	}
 	
+	/* Show expense value syntax errors. */
 	function validateValueWithInfo(input_value) {
 		if (input_value != '') {
 			if (input_value.length > 9) {
@@ -59,9 +62,9 @@ $(document).ready(function() {
 		return false;
 	}
 	
+	/* Check expense value syntax. */
 	function validateValue(input_value) {
-		console.log('validateValue');
-		if (input_value===0) return true;
+		if (input_value===0) return true; //show limit when value===0
 		if (input_value != '') {
 			if (input_value.length > 9) {
 				return false;
@@ -79,15 +82,11 @@ $(document).ready(function() {
 		return false;
 	}
 	
-	function ajaxGetLimit() {
-		;
-	}
-	
-	function updateInfo($valueInput, $checked) {
-		let amount = $valueInput.val();
-		if (!amount) amount=0;
-		console.log("val: "+amount);
+	/* Get and show limit informations. */
+	function updateInfo(amount) {
+		if (amount==='') amount=0;
 		if(validateValue(amount)) {
+			$checked = $("input[name='expense_category']:checked");
 			let category_id = $checked.val();
 			let limit_value = $checked.attr("data-limit-value");
 			let date = $dateInput.val();
@@ -127,10 +126,8 @@ $(document).ready(function() {
 				dataType : "json",
 				data: $(this).serialize()
 			}).done(function(response) {
-				$(".alert-warning").hide();
 				if(response.success) {
 					successInfo(response.message);
-					$(".alert-success").show();
 				} else {
 					location.reload(true);
 				}
@@ -143,33 +140,20 @@ $(document).ready(function() {
 		$expenseValue.focus();
 	});
 	
+	/* Execute user events */
 	$expenseValue.keyup(function() {
+		$value = $(this).val();
 		$(this).prop('disabled', true);
-		($(this).val().length>9) ? $(this).val($(this).val().slice(0, -1)) : false;
-		$(this).val() ? showEstimation($(this)) : false;
+		($value.length>9) ? $value($value.slice(0, -1)) : false;
+		showEstimation($value);
 		$(this).prop('disabled', false);
 		$(this).focus();
 	});
+	$expenseValue.keydown(function() { ($(this).val().length>10) ? $(this).val($(this).val().slice(0, -1)) : false; });
+	$category.on("change", function() { showEstimation($expenseValue.val()) });
+	$dateInput.on("change", function() { showEstimation($expenseValue.val()); });
 	
-	$expenseValue.keydown(function() {
-		($(this).val().length>10) ? $(this).val($(this).val().slice(0, -1)) : false;
-	});
-	
-	$category.on("change", function() {
-		$checked = $(this);
-		let limited = $checked.attr("data-limited"); // 0 or 1
-		if (limited==1) {
-			updateInfo($expenseValue, $checked);
-		} else {
-			$info.empty();
-		}
-	});
-	
-	$dateInput.on("change", function() {
-		showEstimation($expenseValue);
-	});
-	
-	updateInfo($expenseValue, $checked)
-	
+	/* show first limit when document loaded */
+	showEstimation(0);
 });
 
