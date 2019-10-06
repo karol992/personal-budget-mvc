@@ -46,8 +46,8 @@ class Timer {
 	public static function customMonthPeriod($date) {
 		$period = [];
 		$day = new \DateTime($date);
-		$period['start'] = $now->format('Y-m-01');
-		$period['end'] = $now->format('Y-m-t');
+		$period['start'] = $day->format('Y-m-01');
+		$period['end'] = $day->format('Y-m-t');
 		return $period;
 	}
 	

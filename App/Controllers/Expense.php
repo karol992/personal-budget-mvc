@@ -69,17 +69,20 @@ class Expense extends Authenticated
 	 * @return 
 	 */
 	public function getPeriodedSumAjaxAction() {
-		//$response = new Array();
-		/*if (!Timer::dateValidation($date) ) {
+		$response = [];
+		$date=$_POST['date'];
+		$response['date_error']=Timer::dateValidation($date);
+		if (!$response['date_error']) {
 			$cat_id = $_POST['cat_id'];
-			$period=Timer::customMonthPeriod($_POST['date']);
-			$response['sum'] = Data::getExpenseSum($cat_id, $period);
+			$period=Timer::customMonthPeriod($date);
+			$response['beforeSum'] = number_format(Data::getExpenseSum($cat_id, $period), 2, '.', '');
+			$response['afterSum'] = number_format(($response['beforeSum'] + $_POST['amount']), 2, '.', '');
+			$limit = Data::getCategoryLimit($cat_id);
+			$response['limit_reached'] = (($response['afterSum']>$limit ) ? true : false);
 			$response['success'] = true;
 		} else {
-			$response['message']='Data nie istnieje. ';
 			$response['success'] = false;
-		}*/
-		$response = "inside getPeriodedSumAjaxAction";
+		}
 		echo json_encode($response);
 	}
 }

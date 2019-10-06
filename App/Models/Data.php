@@ -107,7 +107,7 @@ class Data extends \Core\Model
 	 */
 	public static function getExpenseSum($cat_id, $period) {
 		$sql = "SELECT SUM(ex.amount) FROM expenses ex 
-		ON ex.user_id = :user_id 
+		WHERE ex.user_id = :user_id 
 		AND ex.expense_category_assigned_to_user_id = :cat_id 
 		AND (ex.date_of_expense BETWEEN :start AND :end);";
 		$db = static::getDB();
@@ -121,5 +121,20 @@ class Data extends \Core\Model
 		return $sum[0];
 	}
 	
-	
+	/** 
+	 * @param $cat_id, integer Expense Category id
+	 * @return string $limit_value Expense Category limit value
+	 */
+	public static function getCategoryLimit($cat_id) {
+		$sql = "SELECT limit_value FROM expenses_category_assigned_to_users 
+		WHERE user_id = :user_id 
+		AND id = :cat_id;";
+		$db = static::getDB();
+		$query = $db->prepare($sql);
+		$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
+		$query->bindValue(':cat_id', $cat_id, PDO::PARAM_INT);
+		$query->execute();
+		$limit_value=$query->fetch();
+		return $limit_value[0];
+	}
 }
