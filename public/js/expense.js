@@ -24,7 +24,7 @@ $(document).ready(function() {
 	
 	/* Prepare text with limit informations. */
 	function infoText(name, limit_value, beforeSum, afterSum) {
-		let message = '<div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;">'+name+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;">Limit: '+limit_value+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;"> W miesiącu: '+beforeSum+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;"> Łącznie: '+afterSum+'</div>';
+		let message = '<div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;">'+name+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;">Limit: '+limit_value+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;"> Miesiąc: '+beforeSum+'</div><div class="col-md-3 col-sm-6 col-12" style="float: left; text-align: left;"> Łącznie: '+afterSum+'</div>';
 		return message;
 	}
 	
@@ -142,10 +142,9 @@ $(document).ready(function() {
 	
 	/* Execute user events */
 	$expenseValue.keyup(function() {
-		$value = $(this).val();
 		$(this).prop('disabled', true);
-		($value.length>9) ? $value($value.slice(0, -1)) : false;
-		showEstimation($value);
+		($(this).val().length>9) ? $(this).val($(this).val().slice(0, -1)) : false;
+		showEstimation($(this).val());
 		$(this).prop('disabled', false);
 		$(this).focus();
 	});

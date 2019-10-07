@@ -44,7 +44,6 @@ $(document).ready(function() {
 		let editLimitValue = $(this).attr("data-limit-value");
 		$('#editExpenseLabel').val(editName);
 		$('#editExpenseId').val(editValue);
-		console.log("passExpenseCategory->editLimit: "+editLimited);
 		if (editLimited == "true") {
 			$('#editExpenseLimited').prop("checked", true);
 			$('#editExpenseLimitValue').prop("readonly", false).show();
@@ -140,7 +139,6 @@ $(document).ready(function() {
 				$('#expense'+editId+'editBtn').attr('data-limit-value', editLimitValue);
 				$('#expense'+editId+'delBtn').attr('name', editName);
 				$('#expense'+editId+'limitValue').html(editLimitValue);
-				//console.log("editLimited: "+editLimited);
 				if (editLimited) {
 					$('#expense'+editId+'limit').show();
 				} else {
