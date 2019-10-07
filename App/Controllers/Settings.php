@@ -325,6 +325,24 @@ class Settings extends Authenticated
     }
 	
 	/**
+     * Change name for logged user (AJAX)
+     * @return void
+     */
+    public function changeNameAjaxAction() {
+		$user = new User($_POST);
+		$response = [];
+		if($user->updateName()) {
+			$response['success'] = true;
+			$response['message'] = "Zmieniono imię na: ".$user->name;
+			$response['name'] = $user->name;
+		} else {
+			$response['success'] = false;
+			$response['message'] = "Nie zmieniono imienia.";
+		}
+		echo json_encode($response);
+    }
+	
+	/**
      * Change email for logged user
      * @return void
      */
@@ -334,6 +352,23 @@ class Settings extends Authenticated
 			Flash::addMessage('Email zaktualizowany.');
 		}
 		$this->redirect('/settings/index');
+    }
+	
+	/**
+     * Change email for logged user (AJAX)
+     * @return void
+     */
+    public function changeEmailAjaxAction() {
+		$user = new User($_POST);
+		$response = [];
+		if($user->updateEmail()) {
+			$response['success'] = true;
+			$response['message'] = "Zmieniono adres email na: ".$user->email;
+		} else {
+			$response['success'] = false;
+			$response['message'] = "Nie zmieniono adresu email.";
+		}
+		echo json_encode($response);
     }
 	
 	/**
@@ -352,9 +387,36 @@ class Settings extends Authenticated
 				};
 			}
 		} else {
+			$response = [];
 			Flash::addMessage('Podano złe hasło','warning');
 		}
 		$this->redirect('/settings/index');
+    }
+	
+	/**
+     * Change password for logged user (AJAX)
+     * @return void
+     */
+    public function changePasswordAjaxAction() {
+		$response = [];
+		$oldPasswordConfirm = User::authenticate(Auth::getUserEmail(),$_POST['oldpassword']);
+		if($oldPasswordConfirm) {
+			$user = new User($_POST);
+			if ($user->updatePassword()) {
+				$response['success'] = true;
+				$response['message'] = "Hasło zaktualizowane";
+			} else {
+				$response['success'] = false;
+				$response['message'] = "";
+				foreach($user->errors as $error) {
+					$response['message']+= $error+" ";
+				};
+			}
+		} else {
+			$response['success'] = false;
+			$response['message'] = "Podano złe hasło.";
+		}
+		echo json_encode($response);
     }
 	
 	/**
@@ -365,6 +427,7 @@ class Settings extends Authenticated
 		$passwordConfirm = User::authenticate(Auth::getUserEmail(),$_POST['password']);
 		if($passwordConfirm) {
 			DataCleaner::removeAccount();
+			Flash::addMessage('Konto usunięte.','warning');
 			$this->redirect('/logout');
 		} else {
 			Flash::addMessage('Podano złe hasło.','warning');

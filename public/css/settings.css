@@ -4,18 +4,7 @@
 -ms-transition: none;
 transition: none;
 
-
-/*.settings_group {
-	padding: 10px;
-	border: 1px solid var(--color-dark);
-	color: rgba(0, 0, 0, 0.5);
-	text-align: center;
-	margin-top: 10px;
-	display: inline-block;
-	width: 100%;
-}*/
 .settings_group {
-	/*border: 1px solid var(--color-dark);*/
 	color: rgba(0, 0, 0, 0.5);
 	text-align: center;
 	display: inline-block;
@@ -64,22 +53,21 @@ transition: none;
 	padding: 0px;
 	border-radius: 0px;
 }
+.edit_acc_opt {
+	margin: 5px;
+	width: 100%;
+	text-align: center;
+}
 
 
 .modal_line {
 	font-size: 16px;
 	color: black;
 	text-align: left;
-	/*margin-bottom: 10px;*/
 	border: 1px solid var(--color-dark);
-	/*border-left: none;
-	border-top: none;*/
 }
 .modal_cell {
 	padding: 5px;
-	/*border: 1px solid var(--color-dark);
-	border-right: none;
-	border-bottom: none;*/
 	background-color: white;
 }
 .modal_button {
@@ -152,4 +140,6 @@ transition: none;
 		width: 250px;
 	}
 }
-
+#accountEditInfo {
+	width: 100%;
+}
