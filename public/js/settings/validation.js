@@ -16,7 +16,7 @@ $.validator.addMethod('validPassword',
 $(document).ready(function() {
 	$('.error:empty').hide();
 	
-	$('#changeName').validate({
+	$('#changeNameForm').validate({
 		rules: {
 			name: {
 				required: true,
@@ -33,7 +33,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#changePassword').validate({
+	$('#changePasswordForm').validate({
 		rules: {
 			password: {
 				required: true,
@@ -51,7 +51,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#changeEmail').validate({
+	$('#changeEmailForm').validate({
 		rules: {
 			email: {
 				required: true,

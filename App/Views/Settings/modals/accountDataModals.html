@@ -2,7 +2,7 @@
 		<!-- Change name modal -->
 		<div class="modal fade" id="changeNameModal" tabindex="-1" role="dialog" aria-labelledby="changeNameModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-md" role="document">
-				<form class="modal-content" action="/settings/change-name" method="post" enctype="multipart/form-data" id="changeName">
+				<form id="changeNameForm" class="modal-content">
 					<div class="modal-header">
 						<div class="modal-title" id="changeNameModalLabel">Zmień imię</div>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -13,14 +13,14 @@
 						<section>
 							<div class="container">
 									<div class="modal_line row shadow">
-										<input type="text" name="name" class="modal_cell col-12" value="{{ user.username }}" id="inputName">
+										<input type="text" name="name" class="modal_input col-12" value="{{ user.username }}" id="inputName">
 									</div>
 									<label id="inputName-error" class="error" for="inputName"></label>
 							</div>
 						</section>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn_confirm" >Zapisz</button>
+						<button id="editNameBtn" type="submit" class="btn btn_confirm" >Zapisz</button>
 					</div>
 				</form>
 			</div>
@@ -29,7 +29,7 @@
 		<!-- Change email modal -->
 		<div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="changeEmailModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-md" role="document">
-				<form class="modal-content" action="/settings/change-email" method="post" id="changeEmail">
+				<form id="changeEmailForm" class="modal-content">
 					<div class="modal-header">
 						<div class="modal-title" id="changeEmailModalLabel">Zmień email</div>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -40,14 +40,14 @@
 						<section>
 							<div class="container">
 									<div class="modal_line row shadow">
-										<input type="email" name="email" class="modal_cell col-12" value="{{ user.email }}" id="inputEmail">
+										<input type="email" name="email" class="modal_input col-12" value="{{ user.email }}" id="inputEmail">
 									</div>
 									<label id="inputEmail-error" class="error" for="inputEmail"></label>
 							</div>
 						</section>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn_confirm" >Zapisz</button>
+						<button id="editEmailBtn" type="submit" class="btn btn_confirm" >Zapisz</button>
 					</div>
 				</form>
 			</div>
@@ -56,7 +56,7 @@
 		<!-- Change password modal -->
 		<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-md" role="document">
-				<form class="modal-content" action="/settings/change-password" method="post" id="changePassword">
+				<form id="changePasswordForm"  class="modal-content">
 					<div class="modal-header">
 						<div class="modal-title" id="changePasswordModalLabel">Zmień hasło</div>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -68,20 +68,20 @@
 							<div class="container">
 								<h5>Podaj aktualne hasło:</h5>
 								<div class="modal_line row shadow">
-									<input type="password" name="oldpassword" class="modal_cell col-12">
+									<input type="password" name="oldpassword" class="modal_input col-12" id="oldPassword">
 								</div>
 							</div>
 							<div class="container">
 								<h5>Podaj nowe hasło:</h5>
 								<div class="modal_line row shadow">
-									<input type="password" name="password" class="modal_cell col-12" id="inputPassword">
+									<input type="password" name="password" class="modal_input col-12" id="inputPassword">
 								</div>
 								<label id="inputPassword-error" class="error" for="inputPassword"></label>
 							</div>
 						</section>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn_confirm" >Zapisz</button>
+						<button id="editPasswordBtn" type="submit" class="btn btn_confirm" >Zapisz</button>
 					</div>
 				</form>
 			</div>
