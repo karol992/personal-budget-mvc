@@ -1,4 +1,4 @@
-$('.delete_record_button').on('click', function () {
+/*$('.delete_record_button').on('click', function () {
 	this.parentNode.parentNode.style.display = 'none';
 });
 
@@ -8,6 +8,6 @@ $('.edit_record_button').on('click', function () {
 
 $('.reload').on('click', function () {
    window.location.reload();
-});	
+});	*/
 
 

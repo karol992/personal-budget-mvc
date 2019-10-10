@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use \Core\View;
-//use \App\Models\DataProperties\ShowBalanceStatic;
 use \App\Models\DataProperties\ShowBalance;
+use \App\Models\DataProperties\BalanceData;
 use \App\Timer;
 use \App\Flash;
 use \App\Models\DataProperties\UpdateIncome;
@@ -19,7 +19,7 @@ class Balance extends Authenticated
 {
 
     /**
-     * Show the Balance page
+     * Show the Balance page, used on page load
      * @return void
      */
     public function indexAction() {
@@ -38,7 +38,7 @@ class Balance extends Authenticated
     }
 	
 	/** Processes session and post period variables
-	 * @return assoc array $outPeriod [start, end], format ("Y-m-d") 
+	 * @return assoc array $outPeriod [start, end], format ("Y-m-d")
 	 */
 	protected function getPeriodForView() {
 		if (isset($_POST['balance_start_day']) && 
@@ -156,5 +156,13 @@ class Balance extends Authenticated
 			$text[2]='wpadasz w długi!';
 		}
 		return $text;
+	}
+
+	public function getIncomeRecordsAjaxAction() {
+		$period=[];
+		$period['start']=$_SESSION['remembered_period']['start'];
+		$period['end']=$_SESSION['remembered_period']['end'];
+		$response=BalanceData::getIncomeRecords($_POST['category_id'],$period);
+		echo json_encode($response);
 	}
 }
