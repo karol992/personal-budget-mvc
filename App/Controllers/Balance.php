@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
+//use \App\Models\DataProperties\ShowBalanceStatic;
 use \App\Models\DataProperties\ShowBalance;
 use \App\Timer;
 use \App\Flash;
@@ -31,7 +32,7 @@ class Balance extends Authenticated
 		$args['payment_cats'] = $balance->paymentCategories;
 		$args['js_expenses_sums'] = $balance->pieChartExpenseSums;
 		$args['balance_value'] = $balance->balanceValue;
-		$args['motivation_info'] = $balance->motivationInfo;
+		$args['motivation_info'] = $this->loadMotivationText($balance->balanceValue);
 		$args['expense_sum'] = $balance->expenseSum;
         View::renderTemplate('Balance/index.html', $args);
     }
@@ -137,5 +138,23 @@ class Balance extends Authenticated
 		if (!DataCleaner::expenseRecord($_POST['expense_id'])) {
 			Flash::addMessage("Expense delete failed.",'warning');
 		}
+	}
+	
+	/** Specify the motivation div in separated strings (cause of RWD)
+	 * @param $value, Integer balance value
+	 * @return assoc array $text ([0] - style, [1] - first span, [2] - second span)
+	 */
+	protected function loadMotivationText($value) {
+		$text=[];
+		if ($value >= 0) {
+			$text[0]='';
+			$text[1]='Gratulacje.';
+			$text[2]='Świetnie zarządzasz finansami!';
+		} else {
+			$text[0]='color:red';
+			$text[1]='Uważaj,';
+			$text[2]='wpadasz w długi!';
+		}
+		return $text;
 	}
 }
