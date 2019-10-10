@@ -31,7 +31,7 @@
 									<div class="b_line row shadow">
 										<div class="blcell col-7">{{ income.name }}</div>
 										<div class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
-										<button class="btn_list col-1 income_category_button" href="#incomeListModal" data-toggle="modal" data-target="#incomeListModal" data-category-id="{{ income.id }}" data-category-name="{{ income.name }}">
+										<button class="btn btn_list col-1" href="#incomeListModal{{ income.id }}" data-toggle="modal" data-target="#incomeListModal{{ income.id }}">
 											<span class="fa fa-file-text-o"></span>
 										</button>
 									</div>
@@ -46,7 +46,7 @@
 									<div class="b_line row shadow">
 										<div class="blcell col-7">{{ expense.name }}</div>
 										<div class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
-										<button class="btn btn_list col-1 expense_category_button" href="#expenseListModal" data-toggle="modal" data-target="#expenseListModal"  data-category-id="{{ expense.id }}" data-category-name="{{ expense.name }}">
+										<button class="btn btn_list col-1" href="#expenseListModal{{ expense.id }}" data-toggle="modal" data-target="#expenseListModal{{ expense.id }}">
 											<span class="fa fa-file-text-o"></span>
 										</button>
 									</div>
@@ -136,5 +136,4 @@
 </script>
 <script src="/js/piechart.js"></script>
 <script src="/js/modal.js"></script>
-<script src="/js/balance/balance.js"></script>
 {% endblock %}
