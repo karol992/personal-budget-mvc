@@ -10,19 +10,21 @@
 					</div>
 					<div class="modal-body">
 						<section>
-							<h5>Szczegółowa lista</h5>
-							<div class="container">
-									<form class="modal_line row shadow">
-										<input type="hidden" name="income_id" value="" />
-										<input type="number" name="amount" class="modal_cell col-6 col-sm-6 col-lg-2" step="0.01" value="" min="0.01">
-										<input type="date" name="income_date" class="modal_cell col-6 col-sm-6 col-lg-3" value="">
-										<input type="text" name="comment" class="modal_cell col-8 col-sm-9 col-lg-5" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="">
-										<div class="container modal_cell col-4 col-sm-3 col-lg-2" style="padding: 0;">
-											<button name="action" value="update" type="submit" class="btn_record modal_button edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
-											<button name="action" value="delete" type="submit" class="btn_record bg_del modal_button delete_record_button"><i class="fa fa-trash fa-fw"></i></button>
-										</div>
-									</form>
-							</div>
+							<ul id="incomeCategoryList" class="list-unstyled">
+								<h5>Szczegółowa lista</h5>
+								<li class="container">
+										<form class="modal_line row shadow">
+											<input type="hidden" name="income_id" value="" />
+											<input type="number" name="amount" class="modal_cell col-6 col-sm-6 col-lg-2" step="0.01" value="" min="0.01">
+											<input type="date" name="income_date" class="modal_cell col-6 col-sm-6 col-lg-3" value="">
+											<input type="text" name="comment" class="modal_cell col-8 col-sm-9 col-lg-5" placeholder="Notatki..." onfocus="this.placeholder=''Notatki..." onblur="this.placeholder='Notatki...'" value="">
+											<div class="container modal_cell col-4 col-sm-3 col-lg-2" style="padding: 0;">
+												<button name="action" value="update" type="submit" class="btn_record modal_button edit_record_button"><i class="fa fa-floppy-o fa-fw"></i></button> 
+												<button name="action" value="delete" type="submit" class="btn_record bg_del modal_button delete_record_button"><i class="fa fa-trash fa-fw"></i></button>
+											</div>
+										</form>
+								</li>
+							</ul>
 						</section>
 					</div>
 					<div class="modal-footer">
