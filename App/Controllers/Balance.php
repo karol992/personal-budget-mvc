@@ -10,6 +10,7 @@ use \App\Flash;
 use \App\Models\DataProperties\UpdateIncome;
 use \App\Models\DataProperties\UpdateExpense;
 use \App\Models\DataProperties\DataCleaner;
+use \App\Models\Data;
 
 /**
  * Balance controller
@@ -190,6 +191,18 @@ class Balance extends Authenticated
 		echo json_encode($response);
 	}
 	
+	public function updateExpenseRecordAjaxAction() {
+		$response =[];
+		$update = new UpdateExpense($_POST);
+		if ($update->send($update->amount, $update->expense_date, $update->payment, $update->comment)) {
+			$response['success']=true;
+			$response['new_sum']=$this->getExpenseRecordSum($_POST['category_id']);
+		} else {
+			$response['success']=false;
+			$response['errors']=$update->errors;
+		}
+		echo json_encode($update->amount);
+	}
 	
 	protected function getIncomeRecordSum($category_id) {
 		$period=[];
@@ -197,5 +210,17 @@ class Balance extends Authenticated
 		$period['end']=$_SESSION['remembered_period']['end'];
 		$sum=BalanceData::getIncomeSum($category_id,$period);
 		return $sum['0']['new_sum'];
+	}
+	
+	protected function getExpenseRecordSum($category_id) {
+		$period=[];
+		$period['start']=$_SESSION['remembered_period']['start'];
+		$period['end']=$_SESSION['remembered_period']['end'];
+		$sum=BalanceData::getExpenseSum($category_id,$period);
+		return $sum['0']['new_sum'];
+	}
+	
+	public function getPaymentCategoriesAjaxAction() {
+		echo json_encode(Data::getUserPaymentCats());
 	}
 }

@@ -45,7 +45,7 @@
 						{% for expense in expenses %}
 									<div class="b_line row shadow">
 										<div class="blcell col-7">{{ expense.name }}</div>
-										<div class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
+										<div id="expense{{ expense.id }}Sum" class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
 										<button class="btn btn_list col-1 expense_category_button" href="#expenseListModal" data-toggle="modal" data-target="#expenseListModal"  data-category-id="{{ expense.id }}" data-category-name="{{ expense.name }}">
 											<span class="fa fa-file-text-o"></span>
 										</button>
@@ -135,5 +135,8 @@
 	var expenses= JSON.parse('{{ js_expenses_sums|json_encode|raw}}');
 </script>
 <script src="/js/piechart.js"></script>
+<script>
+	$payments= JSON.parse('{{ payment_cats|json_encode|raw}}');
+</script>
 <script src="/js/balance/balance.js"></script>
 {% endblock %}

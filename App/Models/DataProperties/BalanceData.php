@@ -26,7 +26,7 @@ class BalanceData extends \Core\Model
 	}
 	
 	public static function getExpenseRecords($category_id,$period){
-		$sql ="SELECT id, amount, date_of_expense, expense_comment FROM expenses 
+		$sql ="SELECT id, amount, date_of_expense, 	payment_method_assigned_to_user_id, expense_comment FROM expenses 
 		WHERE user_id = :user_id
 		AND expense_category_assigned_to_user_id = :category_id
 		AND (date_of_expense BETWEEN :start AND :end)";
@@ -48,4 +48,12 @@ class BalanceData extends \Core\Model
 		return Data::dbCategoryQuery($sql, $user_id, $category_id, $period);
 	}
 	
+	public static function getExpenseSum($category_id,$period){
+		$sql ="SELECT SUM(amount) new_sum FROM expenses 
+		WHERE user_id = :user_id
+		AND expense_category_assigned_to_user_id = :category_id
+		AND (date_of_expense BETWEEN :start AND :end)";
+		$user_id = Auth::getUserId();
+		return Data::dbCategoryQuery($sql, $user_id, $category_id, $period);
+	}
 }
