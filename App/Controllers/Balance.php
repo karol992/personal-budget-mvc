@@ -166,6 +166,14 @@ class Balance extends Authenticated
 		echo json_encode($response);
 	}
 	
+	public function getExpenseRecordsAjaxAction() {
+		$period=[];
+		$period['start']=$_SESSION['remembered_period']['start'];
+		$period['end']=$_SESSION['remembered_period']['end'];
+		$response=BalanceData::getExpenseRecords($_POST['category_id'],$period);
+		echo json_encode($response);
+	}
+	
 	/** Update income record
 	 * @return void
 	 */

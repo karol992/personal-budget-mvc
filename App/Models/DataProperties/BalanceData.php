@@ -25,6 +25,15 @@ class BalanceData extends \Core\Model
 		return Data::dbCategoryQuery($sql, $user_id, $category_id, $period);
 	}
 	
+	public static function getExpenseRecords($category_id,$period){
+		$sql ="SELECT id, amount, date_of_expense, expense_comment FROM expenses 
+		WHERE user_id = :user_id
+		AND expense_category_assigned_to_user_id = :category_id
+		AND (date_of_expense BETWEEN :start AND :end)";
+		$user_id = Auth::getUserId();
+		return Data::dbCategoryQuery($sql, $user_id, $category_id, $period);
+	}
+	
 	/** Create table with user income records of specified category
 	 * @param $category_id
 	 * @param assoc array $period [start, end]
