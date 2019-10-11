@@ -165,4 +165,29 @@ class Balance extends Authenticated
 		$response=BalanceData::getIncomeRecords($_POST['category_id'],$period);
 		echo json_encode($response);
 	}
+	
+	/** Update income record
+	 * @return void
+	 */
+	public function updateIncomeRecordAjaxAction() {
+		$response =[];
+		$update = new UpdateIncome($_POST);
+		if ($update->send($update->amount, $update->income_date, $update->comment)) {
+			$response['success']=true;
+			$response['new_sum']=$this->getIncomeRecordSum($_POST['category_id']);
+		} else {
+			$response['success']=false;
+			$response['errors']=$update->errors;
+		}
+		echo json_encode($response);
+	}
+	
+	
+	protected function getIncomeRecordSum($category_id) {
+		$period=[];
+		$period['start']=$_SESSION['remembered_period']['start'];
+		$period['end']=$_SESSION['remembered_period']['end'];
+		$sum=BalanceData::getIncomeSum($category_id,$period);
+		return $sum['0']['new_sum'];
+	}
 }

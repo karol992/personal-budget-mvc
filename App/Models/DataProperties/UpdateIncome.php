@@ -12,7 +12,7 @@ use \App\Models\Data;
 class UpdateIncome extends Transaction
 {
 	/** Body of public function send()
-     * @_POST [income_id, amount, date, comment]
+     * @_POST [income_id, qamount, date, comment]
      * @return boolean True if income is updated
      */
 	protected function transactionQuery() {

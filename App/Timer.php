@@ -74,7 +74,7 @@ class Timer {
 			$temp = $start;
 			$start = $end;
 			$end = $temp;
-			Flash::addMessage('Odwrócono kolejność dat.', 'info');
+			//Flash::addMessage('Odwrócono kolejność dat.', 'info');
 		}
 		$outPeriod['start'] = $start;
 		$outPeriod['end'] = $end;
