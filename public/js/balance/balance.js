@@ -54,6 +54,7 @@ function editExpenseRecord() {
 		dataType : "json",
 		data: $form.serialize()
 	}).done(function(response) {
+		console.log(response);
 		$form.next('div.error').empty().attr('hidden', true);
 		if(!response.success) {
 			$form.next('div.error').attr('hidden', false);

@@ -201,7 +201,7 @@ class Balance extends Authenticated
 			$response['success']=false;
 			$response['errors']=$update->errors;
 		}
-		echo json_encode($update->amount);
+		echo json_encode($response);
 	}
 	
 	protected function getIncomeRecordSum($category_id) {
