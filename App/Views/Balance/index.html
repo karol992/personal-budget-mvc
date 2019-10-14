@@ -132,7 +132,8 @@
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
 <script src="http://www.amcharts.com/lib/4/themes/kelly.js"></script>
 <script>
-	var expenses= JSON.parse('{{ js_expenses_sums|json_encode|raw}}');
+	var json_expenses = '{{ js_expenses_sums|json_encode|raw}}';
+	var onload_expenses= JSON.parse(json_expenses);
 </script>
 <script src="/js/piechart.js"></script>
 <script>

@@ -56,4 +56,22 @@ class BalanceData extends \Core\Model
 		$user_id = Auth::getUserId();
 		return Data::dbCategoryQuery($sql, $user_id, $category_id, $period);
 	}
+	
+	public static function getAllExpenseSums($period) {
+		$sql = ("SELECT ecat.name, ecat.id, SUM(ex.amount) sum
+		FROM expenses ex
+		INNER JOIN expenses_category_assigned_to_users ecat
+		ON ex.expense_category_assigned_to_user_id = ecat.id
+		AND (ex.date_of_expense BETWEEN :start AND :end)
+		AND ecat.id IN (
+			SELECT ecat.id FROM expenses_category_assigned_to_users ecat
+			INNER JOIN users
+			ON users.id = ecat.user_id
+			AND users.id = :id
+		)
+		GROUP BY ecat.id
+		ORDER BY sum DESC;");
+		$id = Auth::getUserId();
+		return Data::dbQuery($sql, $id,$period);
+	}
 }

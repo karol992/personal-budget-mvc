@@ -122,6 +122,17 @@ class Balance extends Authenticated
 		}
 	}
 	
+	public function deleteIncomeRecordAjaxAction() {
+		$response=[];
+		if (DataCleaner::incomeRecord($_POST['income_id'])) {
+			$response['success']=true;
+			$response['new_sum']=$this->getIncomeRecordSum($_POST['category_id']);
+		} else {
+			$response['success']=false;
+		}
+		echo json_encode($response);
+	}
+	
 	/** Update expense record
 	 * @return void
 	 */
@@ -139,6 +150,18 @@ class Balance extends Authenticated
 		if (!DataCleaner::expenseRecord($_POST['expense_id'])) {
 			Flash::addMessage("Expense delete failed.",'warning');
 		}
+	}
+	
+	public function deleteExpenseRecordAjaxAction() {
+		$response=[];
+		if (DataCleaner::expenseRecord($_POST['expense_id'])) {
+			$response['success']=true;
+			$response['new_sum']=$this->getExpenseRecordSum($_POST['category_id']);
+			$response['all_sums']=$this->getExpenseSums();
+		} else {
+			$response['success']=false;
+		}
+		echo json_encode($response);
 	}
 	
 	/** Specify the motivation div in separated strings (cause of RWD)
@@ -197,6 +220,7 @@ class Balance extends Authenticated
 		if ($update->send($update->amount, $update->expense_date, $update->payment, $update->comment)) {
 			$response['success']=true;
 			$response['new_sum']=$this->getExpenseRecordSum($_POST['category_id']);
+			$response['all_sums']=$this->getExpenseSums();
 		} else {
 			$response['success']=false;
 			$response['errors']=$update->errors;
@@ -222,5 +246,13 @@ class Balance extends Authenticated
 	
 	public function getPaymentCategoriesAjaxAction() {
 		echo json_encode(Data::getUserPaymentCats());
+	}
+	
+	protected function getExpenseSums() {
+		$period=[];
+		$period['start']=$_SESSION['remembered_period']['start'];
+		$period['end']=$_SESSION['remembered_period']['end'];
+		$sums=BalanceData::getAllExpenseSums($period);
+		return $sums;
 	}
 }
