@@ -77,9 +77,9 @@
 					<!--  Sum & Comment. -->
 						<div class="b_line b_sum row shadow">
 							<div class="blcell col-7">Bilans</div>
-							<div class="brcell col-5 b_right_brd_r">{{ "%.2f"|format(balance_value) }}</div>
+							<div id="balance_value" class="brcell col-5 b_right_brd_r">{{ "%.2f"|format(balance_value) }}</div>
 						</div>
-						<div class="b_line b_motivation shadow" style="{{ motivation_info.0 }}">
+						<div id="b_motivation" class="b_line b_motivation shadow" style="{{ motivation_info.0 }}">
 							<div class="inB">
 								<span>{{ motivation_info.1 }}</span>
 							</div>

@@ -31,6 +31,17 @@ function changeDetect() {
 	$(this).css("background-color", "#E0FFFF");
 }
 
+function updateMotivation(balance_value) {
+	$('#balance_value').html(balance_value);
+	if (balance_value>=0) {
+		$('#b_motivation').html('<div class="inB"><span>Gratulacje.</span></div><div class="inB"><span>Świetnie zarządzasz finansami!</span></div>');
+		$('#b_motivation').css('color','');
+	} else {
+		$('#b_motivation').html('<div class="inB"><span>Uważaj,</span></div><div class="inB"><span> wpadasz w długi!</span></div>');
+		$('#b_motivation').css('color','red');
+	}
+}
+
 function editIncomeRecord() {
 	$form = $(this).closest('form');
 	$.ajax({
@@ -48,6 +59,7 @@ function editIncomeRecord() {
 		} else {
 			$('#income'+$inc_id_label.val()+'Sum').html(response.new_sum);
 			$form.find('input').css("background-color", "");
+			updateMotivation(parseFloat(response.balance).toFixed(2));
 		}
 	}).fail(function() {
 		alert("income edit fail");
@@ -69,6 +81,7 @@ function deleteIncomeRecord() {
 		} else {
 			$('#income'+$inc_id_label.val()+'Sum').html(response.new_sum);
 			$form.remove();
+			updateMotivation(parseFloat(response.balance).toFixed(2));
 		}
 	}).fail(function() {
 		alert("income delete fail");
@@ -95,6 +108,7 @@ function editExpenseRecord() {
 			reloadChartData(response.all_sums);
 			$form.find('input').css("background-color", "");
 			$form.find('select').css("background-color", "");
+			updateMotivation(parseFloat(response.balance).toFixed(2));
 		}
 	}).fail(function() {
 		alert("expense edit fail");
@@ -116,6 +130,7 @@ function deleteExpenseRecord() {
 		} else {
 			$('#expense'+$exp_id_label.val()+'Sum').html(response.new_sum);
 			$form.remove();
+			updateMotivation(parseFloat(response.balance).toFixed(2));
 			reloadChartData(response.all_sums);
 		}
 	}).fail(function() {

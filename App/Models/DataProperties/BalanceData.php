@@ -74,4 +74,22 @@ class BalanceData extends \Core\Model
 		$id = Auth::getUserId();
 		return Data::dbQuery($sql, $id,$period);
 	}
+	
+	public static function getAllIncomeSums($period) {
+		$sql = ("SELECT icat.name, icat.id, SUM(ic.amount) sum
+		FROM incomes ic
+		INNER JOIN incomes_category_assigned_to_users icat
+		ON ic.income_category_assigned_to_user_id = icat.id
+		AND (ic.date_of_income BETWEEN :start AND :end)
+		AND icat.id IN (
+			SELECT icat.id FROM incomes_category_assigned_to_users icat
+			INNER JOIN users
+			ON users.id = icat.user_id
+			AND users.id = :id
+		)
+		GROUP BY icat.id
+		ORDER BY sum DESC;");
+		$id = Auth::getUserId();
+		return Data::dbQuery($sql, $id,$period);
+	}
 }
