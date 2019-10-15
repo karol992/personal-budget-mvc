@@ -53,9 +53,7 @@
 						{% endfor %}
 						</div>
 				</div>
-				
 				<div class="col-md-6"> 
-					
 					{% if expenses is empty %}
 					Wydatki
 							<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>
@@ -88,7 +86,6 @@
 							</div>
 						</div>
 					{% endif %}
-					
 				</div>
 			</div>
 		</div>
@@ -130,13 +127,15 @@
 {% block footer %}
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
-<script src="http://www.amcharts.com/lib/4/themes/kelly.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/kelly.js"></script>
 <script>
+	/* Load expense sums from twig to piechart.js.  */
 	var json_expenses = '{{ js_expenses_sums|json_encode|raw}}';
 	var onload_expenses= JSON.parse(json_expenses);
 </script>
 <script src="/js/piechart.js"></script>
 <script>
+	/* Load payment categories from twig to balance.js.  */
 	$payments= JSON.parse('{{ payment_cats|json_encode|raw}}');
 </script>
 <script src="/js/balance/balance.js"></script>
