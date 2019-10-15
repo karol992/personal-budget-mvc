@@ -127,6 +127,7 @@ class Balance extends Authenticated
 		if (DataCleaner::incomeRecord($_POST['income_id'])) {
 			$response['success']=true;
 			$response['new_sum']=$this->getIncomeRecordSum($_POST['category_id']);
+			$response['balance']=$this->getBalanceValue();
 		} else {
 			$response['success']=false;
 		}
@@ -158,6 +159,7 @@ class Balance extends Authenticated
 			$response['success']=true;
 			$response['new_sum']=$this->getExpenseRecordSum($_POST['category_id']);
 			$response['all_sums']=$this->getExpenseSums();
+			$response['balance']=$this->getBalanceValue();
 		} else {
 			$response['success']=false;
 		}
@@ -207,6 +209,7 @@ class Balance extends Authenticated
 		if ($update->send($update->amount, $update->income_date, $update->comment)) {
 			$response['success']=true;
 			$response['new_sum']=$this->getIncomeRecordSum($_POST['category_id']);
+			$response['balance']=$this->getBalanceValue();
 		} else {
 			$response['success']=false;
 			$response['errors']=$update->errors;
@@ -221,6 +224,7 @@ class Balance extends Authenticated
 			$response['success']=true;
 			$response['new_sum']=$this->getExpenseRecordSum($_POST['category_id']);
 			$response['all_sums']=$this->getExpenseSums();
+			$response['balance']=$this->getBalanceValue();
 		} else {
 			$response['success']=false;
 			$response['errors']=$update->errors;
@@ -254,5 +258,26 @@ class Balance extends Authenticated
 		$period['end']=$_SESSION['remembered_period']['end'];
 		$sums=BalanceData::getAllExpenseSums($period);
 		return $sums;
+	}
+	
+	protected function getIncomeSums() {
+		$period=[];
+		$period['start']=$_SESSION['remembered_period']['start'];
+		$period['end']=$_SESSION['remembered_period']['end'];
+		$sums=BalanceData::getAllIncomeSums($period);
+		return $sums;
+	}
+	
+	protected function getBalanceValue() {
+		$incomeSums = $this->getIncomeSums();
+		$expenseSums = $this->getExpenseSums();
+		$balance = 0;
+		foreach ($incomeSums as $sum) {
+			$balance += $sum['sum'];
+		}
+		foreach ($expenseSums as $sum) {
+			$balance -= $sum['sum'];
+		}
+		return $balance;
 	}
 }
