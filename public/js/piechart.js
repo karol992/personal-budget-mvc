@@ -17,10 +17,13 @@ am4core.useTheme(am4themes_kelly);
 var chart = am4core.create("chartdiv", am4charts.PieChart);
 
 //Add data
-var step;
-for (step=0; step<expenses.length; step++) {
-	chart.data.push({"category": expenses[step].name, "value": expenses[step].sum});
+function loadChartData(expenses) {
+	var step;
+	for (step=0; step<expenses.length; step++) {
+		chart.data.push({"category": expenses[step].name, "value": expenses[step].sum});
+	}
 }
+loadChartData(onload_expenses);
 
 // Add example data 
 /*chart.data = [{

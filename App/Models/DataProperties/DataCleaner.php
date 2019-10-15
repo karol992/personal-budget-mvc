@@ -17,8 +17,9 @@ class DataCleaner extends \Core\Model
      */
 	public static function incomeRecord($incomeId) {
 		$db = static::getDB();
-		$query = $db->prepare("DELETE FROM incomes WHERE incomes.id = :id;");
+		$query = $db->prepare("DELETE FROM incomes WHERE incomes.id = :id AND incomes.user_id = :user_id;");
 		$query->bindValue(':id', $incomeId, PDO::PARAM_INT);
+		$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
 		return $query->execute();
 	}
 	
@@ -27,8 +28,9 @@ class DataCleaner extends \Core\Model
      */
 	public static function expenseRecord($expenseId) {
 		$db = static::getDB();
-		$query = $db->prepare("DELETE FROM expenses WHERE expenses.id = :id;");
+		$query = $db->prepare("DELETE FROM expenses WHERE expenses.id = :id AND expenses.user_id = :user_id;");
 		$query->bindValue(':id', $expenseId, PDO::PARAM_INT);
+		$query->bindValue(':user_id', Auth::getUserId(), PDO::PARAM_INT);
 		return $query->execute();
 	}
 	

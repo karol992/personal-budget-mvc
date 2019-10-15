@@ -100,6 +100,24 @@ class Data extends \Core\Model
 		return $query->fetchAll();
 	}
 	
+	/** Query execution based on user_id, category_id and period
+	 * @param $sql, string, user SQL query
+	 * @param $user_id, integer
+	 * @param $category_id, integer
+	 * @param $period, assoc array [start, end]
+	 * @return result of SQL query
+	 */
+	public static function dbCategoryQuery($sql, $user_id, $category_id, $period) {
+		$db = static::getDB();
+		$query = $db->prepare($sql);
+		$query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$query->bindValue(':category_id', $category_id, PDO::PARAM_INT);
+		$query->bindValue(':start', $period['start'], PDO::PARAM_STR);
+		$query->bindValue(':end', $period['end'], PDO::PARAM_STR);
+		$query->execute();
+		return $query->fetchAll();
+	}
+	
 	/** 
 	 * @param $cat_id, integer Expense Category id
 	 * @param $period, assoc array [start, end]
