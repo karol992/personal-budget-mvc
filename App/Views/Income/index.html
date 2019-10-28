@@ -20,21 +20,28 @@
 		
 		<div class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10 bg-main">
 		
-			<div class="row" >
-				<div id="info_ribbon">
-				</div>
+			<div class="row height_30" >
+				<div id="info_ribbon"></div>
 			</div>
 			
 			<div class="row">
 				<!-- Amount of income -->
 				<div class="transaction_section col-12 col-md-6">
-					<label for="income_value">Kwota: </label>
-					<input class="form-control" type="number" name="income_value" step="0.01" min="0.01" max="999999.99"  value="{{ income_value }}" required>
+					<div class="mobile_width_25">
+						<label for="income_value">Kwota: </label>
+					</div>
+					<div class="mobile_width_75">
+						<input id="income_value" class="form-control" type="number" name="income_value" step="0.01" min="0.01" max="999999.99" required>
+					</div>
 				</div>
 				<!-- Date of income -->
 				<div class="transaction_section col-12 col-md-6">
-					<label for="income_date">Data: </label>
-					<input class="form-control" type="date" name="income_date" value="{{ transaction_date }}">
+					<div class="mobile_width_25">
+						<label for="income_date">Data: </label>
+					</div>
+					<div class="mobile_width_75">
+						<input class="form-control" type="date" name="income_date" value="{{ transaction_date }}">
+					</div>
 				</div>
 			</div>
 			

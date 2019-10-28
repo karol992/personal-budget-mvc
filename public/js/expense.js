@@ -135,7 +135,7 @@ $(document).ready(function() {
 				alertInfo('Błąd połączenia z bazą danych.');
 			});
 		}
-		$expenseValue.val("");
+		$expenseValue.val('');
 		setTimeout(function() {$submitBtn.prop('disabled', false);}, 1000);
 		$expenseValue.focus();
 	});
@@ -162,7 +162,8 @@ $(document).ready(function() {
 	$dateInput.on("change", function() { showEstimation($expenseValue.val()); });
 	
 	
-	/* show first limit when document loaded */
+	/* actions document loaded */
 	showEstimation(0);
+	$expenseValue.focus();
 });
 

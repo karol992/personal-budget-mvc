@@ -21,7 +21,6 @@ class Expense extends Authenticated
      * @return void
      */
     public function indexAction($args = []) {
-		$args['expense_value'] = '0.00';
 		$args['expense_cats'] = \App\Models\Data::getUserExpenseCats();
 		$args['payment_cats'] = \App\Models\Data::getUserPaymentCats();
 		$args['transaction_date'] = $_POST['expense_date'] ?? \App\Timer::getCurrentDate();

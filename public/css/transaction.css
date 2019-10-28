@@ -35,13 +35,36 @@ input,option,select,input[type=textarea] {
 	width: 100%;
     /*font-size: calc(12px + 2vmin);*/
 }
-input[type=number]::-webkit-inner-spin-button {
+/*input[type=number]::-webkit-inner-spin-button {
 	opacity: 1;
-}
+}*/
 input[type=date]::-webkit-inner-spin-button {
 	opacity: 1;
 }
 input[type=date]::-webkit-calendar-picker-indicator {
 	opacity: 1;
 }
-
+@media (max-width: 576px) {
+	.mobile_width_25 {
+		width: 25%;
+		float: left;
+		height: 100%;
+	}
+	.mobile_width_75 {
+		width: 75%;
+		float: left;
+		height: 100%;
+	}
+}
+.height_30 {
+	min-height: 30px;
+}
+input[type="number"] {
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
