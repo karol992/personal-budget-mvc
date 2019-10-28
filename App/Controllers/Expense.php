@@ -64,9 +64,9 @@ class Expense extends Authenticated
 		echo json_encode($response);
 	}
 	
-	/** Get (AJAX)
-	 * @_POST []
-	 * @return 
+	/** Get  (AJAX)
+	 * @_POST [date, cat_id, amount]
+	 * @return void
 	 */
 	public function getPeriodedSumAjaxAction() {
 		$response = [];

@@ -18,7 +18,20 @@
 	
 	<!------mainBody----------------------------------------------------------------------------------->
 	<section id="balanceBody"><!-- Contains incomes, expense pie chart, expenses. -->
-		<div class="container"> 
+		<div class="container bg-main">
+		
+			<!-- Show period of balance -->
+			<div class="ribbon_info alert-success period-border">
+				<div class="inB">Zakres bilansu:</div>
+				<div class="inB">
+					<div class="inB" >{{ balance_period.start }}</div>
+					<input id="balance_start_day" value="{{ balance_period.start }}" hidden>
+					<div class="inB"> - </div>
+					<div class="inB">{{ balance_period.end }}</div>
+					<input id="balance_end_day" value="{{ balance_period.end }}" hidden>
+				</div>
+			</div>
+	
 			<div class="row">
 				<div class="col-md-6">
 					<!-- Incomes categories. -->
@@ -98,7 +111,7 @@
 	
 	<section id="balanceModals">
 	<!---legendModal------------------------------------------------------------------------------------------>
-		<div class="modal fade" id="legendModal" tabindex="-1" role="dialog" aria-labelledby="legendModalLabel" aria-hidden="true">
+		<div class="modal fade" id="legendModal" tabindex="-1" role="dialog" aria-labelledby="Legend" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<form class="modal-content" action="" method="post" enctype="multipart/form-data">
 					<div class="modal-header">
@@ -129,13 +142,13 @@
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/kelly.js"></script>
 <script>
-	/* Load expense sums from twig to piechart.js.  */
+	/* Load expense sums by twig to piechart.js.  */
 	var json_expenses = '{{ js_expenses_sums|json_encode|raw}}';
 	var onload_expenses= JSON.parse(json_expenses);
 </script>
 <script src="/js/piechart.js"></script>
 <script>
-	/* Load payment categories from twig to balance.js.  */
+	/* Load payment categories by twig to balance.js.  */
 	$payments= JSON.parse('{{ payment_cats|json_encode|raw}}');
 </script>
 <script src="/js/balance/balance.js"></script>

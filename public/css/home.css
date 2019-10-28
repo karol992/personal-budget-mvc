@@ -1,7 +1,11 @@
 article {
 	font-size: 16px;
-	font-style: italic;
 	text-align: justify;
 	text-justify: inter-word;
 	padding: 10px;
+	height: 100%;
+}
+.margin5 {
+	margin-top: 5px;
+	margin-bottom: 5px;
 }

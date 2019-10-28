@@ -1,12 +1,21 @@
 :root {
-	--color-bg: #FFFBD9;
-	--color-dark: #7F9949;
-	--color-medium: #BBCC99;
-	--color-warning-text: #6e1a22;
+	--color-bg: #FFFBD9; /* main background color */
+	--color-dark: #7F9949; /* font color */
+	--color-medium: #BBCC99; /* elemensts background color */
+	--color-warning-text: #6e1a22; /* CONST warning font color, delete button border color*/
 	--color-warning-bg: #dc5565;
 	--color-item-active: #B399CC;
-	--color-item-hover-bg: #99AACC;
-	--color-item-hover-brd: #6973FA;
-	--color-item-hover-del: #dc3545;
+	--color-item-hover-bg: #99AACC; /* settings button background color */
+	--color-item-hover-brd: #6973FA; /* settings button background color */
+	--color-item-hover-del: #dc3545; /* CONST delete button background color */
 	--color-btn-checked: #9379AC;
+	
+	/* personal colors */
+	--color-bg: #FAF7E5; 
+	--color-dark: #405380;
+	--color-medium: #8AA4B7;
+	--color-item-hover-bg: #4671D5;
+	--color-item-hover-brd: #1240AB;
+	--color-icons: #003153;
+	/**/
 }

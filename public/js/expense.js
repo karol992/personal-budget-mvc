@@ -148,9 +148,19 @@ $(document).ready(function() {
 		$(this).prop('disabled', false);
 		$(this).focus();
 	});
+	
+	$expenseValue.on("change", function() {
+		$(this).prop('disabled', true);
+		($(this).val().length>9) ? $(this).val($(this).val().slice(0, -1)) : false;
+		showEstimation($(this).val());
+		$(this).prop('disabled', false);
+		$(this).focus();
+	});
+	
 	$expenseValue.keydown(function() { ($(this).val().length>10) ? $(this).val($(this).val().slice(0, -1)) : false; });
 	$category.on("change", function() { showEstimation($expenseValue.val()) });
 	$dateInput.on("change", function() { showEstimation($expenseValue.val()); });
+	
 	
 	/* show first limit when document loaded */
 	showEstimation(0);

@@ -183,7 +183,10 @@ class Balance extends Authenticated
 		}
 		return $text;
 	}
-
+	
+	/** Get income-list
+	 * @return void
+	 */
 	public function getIncomeRecordsAjaxAction() {
 		$period=[];
 		$period['start']=$_SESSION['remembered_period']['start'];
@@ -192,6 +195,9 @@ class Balance extends Authenticated
 		echo json_encode($response);
 	}
 	
+	/** Get expense-list
+	 * @return void
+	 */
 	public function getExpenseRecordsAjaxAction() {
 		$period=[];
 		$period['start']=$_SESSION['remembered_period']['start'];

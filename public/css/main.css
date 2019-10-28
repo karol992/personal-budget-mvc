@@ -7,14 +7,20 @@ body {
 	min-width: 300px;
 }
 h1 {
-	font-size: calc(10px + 5vw);
+	font-family: 'ZCOOL XiaoWei', serif;
+	font-size: calc(1em + 5vw);
 	font-weight: 700;
 }
-
+.fa-calculator {
+	font-size: calc(10px + 4vw);
+}
 /* <header> stylization */
 .ribbon {
 	background-color: var(--color-dark);
 	min-height: 40px;
+}
+.nav-link {
+	color: var(--color-icons) !important;
 }
 .nav_icon {
 	font-size: 0.8em;
@@ -48,7 +54,6 @@ h1 {
 	background-color: var(--color-item-hover-bg);
 	border: 2px solid var(--color-item-hover-brd);
 }
-
 
 .single-icon {
 	color: white;
@@ -107,7 +112,32 @@ h1 {
 #buttons_footer {
 	position: fixed; 
 	bottom: 0;
+	min-width: 300px;
 }
 .bot10 {
 	margin-bottom: 10px;
+}
+
+.bg-main {
+	border: 1px solid var(--color-dark);
+	border-radius: 4px;
+	background-color: var(--color-bg);
+}
+.fa-file-text-o {
+	color: var(--color-icons) !important;
+}
+.fa-floppy-o {
+	color: var(--color-icons) !important;
+}
+.fa-trash {
+	color: var(--color-icons) !important;
+}
+.fa-pencil {
+	color: var(--color-icons) !important;
+}
+.fa-plus {
+	color: var(--color-icons) !important;
+}
+input {
+	min-width:0;
 }
