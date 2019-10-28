@@ -4,6 +4,7 @@ $(document).ready(function() {
 	const $submitBtn = $("#submitBtn");
 	const $info = $("#info_ribbon");
 	const $expenseValue = $("#expense_value");
+	const $expenseNote = $("#expense_note");
 	const $limit = $("#limit_ribbon");
 	const $category = $("input[name='expense_category']");
 	const $dateInput = $('#expense_date');
@@ -132,6 +133,7 @@ $(document).ready(function() {
 				alertInfo('Błąd połączenia z bazą danych.');
 			});
 		}
+		$expenseNote.val('');
 		$expenseValue.val('').focus();
 		setTimeout(function() {
 			$submitBtn.prop('disabled', false);

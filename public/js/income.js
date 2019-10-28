@@ -5,6 +5,7 @@ $(document).ready(function() {
 	const $submitBtn = $("#submitBtn");
 	const $info = $("#info_ribbon");
 	const $incomeValue = $("#income_value");
+	const $incomeNote = $("#income_note");
 	
 	/* Show alert message */
 	function alertInfo(text) {
@@ -62,12 +63,12 @@ $(document).ready(function() {
 				alertInfo('Błąd połączenia z bazą danych.');
 			});
 		}
-		$incomeValue.val('');
+		$incomeNote.val('');
+		$incomeValue.val('').focus();
 		setTimeout(function() {
 			$submitBtn.prop('disabled', false);
 			$incomeValue.attr('readonly', false);
 		}, 1000);
-		$incomeValue.focus();
 	});
 	
 	$incomeValue.keyup(function() {
