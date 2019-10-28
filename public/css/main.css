@@ -2,7 +2,7 @@
 body {
 	
 	background: url(/jpeg/office-pen-calculator-computation.jpg);
-	background-size: cover;
+	background-size: 100% auto;
 	background-repeat: no-repeat;
 	background-color: #E8E8EA;
 	color: var(--color-dark);
