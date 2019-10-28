@@ -8,6 +8,8 @@ $inc_list=$('#incomeCategoryList');
 $exp_label=$('#expenseModalLabel');
 $exp_id_label=$('#expenseModalIdLabel');
 $exp_list=$('#expenseCategoryList');
+$balance=$('#balance_value');
+$motivation=$('#b_motivation');
 
 function loadPaymentCategories($payment_id) {
 	let text = "";
@@ -27,18 +29,18 @@ function reloadChartData(sums=[]) {
 	chart.validateData();
 }
 
-function changeDetect() {
+function changeBg() {
 	$(this).css("background-color", "#E0FFFF");
 }
 
 function updateMotivation(balance_value) {
-	$('#balance_value').html(balance_value);
+	$balance.html(balance_value);
 	if (balance_value>=0) {
-		$('#b_motivation').html('<div class="inB"><span>Gratulacje.</span></div><div class="inB"><span>Świetnie zarządzasz finansami!</span></div>');
-		$('#b_motivation').css('color','');
+		$motivation.html('<div class="inB"><span>Gratulacje. </span></div><div class="inB"><span>Świetnie zarządzasz finansami!</span></div>');
+		$motivation.css('color','');
 	} else {
-		$('#b_motivation').html('<div class="inB"><span>Uważaj,</span></div><div class="inB"><span> wpadasz w długi!</span></div>');
-		$('#b_motivation').css('color','red');
+		$motivation.html('<div class="inB"><span>Uważaj, </span></div><div class="inB"><span>wpadasz w długi!</span></div>');
+		$motivation.css('color','red');
 	}
 }
 
@@ -62,7 +64,7 @@ function editIncomeRecord() {
 			updateMotivation(parseFloat(response.balance).toFixed(2));
 		}
 	}).fail(function() {
-		alert("income edit fail");
+		alert("Income record editing fail.");
 	});
 }
 
@@ -80,11 +82,15 @@ function deleteIncomeRecord() {
 			$form.next('div.error').append('<p>Nie udało się usunąć dochodu.</p>');
 		} else {
 			$('#income'+$inc_id_label.val()+'Sum').html(response.new_sum);
-			$form.remove();
+			$form.closest('li').remove();
 			updateMotivation(parseFloat(response.balance).toFixed(2));
+			if(!$inc_list.children().length) {
+				$('#income'+$inc_id_label.val()+'Line').remove();
+				$('#incomeListModal').modal('toggle');
+			}
 		}
 	}).fail(function() {
-		alert("income delete fail");
+		alert("Income record deleting fail.");
 	});
 }
 
@@ -111,7 +117,7 @@ function editExpenseRecord() {
 			updateMotivation(parseFloat(response.balance).toFixed(2));
 		}
 	}).fail(function() {
-		alert("expense edit fail");
+		alert("Expense record editing fail.");
 	});
 }
 
@@ -129,12 +135,16 @@ function deleteExpenseRecord() {
 			$form.next('div.error').append('<p>Nie udało się usunąć wydatku.</p>');
 		} else {
 			$('#expense'+$exp_id_label.val()+'Sum').html(response.new_sum);
-			$form.remove();
+			$form.closest('li').remove();
 			updateMotivation(parseFloat(response.balance).toFixed(2));
 			reloadChartData(response.all_sums);
+			if(!$exp_list.children().length) {
+				$('#expense'+$exp_id_label.val()+'Line').remove();
+				$('#expenseListModal').modal('toggle');
+			}
 		}
 	}).fail(function() {
-		alert("expense delete fail");
+		alert("Expense record deleting fail.");
 	});
 }
 
@@ -142,9 +152,9 @@ function loadIncomeRecord(record) { $inc_list.append($('<li class="container">')
 	$('<form class="modal_line row shadow">').append(
 		$('<input type="hidden" name="income_id" value="" />').attr('value', record['id']),
 		$('<input type="hidden" name="category_id" value="" />').attr('value', $inc_id_label.val()),
-		$('<input type="number" name="amount" class="modal_cell col-6 col-sm-6 col-lg-2" step="0.01" value="" min="0.01">').attr('value', record['amount']).on('change', changeDetect),
-		$('<input type="date" name="income_date" class="modal_cell col-6 col-sm-6 col-lg-3" value="">').attr('value', record['date_of_income']).on('change', changeDetect),		
-		$('<input type="text" name="comment" class="modal_cell col-8 col-sm-9 col-lg-5" value="">').attr('value', record['income_comment']).attr('placeholder','Notatki...').on('change', changeDetect),	
+		$('<input type="number" name="amount" class="modal_cell col-6 col-sm-6 col-lg-2" step="0.01" value="" min="0.01">').attr('value', record['amount']).on('change', changeBg),
+		$('<input type="date" name="income_date" class="modal_cell col-6 col-sm-6 col-lg-3" value="">').attr('value', record['date_of_income']).on('change', changeBg),		
+		$('<input type="text" name="comment" class="modal_cell col-8 col-sm-9 col-lg-5" value="">').attr('value', record['income_comment']).attr('placeholder','Notatki...').on('change', changeBg),	
 		$('<div class="container modal_cell col-4 col-sm-3 col-lg-2" style="padding: 0;">').append(
 			$('<button type="button" class="btn_record modal_button edit_record_button">').on('click', editIncomeRecord).html('<i class="fa fa-floppy-o fa-fw"></i>'),
 			$('<button type="button" class="btn_record bg_del modal_button delete_record_button">').on('click', deleteIncomeRecord).html('<i class="fa fa-trash fa-fw"></i>'))),
@@ -155,16 +165,17 @@ function loadExpenseRecord(record) { $exp_list.append($('<li class="container">'
 	$('<form class="modal_line row shadow">').append(
 		$('<input type="hidden" name="expense_id" value="" />').attr('value', record['id']),
 		$('<input type="hidden" name="category_id" value="" />').attr('value', $exp_id_label.val()),
-		$('<input type="number" name="amount" class="modal_cell col-12 col-sm-4 col-lg-2" step="0.01" value="" min="0.01">').attr('value', record['amount']).on('change', changeDetect),
-		$('<input type="date" name="expense_date" class="modal_cell col-6 col-sm-4 col-lg-3" value="">').attr('value', record['date_of_expense']).on('change', changeDetect),
-		$('<select name="payment" class="modal_cell col-6 col-sm-4 col-lg-2">').append(loadPaymentCategories(record['payment_method_assigned_to_user_id'])).on('change', changeDetect),	
-		$('<input type="text" name="comment" class="modal_cell col-8 col-lg-3" value="">').attr('value', record['expense_comment']).attr('placeholder','Notatki...').on('change', changeDetect),	
+		$('<input type="number" name="amount" class="modal_cell col-12 col-sm-4 col-lg-2" step="0.01" value="" min="0.01">').attr('value', record['amount']).on('change', changeBg),
+		$('<input type="date" name="expense_date" class="modal_cell col-6 col-sm-4 col-lg-3" value="">').attr('value', record['date_of_expense']).on('change', changeBg),
+		$('<select name="payment" class="modal_cell col-6 col-sm-4 col-lg-2">').append(loadPaymentCategories(record['payment_method_assigned_to_user_id'])).on('change', changeBg),	
+		$('<input type="text" name="comment" class="modal_cell col-8 col-lg-3" value="">').attr('value', record['expense_comment']).attr('placeholder','Notatki...').on('change', changeBg),	
 		$('<div class="container modal_cell col-4 col-lg-2" style="padding: 0;">').append(
 			$('<button type="button" class="btn_record modal_button edit_record_button">').on('click', editExpenseRecord).html('<i class="fa fa-floppy-o fa-fw"></i>'),
 			$('<button type="button" class="btn_record bg_del modal_button delete_record_button">').on('click', deleteExpenseRecord).html('<i class="fa fa-trash fa-fw"></i>'))),
 	$('<div class="error bot10" hidden>')
 ))};
 
+/* Load income records for category in period time. */
 $inc_btn.on('click' , function(e) {
 	e.preventDefault();
 	$inc_label.html($(this).attr('data-category-name'));
@@ -182,10 +193,11 @@ $inc_btn.on('click' , function(e) {
 			loadIncomeRecord(this);
 		});
 	}).fail(function() {
-		alert("income load fail");
+		alert("Income records loading fail.");
 	});
 });
 
+/* Load expense records for category in period time. */
 $exp_btn.on('click' , function(e) {
 	e.preventDefault();
 	$exp_label.html($(this).attr('data-category-name'));
@@ -203,6 +215,6 @@ $exp_btn.on('click' , function(e) {
 			loadExpenseRecord(this);
 		});
 	}).fail(function() {
-		alert("expense load fail");
+		alert("Expense records loading fail.");
 	});
 });

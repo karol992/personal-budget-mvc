@@ -1,37 +1,27 @@
 	<!-- Choose period of balance -->
-	<div class="container"> 
-			<div class="dropdown">
-				 <button class="con margin20 offset-lg-10 offset-md-9 offset-sm-8 offset-7 col-lg-2 col-md-3 col-sm-4 col-5 btn btn_confirm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Zakres
-				</button>
-				<div class="dropdown-menu col-lg-2 col-md-3 col-sm-4 col-5" aria-labelledby="dropdownMenu2">
-						<form action="/balance/index" method="post">
-						<button class="dropdown-item" type="submit" name="balance_period" value="current_month">Bieżący miesiąc</button>
-						<button class="dropdown-item" type="submit" name="balance_period" value="last_month">Poprzedni miesiąc</button>
-						<button class="dropdown-item" type="submit" name="balance_period" value="current_year">Bieżący rok</button></form>
-					<button class="dropdown-item" type="button" href="#dateModal" data-toggle="modal" data-target="#dateModal">
-						Niestandardowy
-					</button>			
-				</div>
+	<div id="periodDropdown" class="row">
+		<div class="container_title col-6">
+			<label>Przeglądaj bilans</label>
+		</div>
+		<div class="dropdown offset-3 col-3">
+			 <button class="period_button btn btn_confirm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Zakres
+			</button>
+			<div class="dropdown-menu col-lg-2 col-md-3 col-sm-4 col-5" aria-labelledby="dropdownMenu2">
+					<form action="/balance/index" method="post">
+					<button class="dropdown-item" type="submit" name="balance_period" value="current_month">Bieżący miesiąc</button>
+					<button class="dropdown-item" type="submit" name="balance_period" value="last_month">Poprzedni miesiąc</button>
+					<button class="dropdown-item" type="submit" name="balance_period" value="current_year">Bieżący rok</button></form>
+				<button class="dropdown-item" type="button" href="#dateModal" data-toggle="modal" data-target="#dateModal">
+					Niestandardowy
+				</button>			
 			</div>
-	</div>
-
-	<!-- Display period of balance -->
-	<div class="ribbon_info alert-success">
-		<div class="inB">Zakres bilansu:</div>
-		<div class="inB">
-			<div class="inB" >{{ balance_period.start }}</div>
-			<input id="balance_start_day" value="{{ balance_period.start }}" hidden>
-			<div class="inB"> - </div>
-			<div class="inB">{{ balance_period.end }}</div>
-			<input id="balance_end_day" value="{{ balance_period.end }}" hidden>
 		</div>
 	</div>
 	
-	
 
 	<!------dateModal----------------------------------------------------------------------------------->	
-	<div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="dateModalLabel" aria-hidden="true">
+	<div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<form action="/balance/index" method="post" enctype="multipart/form-data">

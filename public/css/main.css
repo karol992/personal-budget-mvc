@@ -1,20 +1,29 @@
 @import url('colors.css');
 body {
-	background-color: var(--color-bg);
+	background: url(/jpeg/office-pen-calculator-computation.jpg); /* source: https://www.pexels.com by Pixabay */
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	background-color: #E8E8EA;
 	color: var(--color-dark);
     font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	min-width: 300px;
 }
 h1 {
-	font-size: calc(10px + 5vw);
+	font-family: 'ZCOOL XiaoWei', serif;
+	font-size: calc(1em + 5vw);
 	font-weight: 700;
 }
-
+.fa-calculator {
+	font-size: calc(10px + 4vw);
+}
 /* <header> stylization */
 .ribbon {
 	background-color: var(--color-dark);
 	min-height: 40px;
+}
+.nav-link {
+	color: var(--color-icons) !important;
 }
 .nav_icon {
 	font-size: 0.8em;
@@ -49,7 +58,6 @@ h1 {
 	border: 2px solid var(--color-item-hover-brd);
 }
 
-
 .single-icon {
 	color: white;
 	padding: 18px 7px 7px 7px;
@@ -75,21 +83,15 @@ h1 {
 	text-align: center;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	font-size: calc(8px + 3vmin);
+	font-size: calc(16px + 2vmin);
+	font-family: 'ZCOOL XiaoWei', serif;
 }
 .alert-info {
 	font-size: calc(8px + 3vmin);
 	text-align: center;
 }
 
-#info_ribbon {
-	margin: 0.375em 0.75em 0 0.75em;
-	text-align: center;
-	font-size: 1em;
-	border-radius: 1em;
-	width: 100%;
-}
-#limit_ribbon {
+#info_ribbon, #limit_ribbon {
 	margin: 0.375em 0.75em 0 0.75em;
 	text-align: center;
 	font-size: 1em;
@@ -107,7 +109,38 @@ h1 {
 #buttons_footer {
 	position: fixed; 
 	bottom: 0;
+	min-width: 300px;
 }
 .bot10 {
 	margin-bottom: 10px;
+}
+
+.bg-main {
+	border: 1px solid var(--color-dark);
+	border-radius: 4px;
+	background-color: var(--color-bg);
+}
+.fa-file-text-o, .fa-floppy-o, .fa-trash, .fa-pencil, .fa-plus {
+	color: var(--color-icons) !important;
+}
+input {
+	min-width: 0;
+}
+.container_title {
+	font-family: 'ZCOOL XiaoWei', serif;
+	font-weight: 700;
+	font-size: calc(1em + 1vw);
+	margin-top: 0.375em;
+}
+@media (max-width: 576px) {
+	.mobile_width_25 {
+		width: 25%;
+		float: left;
+		height: 100%;
+	}
+	.mobile_width_75 {
+		width: 75%;
+		float: left;
+		height: 100%;
+	}
 }

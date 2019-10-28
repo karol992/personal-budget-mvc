@@ -4,22 +4,19 @@ $(document).ready(function() {
 	const $submitBtn = $("#submitBtn");
 	const $info = $("#info_ribbon");
 	const $expenseValue = $("#expense_value");
+	const $expenseNote = $("#expense_note");
 	const $limit = $("#limit_ribbon");
 	const $category = $("input[name='expense_category']");
 	const $dateInput = $('#expense_date');
 	
 	/* Show alert message */
 	function alertInfo(text) {
-		$info.removeClass('alert-success');
-		$info.addClass('alert-danger');
-		$info.html(text);
+		$info.removeClass('alert-success').addClass('alert-danger').html(text);
 	}
 	
 	/* Show non-alert message */
 	function successInfo(text) {
-		$info.removeClass('alert-danger');
-		$info.addClass('alert-success');
-		$info.html(text);
+		$info.removeClass('alert-danger').addClass('alert-success').html(text);
 	}
 	
 	/* Prepare text with limit informations. */
@@ -119,6 +116,7 @@ $(document).ready(function() {
 	$form.on("submit", function(e) {
 		e.preventDefault();
 		$submitBtn.prop('disabled', true);
+		$expenseValue.attr('readonly', true);
 		if(validateValueWithInfo($expenseValue.val())) {
 			$.ajax({
 				url: '/expense/add-expense-ajax',
@@ -135,9 +133,12 @@ $(document).ready(function() {
 				alertInfo('Błąd połączenia z bazą danych.');
 			});
 		}
-		$expenseValue.val("");
-		setTimeout(function() {$submitBtn.prop('disabled', false);}, 1000);
-		$expenseValue.focus();
+		$expenseNote.val('');
+		$expenseValue.val('').focus();
+		setTimeout(function() {
+			$submitBtn.prop('disabled', false);
+			$expenseValue.attr('readonly', false);
+		}, 1000);
 	});
 	
 	/* Execute user events */
@@ -145,14 +146,22 @@ $(document).ready(function() {
 		$(this).prop('disabled', true);
 		($(this).val().length>9) ? $(this).val($(this).val().slice(0, -1)) : false;
 		showEstimation($(this).val());
-		$(this).prop('disabled', false);
-		$(this).focus();
+		$(this).prop('disabled', false).focus();
 	});
+	
+	$expenseValue.on("change", function() {
+		$(this).prop('disabled', true);
+		($(this).val().length>9) ? $(this).val($(this).val().slice(0, -1)) : false;
+		showEstimation($(this).val());
+		$(this).prop('disabled', false).focus();
+	});
+	
 	$expenseValue.keydown(function() { ($(this).val().length>10) ? $(this).val($(this).val().slice(0, -1)) : false; });
-	$category.on("change", function() { showEstimation($expenseValue.val()) });
+	$category.on("change", function() { showEstimation($expenseValue.val()); });
 	$dateInput.on("change", function() { showEstimation($expenseValue.val()); });
 	
-	/* show first limit when document loaded */
+	/* actions document loaded */
 	showEstimation(0);
+	$expenseValue.focus();
 });
 

@@ -21,7 +21,6 @@ class Income extends Authenticated
      * @return void
      */
     public function indexAction($args = []) {
-		$args['income_value'] = '0.00';
 		$args['income_cats'] = \App\Models\Data::getUserIncomeCats();
 		$args['transaction_date'] = $_POST['income_date'] ?? \App\Timer::getCurrentDate();
         View::renderTemplate('Income/index.html', $args);

@@ -3,6 +3,7 @@
 	border-radius: 0.25em;
 	margin-top: 1em;
 	margin-bottom: 5em;
+	padding-bottom: 1em;
 	width: 100%;
 }
 .transaction_section{
@@ -34,13 +35,41 @@ input,option,select,input[type=textarea] {
 	width: 100%;
     /*font-size: calc(12px + 2vmin);*/
 }
-input[type=number]::-webkit-inner-spin-button {
+/*input[type=number]::-webkit-inner-spin-button {
 	opacity: 1;
-}
+}*/
 input[type=date]::-webkit-inner-spin-button {
 	opacity: 1;
 }
 input[type=date]::-webkit-calendar-picker-indicator {
 	opacity: 1;
 }
-
+@media (max-width: 576px) {
+	.mobile_width_25 {
+		width: 25%;
+		float: left;
+		height: 100%;
+	}
+	.mobile_width_75 {
+		width: 75%;
+		float: left;
+		height: 100%;
+	}
+}
+.height_min30 {
+	min-height: 30px;
+}
+.container_title {
+	font-family: 'ZCOOL XiaoWei', serif;
+	font-weight: 700;
+	font-size: calc(1em + 1vw);
+}
+input[type="number"] {
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}

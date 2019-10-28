@@ -11,14 +11,25 @@
 {% endblock %}
 
 {% block body %}
-
-	<section id="periodDropdown">
-		{% include 'Balance/periodDropdown.html' %}
-	</section>
 	
 	<!------mainBody----------------------------------------------------------------------------------->
 	<section id="balanceBody"><!-- Contains incomes, expense pie chart, expenses. -->
-		<div class="container"> 
+		<div class="container bg-main">
+			
+			{% include 'Balance/periodDropdown.html' %}
+				
+			<!-- Show period of balance -->
+			<div class="ribbon_info alert-success period-border">
+				<div class="inB">Zakres bilansu:</div>
+				<div class="inB">
+					<div class="inB" >{{ balance_period.start }}</div>
+					<input id="balance_start_day" value="{{ balance_period.start }}" hidden>
+					<div class="inB"> - </div>
+					<div class="inB">{{ balance_period.end }}</div>
+					<input id="balance_end_day" value="{{ balance_period.end }}" hidden>
+				</div>
+			</div>
+	
 			<div class="row">
 				<div class="col-md-6">
 					<!-- Incomes categories. -->
@@ -28,7 +39,7 @@
 							<div class="b_line b_motivation shadow">Brak przychodów w wybranym okresie</div>
 						{% endif %}
 						{% for income in incomes %}
-									<div class="b_line row shadow">
+									<div class="b_line row shadow"  id="income{{ income.id }}Line">
 										<div class="blcell col-7">{{ income.name }}</div>
 										<div id="income{{ income.id }}Sum" class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
 										<button class="btn_list col-1 income_category_button" href="#incomeListModal" data-toggle="modal" data-target="#incomeListModal" data-category-id="{{ income.id }}" data-category-name="{{ income.name }}">
@@ -43,7 +54,7 @@
 						Wydatki:
 						{% endif %}
 						{% for expense in expenses %}
-									<div class="b_line row shadow">
+									<div class="b_line row shadow" id="expense{{ expense.id }}Line">
 										<div class="blcell col-7">{{ expense.name }}</div>
 										<div id="expense{{ expense.id }}Sum" class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
 										<button class="btn btn_list col-1 expense_category_button" href="#expenseListModal" data-toggle="modal" data-target="#expenseListModal"  data-category-id="{{ expense.id }}" data-category-name="{{ expense.name }}">
@@ -53,9 +64,7 @@
 						{% endfor %}
 						</div>
 				</div>
-				
 				<div class="col-md-6"> 
-					
 					{% if expenses is empty %}
 					Wydatki
 							<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>
@@ -88,7 +97,6 @@
 							</div>
 						</div>
 					{% endif %}
-					
 				</div>
 			</div>
 		</div>
@@ -101,7 +109,7 @@
 	
 	<section id="balanceModals">
 	<!---legendModal------------------------------------------------------------------------------------------>
-		<div class="modal fade" id="legendModal" tabindex="-1" role="dialog" aria-labelledby="legendModalLabel" aria-hidden="true">
+		<div class="modal fade" id="legendModal" tabindex="-1" role="dialog" aria-labelledby="Legend" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<form class="modal-content" action="" method="post" enctype="multipart/form-data">
 					<div class="modal-header">
@@ -130,13 +138,15 @@
 {% block footer %}
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
-<script src="http://www.amcharts.com/lib/4/themes/kelly.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/kelly.js"></script>
 <script>
+	/* Load expense sums by twig to piechart.js.  */
 	var json_expenses = '{{ js_expenses_sums|json_encode|raw}}';
 	var onload_expenses= JSON.parse(json_expenses);
 </script>
 <script src="/js/piechart.js"></script>
 <script>
+	/* Load payment categories by twig to balance.js.  */
 	$payments= JSON.parse('{{ payment_cats|json_encode|raw}}');
 </script>
 <script src="/js/balance/balance.js"></script>
