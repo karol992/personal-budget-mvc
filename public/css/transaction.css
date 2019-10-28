@@ -56,8 +56,13 @@ input[type=date]::-webkit-calendar-picker-indicator {
 		height: 100%;
 	}
 }
-.height_30 {
+.height_min30 {
 	min-height: 30px;
+}
+.container_title {
+	font-family: 'ZCOOL XiaoWei', serif;
+	font-weight: 700;
+	font-size: calc(1em + 1vw);
 }
 input[type="number"] {
   -webkit-appearance: textfield;

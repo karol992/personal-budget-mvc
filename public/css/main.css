@@ -81,6 +81,8 @@ h1 {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	font-size: calc(8px + 3vmin);
+	font-size: calc(10px + 2vmin);
+	font-family: 'ZCOOL XiaoWei', serif;
 }
 .alert-info {
 	font-size: calc(8px + 3vmin);
@@ -139,5 +141,23 @@ h1 {
 	color: var(--color-icons) !important;
 }
 input {
-	min-width:0;
+	min-width: 0;
+}
+.container_title {
+	font-family: 'ZCOOL XiaoWei', serif;
+	font-weight: 700;
+	font-size: calc(1em + 1vw);
+	margin-top: 0.375em;
+}
+@media (max-width: 576px) {
+	.mobile_width_25 {
+		width: 25%;
+		float: left;
+		height: 100%;
+	}
+	.mobile_width_75 {
+		width: 75%;
+		float: left;
+		height: 100%;
+	}
 }

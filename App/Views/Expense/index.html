@@ -20,8 +20,9 @@
 		
 		<div class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10 bg-main">
 		
-			<div class="row" >
-				<div id="limit_ribbon">
+			<div class="row container_title">
+				<div class="col-12">
+					<label>Dodaj wydatek</label>
 				</div>
 			</div>
 			
@@ -88,12 +89,11 @@
 						</div>
 						{% endfor %}
 					</div>
-					<!-- Expense saving -->
-					<div class="row d-md-block d-none">
-						<div class="transaction_btn offset-1 col-5">
+					<!-- Buttons for desktops -->
+					<div class="d-md-block d-none">
+						<div class="transaction_btn col-6">
 							<button id="submitBtn" class="btn btn-success" type="submit" value="Submit">Dodaj</button>
-						</div>
-						<div class="transaction_btn col-5">
+						</div><div class="transaction_btn col-6">
 							<button class="btn btn-danger" type="reset" value="Reset">Anuluj</button>
 						</div>
 					</div>
@@ -106,6 +106,7 @@
 			
 		</div>
 		
+		<!-- Buttons for mobiles -->
 		<div class="col-12 d-md-none d-block" id="buttons_footer">
 			<div class="row">
 				<div class="transaction_btn col-4">

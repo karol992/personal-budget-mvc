@@ -12,14 +12,18 @@
 
 {% block body %}
 
-	<section id="periodDropdown">
-		{% include 'Balance/periodDropdown.html' %}
-	</section>
+	<!--<section id="periodDropdown">
+		 include 'Balance/periodDropdown.html' 
+	</section>-->
 	
 	<!------mainBody----------------------------------------------------------------------------------->
 	<section id="balanceBody"><!-- Contains incomes, expense pie chart, expenses. -->
 		<div class="container bg-main">
-		
+			
+			
+				{% include 'Balance/periodDropdown.html' %}
+			
+				
 			<!-- Show period of balance -->
 			<div class="ribbon_info alert-success period-border">
 				<div class="inB">Zakres bilansu:</div>
