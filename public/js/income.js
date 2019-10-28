@@ -73,15 +73,13 @@ $(document).ready(function() {
 	$incomeValue.keyup(function() {
 		$(this).prop('disabled', true);
 		($(this).val().length>9) ? $(this).val($(this).val().slice(0, -1)) : false;
-		$(this).prop('disabled', false);
-		$(this).focus();
+		$(this).prop('disabled', false).focus();
 	});
 	
 	$incomeValue.on("change", function() {
 		$(this).prop('disabled', true);
 		($(this).val().length>9) ? $(this).val($(this).val().slice(0, -1)) : false;
-		$(this).prop('disabled', false);
-		$(this).focus();
+		$(this).prop('disabled', false).focus();
 	});
 	
 	$incomeValue.keydown(function() {
