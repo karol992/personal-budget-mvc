@@ -29,13 +29,21 @@
 			<div class="row">
 				<!-- Amount of expense -->
 				<div class="transaction_section col-12 col-md-6">
-					<label for="expense_value">Kwota: </label>
-					<input id="expense_value" class="form-control" type="number" name="expense_value" step="0.01" min="0.01" max="999999.99" required>
+					<div class="mobile_width_25">
+						<label for="expense_value">Kwota: </label>
+					</div>
+					<div class="mobile_width_75">
+						<input id="expense_value" class="form-control" type="number" name="expense_value" step="0.01" min="0.01" max="999999.99" required>
+					</div>
 				</div>
 				<!-- Date of expense -->
 				<div class="transaction_section col-12 col-md-6">
-					<label for="expense_date">Data: </label>
-					<input id="expense_date" class="form-control" type="date" name="expense_date" value="{{ transaction_date }}">
+					<div class="mobile_width_25">
+						<label for="expense_date">Data: </label>
+					</div>
+					<div class="mobile_width_75">
+						<input id="expense_date" class="form-control" type="date" name="expense_date" value="{{ transaction_date }}">
+					</div>
 				</div>
 			</div>
 			
