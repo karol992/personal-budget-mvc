@@ -1,6 +1,7 @@
 @import url('colors.css');
 body {
 	background: url(/jpeg/office-pen-calculator-computation.jpg);
+	background-repeat: no-repeat;
 	background-size: 100% auto;
 	background-color: #E8E8EA;
 	color: var(--color-dark);
