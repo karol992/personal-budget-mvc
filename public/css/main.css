@@ -1,6 +1,10 @@
 @import url('colors.css');
 body {
-	background-color: var(--color-bg);
+	
+	background: url(/jpeg/office-pen-calculator-computation.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: #E8E8EA;
 	color: var(--color-dark);
     font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
@@ -80,8 +84,7 @@ h1 {
 	text-align: center;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	font-size: calc(8px + 3vmin);
-	font-size: calc(10px + 2vmin);
+	font-size: calc(16px + 2vmin);
 	font-family: 'ZCOOL XiaoWei', serif;
 }
 .alert-info {

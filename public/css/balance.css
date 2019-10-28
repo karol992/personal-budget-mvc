@@ -147,7 +147,6 @@ input[type=date]::-webkit-calendar-picker-indicator {
 }
 .ribbon_info {
 	margin: 0 0 10px 0;
-	font-size: calc(1em + 1vw);
 }
 .bg-main {
 	margin-top: 16px;
