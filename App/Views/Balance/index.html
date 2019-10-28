@@ -41,7 +41,7 @@
 							<div class="b_line b_motivation shadow">Brak przychodów w wybranym okresie</div>
 						{% endif %}
 						{% for income in incomes %}
-									<div class="b_line row shadow">
+									<div class="b_line row shadow"  id="income{{ income.id }}Line">
 										<div class="blcell col-7">{{ income.name }}</div>
 										<div id="income{{ income.id }}Sum" class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
 										<button class="btn_list col-1 income_category_button" href="#incomeListModal" data-toggle="modal" data-target="#incomeListModal" data-category-id="{{ income.id }}" data-category-name="{{ income.name }}">
@@ -56,7 +56,7 @@
 						Wydatki:
 						{% endif %}
 						{% for expense in expenses %}
-									<div class="b_line row shadow">
+									<div class="b_line row shadow" id="expense{{ expense.id }}Line">
 										<div class="blcell col-7">{{ expense.name }}</div>
 										<div id="expense{{ expense.id }}Sum" class="brcell col-4">{{ "%.2f"|format(expense.sum) }}</div>
 										<button class="btn btn_list col-1 expense_category_button" href="#expenseListModal" data-toggle="modal" data-target="#expenseListModal"  data-category-id="{{ expense.id }}" data-category-name="{{ expense.name }}">

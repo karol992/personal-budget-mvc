@@ -82,8 +82,12 @@ function deleteIncomeRecord() {
 			$form.next('div.error').append('<p>Nie udało się usunąć dochodu.</p>');
 		} else {
 			$('#income'+$inc_id_label.val()+'Sum').html(response.new_sum);
-			$form.remove();
+			$form.closest('li').remove();
 			updateMotivation(parseFloat(response.balance).toFixed(2));
+			if(!$inc_list.children().length) {
+				$('#income'+$inc_id_label.val()+'Line').remove();
+				$('#incomeListModal').modal('toggle');
+			}
 		}
 	}).fail(function() {
 		alert("Income record deleting fail.");
@@ -131,9 +135,13 @@ function deleteExpenseRecord() {
 			$form.next('div.error').append('<p>Nie udało się usunąć wydatku.</p>');
 		} else {
 			$('#expense'+$exp_id_label.val()+'Sum').html(response.new_sum);
-			$form.remove();
+			$form.closest('li').remove();
 			updateMotivation(parseFloat(response.balance).toFixed(2));
 			reloadChartData(response.all_sums);
+			if(!$exp_list.children().length) {
+				$('#expense'+$exp_id_label.val()+'Line').remove();
+				$('#expenseListModal').modal('toggle');
+			}
 		}
 	}).fail(function() {
 		alert("Expense record deleting fail.");
