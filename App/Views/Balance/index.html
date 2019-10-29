@@ -64,22 +64,24 @@
 						{% endfor %}
 						</div>
 				</div>
-				<div class="col-md-6"> 
+				<div id="right_col_balance" class="col-md-6"> 
 					{% if expenses is empty %}
 					Wydatki
 							<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>
 					{% endif %}
 					{% if expense_sum != 0 %}
-					Wykres wydatków
-					<div> <!-- Pie chart with expenses. -->
-						<div class="ratioparent">
-							<div id="chartdiv" class="ratiochild b_border shadow"></div>
+					<div id="chart">
+						Wykres wydatków
+						<div> <!-- Pie chart with expenses. -->
+							<div class="ratioparent">
+								<div id="chartdiv" class="ratiochild b_border shadow"></div>
+							</div>
 						</div>
-					</div>
-					<div> <!-- External pie chart legend. Internal has non-rwd display-->
-						<button class="btn b_border col-12" id="legend_btn" href="#legendModal" data-toggle="modal" data-target="#legendModal">
-							Legenda
-						</button>
+						<div> <!-- External pie chart legend. Internal has non-rwd display-->
+							<button class="btn b_border col-12" id="legend_btn" href="#legendModal" data-toggle="modal" data-target="#legendModal">
+								Legenda
+							</button>
+						</div>
 					</div>
 					{% endif %}
 					{% if  (incomes|length + expenses|length != 0) %}

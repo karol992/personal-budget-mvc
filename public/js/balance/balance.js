@@ -48,7 +48,18 @@ function updateMotivation(balance_value) {
 
 function showNoIncome() {
 	$inc_table.append('<div class="b_line b_motivation shadow">Brak przychodów w wybranym okresie</div>');
-	if(!$exp_table.children().length) {
+	if(!$exp_table.children('div[id^="expense"]').length) {
+		$('#b_value').remove();
+		$('#b_motivation').remove();
+	}
+}
+
+function showNoExpense() {
+	$exp_table.empty();
+	chart.dispose();
+	$('#chart').remove();
+	$('#right_col_balance').prepend('Wydatki<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>');
+	if(!$inc_table.children('div[id^="income"]').length) {
 		$('#b_value').remove();
 		$('#b_motivation').remove();
 	}
@@ -98,9 +109,7 @@ function deleteIncomeRecord() {
 				$('#income'+$inc_id_label.val()+'Line').remove();
 				$('#incomeListModal').modal('toggle');
 			}
-			if(!$inc_table.children().length) {
-				showNoIncome();
-			}
+			if(!$inc_table.children('div[id^="income"]').length) showNoIncome();
 		}
 	}).fail(function() {
 		alert("Income record deleting fail.");
@@ -155,6 +164,7 @@ function deleteExpenseRecord() {
 				$('#expense'+$exp_id_label.val()+'Line').remove();
 				$('#expenseListModal').modal('toggle');
 			}
+			if(!$exp_table.children('div[id^="expense"]').length) showNoExpense();
 		}
 	}).fail(function() {
 		alert("Expense record deleting fail.");
