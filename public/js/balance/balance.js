@@ -1,10 +1,12 @@
 $inc_btn = $('.income_category_button');
 $exp_btn = $('.expense_category_button');
 
+$inc_table=$('#income_table');
 $inc_label=$('#incomeModalLabel');
 $inc_id_label=$('#incomeModalIdLabel');
 $inc_list=$('#incomeCategoryList');
 
+$exp_table=$('#expense_table');
 $exp_label=$('#expenseModalLabel');
 $exp_id_label=$('#expenseModalIdLabel');
 $exp_list=$('#expenseCategoryList');
@@ -41,6 +43,25 @@ function updateMotivation(balance_value) {
 	} else {
 		$motivation.html('<div class="inB"><span>Uważaj, </span></div><div class="inB"><span>wpadasz w długi!</span></div>');
 		$motivation.css('color','red');
+	}
+}
+
+function showNoIncome() {
+	$inc_table.append('<div class="b_line b_motivation shadow">Brak przychodów w wybranym okresie</div>');
+	if(!$exp_table.children('div[id^="expense"]').length) {
+		$('#b_value').remove();
+		$('#b_motivation').remove();
+	}
+}
+
+function showNoExpense() {
+	$exp_table.empty();
+	chart.dispose();
+	$('#chart').remove();
+	$('#right_col_balance').prepend('Wydatki<div class="b_line b_motivation shadow">Brak wydatków w wybranym okresie</div>');
+	if(!$inc_table.children('div[id^="income"]').length) {
+		$('#b_value').remove();
+		$('#b_motivation').remove();
 	}
 }
 
@@ -88,6 +109,7 @@ function deleteIncomeRecord() {
 				$('#income'+$inc_id_label.val()+'Line').remove();
 				$('#incomeListModal').modal('toggle');
 			}
+			if(!$inc_table.children('div[id^="income"]').length) showNoIncome();
 		}
 	}).fail(function() {
 		alert("Income record deleting fail.");
@@ -142,6 +164,7 @@ function deleteExpenseRecord() {
 				$('#expense'+$exp_id_label.val()+'Line').remove();
 				$('#expenseListModal').modal('toggle');
 			}
+			if(!$exp_table.children('div[id^="expense"]').length) showNoExpense();
 		}
 	}).fail(function() {
 		alert("Expense record deleting fail.");
