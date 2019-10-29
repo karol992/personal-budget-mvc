@@ -39,13 +39,13 @@
 							<div class="b_line b_motivation shadow">Brak przychodów w wybranym okresie</div>
 						{% endif %}
 						{% for income in incomes %}
-									<div class="b_line row shadow"  id="income{{ income.id }}Line">
-										<div class="blcell col-7">{{ income.name }}</div>
-										<div id="income{{ income.id }}Sum" class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
-										<button class="btn_list col-1 income_category_button" href="#incomeListModal" data-toggle="modal" data-target="#incomeListModal" data-category-id="{{ income.id }}" data-category-name="{{ income.name }}">
-											<span class="fa fa-file-text-o"></span>
-										</button>
-									</div>
+							<div class="b_line row shadow"  id="income{{ income.id }}Line">
+								<div class="blcell col-7">{{ income.name }}</div>
+								<div id="income{{ income.id }}Sum" class="brcell col-4">{{ "%.2f"|format(income.sum) }}</div>
+								<button class="btn_list col-1 income_category_button" href="#incomeListModal" data-toggle="modal" data-target="#incomeListModal" data-category-id="{{ income.id }}" data-category-name="{{ income.name }}">
+									<span class="fa fa-file-text-o"></span>
+								</button>
+							</div>
 						{% endfor %}
 						</div>
 					<!-- Expenses categories. -->
@@ -84,7 +84,7 @@
 					{% endif %}
 					{% if  (incomes|length + expenses|length != 0) %}
 					<!--  Sum & Comment. -->
-						<div class="b_line b_sum row shadow">
+						<div id="b_value" class="b_line b_sum row shadow">
 							<div class="blcell col-7">Bilans</div>
 							<div id="balance_value" class="brcell col-5 b_right_brd_r">{{ "%.2f"|format(balance_value) }}</div>
 						</div>

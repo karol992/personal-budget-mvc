@@ -1,10 +1,12 @@
 $inc_btn = $('.income_category_button');
 $exp_btn = $('.expense_category_button');
 
+$inc_table=$('#income_table');
 $inc_label=$('#incomeModalLabel');
 $inc_id_label=$('#incomeModalIdLabel');
 $inc_list=$('#incomeCategoryList');
 
+$exp_table=$('#expense_table');
 $exp_label=$('#expenseModalLabel');
 $exp_id_label=$('#expenseModalIdLabel');
 $exp_list=$('#expenseCategoryList');
@@ -41,6 +43,14 @@ function updateMotivation(balance_value) {
 	} else {
 		$motivation.html('<div class="inB"><span>Uważaj, </span></div><div class="inB"><span>wpadasz w długi!</span></div>');
 		$motivation.css('color','red');
+	}
+}
+
+function showNoIncome() {
+	$inc_table.append('<div class="b_line b_motivation shadow">Brak przychodów w wybranym okresie</div>');
+	if(!$exp_table.children().length) {
+		$('#b_value').remove();
+		$('#b_motivation').remove();
 	}
 }
 
@@ -87,6 +97,9 @@ function deleteIncomeRecord() {
 			if(!$inc_list.children().length) {
 				$('#income'+$inc_id_label.val()+'Line').remove();
 				$('#incomeListModal').modal('toggle');
+			}
+			if(!$inc_table.children().length) {
+				showNoIncome();
 			}
 		}
 	}).fail(function() {
