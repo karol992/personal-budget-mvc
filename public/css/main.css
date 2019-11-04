@@ -119,6 +119,7 @@ h1 {
 	border: 1px solid var(--color-dark);
 	border-radius: 4px;
 	background-color: var(--color-bg);
+	margin-top: 16px;
 }
 .fa-file-text-o, .fa-floppy-o, .fa-trash, .fa-pencil, .fa-plus {
 	color: var(--color-icons) !important;

@@ -1,10 +1,24 @@
-{% extends "navbar.html" %}
+{% extends "base.html" %}
 
 {% block title %}Page not found{% endblock %}
 
+{% block navbar %}
+<nav class="navbar navbar-light ribbon justify-content-center">
+		<ul class="navbar-nav offset-6">
+			<li class="nav-item">
+				<a class="nav-link" href="/login"><span class="fa fa-sign-in fa-fw"></span>Logowanie</a>
+			</li>
+		</ul>
+</nav>
+{% endblock %}
+
 {% block body %}
-<div class="container">
-    <h1>Page not found</h1>
-    <p>Sorry, that page doesn't exist.</p>
+<div class="container offset-xl-3 offset-lg-2 offset-md-1 offset-sm-2 offset-1 col-xl-6 col-lg-8 col-md-10 col-sm-8 col-10 bg-main">
+    <div class="row container_title">
+				<div class="col-12">
+					<label>Nie znaleziono strony.</label>
+				</div>
+			</div>
+    <p>Przepraszamy, strona nie istnieje.</p>
 </div>
 {% endblock %}
